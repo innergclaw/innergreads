@@ -20,8 +20,17 @@
       content="https://innergclaw.github.io/innergreads/assets/final-frequency-cover.jpg"
     >
     <title>InnerGReads — Books that preserve the frequency</title>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "./vendor/three.module.min.js",
+          "three/addons/": "./vendor/addons/"
+        }
+      }
+    </script>
     <link rel="stylesheet" href="./styles.css">
     <script src="./app.js" defer></script>
+    <script type="module" src="./book-scene.js?v=2"></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to the library</a>
@@ -97,19 +106,26 @@
           </div>
         </div>
 
-        <div class="book-stage reveal" data-tilt>
+        <div class="book-stage reveal is-loading" data-book-viewer>
           <div class="book-aura" aria-hidden="true"></div>
-          <div class="book-object">
-            <span class="book-spine" aria-hidden="true">The Final Frequency</span>
-            <img
-              src="./assets/final-frequency-cover.jpg"
-              alt="Cover of Legacy In Ink: The Final Frequency by Nasirr Mayo"
-              width="1024"
-              height="1280"
-            >
-            <span class="book-glare" aria-hidden="true"></span>
+          <canvas
+            id="book-canvas"
+            tabindex="0"
+            aria-label="Interactive three-dimensional model of Legacy In Ink: The Final Frequency"
+          ></canvas>
+          <div class="book-loading" role="status" aria-live="polite">
+            <span></span>
+            Building the first edition
           </div>
-          <p class="drag-note">Move to examine the first edition</p>
+          <div class="book-fallback">
+            <img
+              src="./assets/final-frequency-front-3d.jpg"
+              alt="Cover of Legacy In Ink: The Final Frequency by Nasirr Mayo"
+              width="1220"
+              height="1850"
+            >
+          </div>
+          <p class="drag-note">Drag to rotate · click to turn the book</p>
         </div>
 
         <aside class="release-meta reveal" aria-label="Book information">

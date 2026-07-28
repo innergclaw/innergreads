@@ -6,6 +6,10 @@ The independent digital library and publishing home of Nasirr Mayo and InnerG In
 
 - `001` — *Legacy In Ink: The Final Frequency*
 
+The hero uses a self-contained Three.js product viewer built from the final
+176-page cover wrap. Readers can drag the physical book, click through the
+front/spine/back views, or use the arrow keys.
+
 ## Local preview
 
 Open `index.html` directly, or serve this directory with any static web server.
