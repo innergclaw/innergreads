@@ -288,20 +288,30 @@ a {
 .nav-socials,
 .footer-socials {
   display: flex;
+  flex: 0 0 auto;
   align-items: center;
   gap: 8px;
 }
 
 .social-icon-link {
   display: grid;
+  flex: 0 0 44px;
+  justify-content: center;
   place-items: center;
   width: 44px;
   height: 44px;
+  min-width: 44px;
   min-height: 44px;
+  max-width: 44px;
+  padding: 0;
+  overflow: hidden;
   color: var(--paper-100);
   background: oklch(1 0 0 / 0.055);
+  aspect-ratio: 1;
   border-radius: 50%;
+  box-sizing: border-box;
   box-shadow: inset 0 0 0 1px oklch(1 0 0 / 0.12);
+  line-height: 0;
   text-decoration: none;
   transition-property: color, background-color, box-shadow, transform;
   transition-duration: 180ms;
@@ -310,8 +320,11 @@ a {
 
 .social-icon-link svg {
   display: block;
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
+  flex: none;
+  overflow: visible;
+  pointer-events: none;
 }
 
 .social-icon-link svg path {
@@ -1329,9 +1342,12 @@ a {
   }
 
   .site-nav .social-icon-link {
+    flex-basis: 52px;
     width: 52px;
     height: 52px;
+    min-width: 52px;
     min-height: 52px;
+    max-width: 52px;
     font-family: inherit;
     font-size: inherit;
     border-block-end: 0;
