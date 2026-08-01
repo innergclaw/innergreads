@@ -1,0 +1,661 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="InnerG Intel is a learning ecosystem for AI, technology, personal intelligence, creative ownership, books, and community."
+    >
+    <meta name="theme-color" content="#171111">
+    <title>InnerG Intel | Intelligence for real life</title>
+    <link rel="stylesheet" href="./community.css">
+    <script src="./community.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#study-main">Skip to the Study Hall</a>
+
+    <div
+      class="newsletter-gate"
+      id="newsletter-gate"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="newsletter-title"
+      aria-describedby="newsletter-description"
+      hidden
+    >
+      <button
+        class="newsletter-backdrop"
+        type="button"
+        data-newsletter-close
+        aria-label="Close newsletter signup"
+      ></button>
+      <section class="newsletter-card">
+        <span class="newsletter-signal" aria-hidden="true"></span>
+        <button
+          class="newsletter-close"
+          type="button"
+          data-newsletter-close
+          aria-label="Close newsletter signup"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </button>
+
+        <div class="newsletter-kicker">
+          <i aria-hidden="true"></i>
+          <span>InnerG Intelligence / Signal 001</span>
+        </div>
+
+        <div class="newsletter-copy">
+          <p class="newsletter-label">Enter the network</p>
+          <h2 id="newsletter-title">Receive the intelligence <em>before the noise.</em></h2>
+          <p id="newsletter-description">
+            Field notes on AI, technology, personal intelligence, creative ownership,
+            and the ideas shaping the InnerG ecosystem.
+          </p>
+        </div>
+
+        <form
+          class="newsletter-form"
+          id="newsletter-form"
+          action="https://innergintelligence.substack.com/api/v1/free?nojs=true"
+          method="post"
+          target="newsletter-submit-frame"
+          novalidate
+        >
+          <input type="hidden" name="source" value="custom_embed">
+          <input type="hidden" name="first_url" value="">
+          <input type="hidden" name="current_url" value="">
+          <label for="newsletter-email">Email address</label>
+          <div class="newsletter-field">
+            <input
+              id="newsletter-email"
+              name="email"
+              type="email"
+              inputmode="email"
+              autocomplete="email"
+              placeholder="you@email.com"
+              required
+            >
+            <button type="submit">
+              <span class="newsletter-button-label">Join the network</span>
+              <span class="newsletter-button-icon" aria-hidden="true">→</span>
+            </button>
+          </div>
+          <p class="newsletter-error" id="newsletter-error" aria-live="polite"></p>
+        </form>
+
+        <p class="newsletter-terms">
+          Free to join. Unsubscribe anytime. By subscribing, you agree to
+          <a href="https://innergintelligence.substack.com/privacy" target="_blank" rel="noreferrer">the privacy policy</a>.
+        </p>
+
+        <div class="newsletter-confirmation" aria-live="polite" aria-hidden="true">
+          <span class="confirmation-mark" aria-hidden="true">IG</span>
+          <p>Signal received</p>
+          <strong>Frequency confirmed.</strong>
+          <small>Check your inbox to complete the connection.</small>
+        </div>
+      </section>
+    </div>
+
+    <header class="study-header">
+      <a class="study-brand" href="#overview" aria-label="InnerG Intel Study Hall home">
+        <span class="study-brand-mark" aria-hidden="true">IG</span>
+        <span>
+          <strong>InnerG Study Hall</strong>
+          <small>InnerG Intel × InnerGReads</small>
+        </span>
+      </a>
+
+      <div class="header-status" aria-label="Community status">
+        <i aria-hidden="true"></i>
+        <span>InnerG network online</span>
+      </div>
+
+      <button
+        class="mobile-nav-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="study-sidebar"
+      >
+        <span></span><span></span>
+        <span class="sr-only">Open Study Hall navigation</span>
+      </button>
+    </header>
+
+    <div class="study-shell">
+      <aside class="study-sidebar" id="study-sidebar">
+        <div class="sidebar-intro">
+          <span class="signal-dot" aria-hidden="true"></span>
+          <p>InnerG Intel network</p>
+          <strong>Intelligence for real life</strong>
+        </div>
+
+        <nav class="channel-nav" aria-label="Study Hall channels">
+          <p class="channel-label">Start here</p>
+          <a class="channel-link is-active" href="#overview" data-section-link>
+            <span aria-hidden="true">⌂</span> Welcome desk
+          </a>
+          <a class="channel-link" href="#path" data-section-link>
+            <span aria-hidden="true">◎</span> Your study path
+          </a>
+          <a class="channel-link" href="#ecosystem" data-section-link>
+            <span aria-hidden="true">◇</span> The ecosystem
+            <small>05</small>
+          </a>
+
+          <p class="channel-label">Learn</p>
+          <a class="channel-link" href="#classes" data-section-link>
+            <span aria-hidden="true">▣</span> Classrooms
+            <small>03</small>
+          </a>
+          <a class="channel-link" href="#notes" data-section-link>
+            <span aria-hidden="true">≡</span> Field notes
+            <small>06</small>
+          </a>
+
+          <p class="channel-label">Discuss</p>
+          <a class="channel-link" href="#reading-room" data-section-link>
+            <span aria-hidden="true">◫</span> Reading room
+          </a>
+          <a class="channel-link" href="#community" data-section-link>
+            <span aria-hidden="true">#</span> Community channels
+          </a>
+        </nav>
+
+        <div class="sidebar-footer">
+          <p>Learn what is changing.</p>
+          <p>Build what should exist.</p>
+          <a href="./index.html">Explore InnerGReads <span aria-hidden="true">→</span></a>
+        </div>
+      </aside>
+
+      <main class="study-main" id="study-main">
+        <section class="welcome-panel section-anchor" id="overview">
+          <div class="welcome-copy">
+            <p class="eyebrow">The learning home of InnerG Intel</p>
+            <h1>Understand the shift.<br><span>Use the tools.</span><br>Build with purpose.</h1>
+            <p>
+              InnerG Intel helps people turn information into usable intelligence
+              across AI, technology, personal growth, creative ownership, and books.
+              Learn what is changing, understand what it means, and build forward
+              with a community.
+            </p>
+            <div class="welcome-actions">
+              <a class="button button-primary" href="#path">Start your path</a>
+              <a class="button button-secondary" href="#community">Enter the community</a>
+            </div>
+          </div>
+
+          <div class="frequency-board" aria-label="InnerG Intel mission">
+            <div class="board-topline">
+              <span>Our mission</span>
+              <span>InnerG Intel</span>
+            </div>
+            <blockquote>
+              Turn information into intelligence people can use.
+            </blockquote>
+            <div class="board-tags">
+              <span>AI</span>
+              <span>Technology</span>
+              <span>Ownership</span>
+              <span>Books</span>
+            </div>
+            <a href="#ecosystem">Explore the ecosystem <span aria-hidden="true">↘</span></a>
+          </div>
+        </section>
+
+        <section
+          class="ecosystem-section section-anchor"
+          id="ecosystem"
+          aria-labelledby="ecosystem-title"
+        >
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">The InnerG ecosystem</p>
+              <h2 id="ecosystem-title">One mission. Five connected rooms.</h2>
+            </div>
+            <p>
+              Each room develops a different form of intelligence. Together they
+              help people understand change, make stronger decisions, and create
+              work that lasts.
+            </p>
+          </div>
+
+          <div class="ecosystem-grid">
+            <article class="ecosystem-card ecosystem-card-featured">
+              <span class="ecosystem-number">01</span>
+              <p class="ecosystem-label">AI and agents</p>
+              <h3>Understand the new tools.</h3>
+              <p>
+                Learn what AI can do, where it fails, and how to use it as a
+                collaborator without surrendering your judgment.
+              </p>
+              <a href="#classes">Enter the AI classroom <span aria-hidden="true">→</span></a>
+            </article>
+
+            <article class="ecosystem-card">
+              <span class="ecosystem-number">02</span>
+              <p class="ecosystem-label">Technology</p>
+              <h3>Build practical literacy.</h3>
+              <p>
+                Make emerging technology understandable, useful, and connected
+                to the problems people face in real life.
+              </p>
+            </article>
+
+            <article class="ecosystem-card">
+              <span class="ecosystem-number">03</span>
+              <p class="ecosystem-label">Personal intelligence</p>
+              <h3>Strengthen the person using the tool.</h3>
+              <p>
+                Practice discernment, discipline, pattern recognition, and the
+                standards that protect your direction.
+              </p>
+            </article>
+
+            <article class="ecosystem-card">
+              <span class="ecosystem-number">04</span>
+              <p class="ecosystem-label">Creative ownership</p>
+              <h3>Turn ideas into owned work.</h3>
+              <p>
+                Move from consuming information to building systems, media,
+                businesses, and intellectual property.
+              </p>
+            </article>
+
+            <article class="ecosystem-card">
+              <span class="ecosystem-number">05</span>
+              <p class="ecosystem-label">InnerGReads</p>
+              <h3>Preserve what the community learns.</h3>
+              <p>
+                Books and publications give lived intelligence a permanent form
+                that can travel beyond the original conversation.
+              </p>
+              <a href="./index.html">Enter the library <span aria-hidden="true">→</span></a>
+            </article>
+          </div>
+        </section>
+
+        <section class="path-section section-anchor" id="path" aria-labelledby="path-title">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Your study path</p>
+              <h2 id="path-title">Begin where you are.</h2>
+            </div>
+            <p class="progress-copy"><strong id="progress-count">0</strong> of 4 complete</p>
+          </div>
+
+          <div class="progress-track" aria-hidden="true">
+            <span id="progress-bar"></span>
+          </div>
+
+          <ol class="path-list">
+            <li>
+              <button class="path-check" type="button" data-path-step="orientation" aria-pressed="false">
+                <span class="check-icon" aria-hidden="true"></span>
+                <span class="path-number">01</span>
+                <span class="path-copy">
+                  <strong>Understand the mission</strong>
+                  <small>InnerG Intel turns information into practical knowledge people can use.</small>
+                </span>
+                <span class="path-time">3 min</span>
+              </button>
+            </li>
+            <li>
+              <button class="path-check" type="button" data-path-step="choose" aria-pressed="false">
+                <span class="check-icon" aria-hidden="true"></span>
+                <span class="path-number">02</span>
+                <span class="path-copy">
+                  <strong>Choose your first learning room</strong>
+                  <small>Start with AI, technology, personal intelligence, ownership, or books.</small>
+                </span>
+                <span class="path-time">10 min</span>
+              </button>
+            </li>
+            <li>
+              <button class="path-check" type="button" data-path-step="build" aria-pressed="false">
+                <span class="check-icon" aria-hidden="true"></span>
+                <span class="path-number">03</span>
+                <span class="path-copy">
+                  <strong>Apply one idea through action</strong>
+                  <small>Use a tool, test a framework, build a small project, or change a decision.</small>
+                </span>
+                <span class="path-time">15 min</span>
+              </button>
+            </li>
+            <li>
+              <button class="path-check" type="button" data-path-step="discuss" aria-pressed="false">
+                <span class="check-icon" aria-hidden="true"></span>
+                <span class="path-number">04</span>
+                <span class="path-copy">
+                  <strong>Bring the result to the community</strong>
+                  <small>Share what worked, what failed, and what someone else can learn from it.</small>
+                </span>
+                <span class="path-time">Open</span>
+              </button>
+            </li>
+          </ol>
+        </section>
+
+        <section class="classes-section section-anchor" id="classes" aria-labelledby="classes-title">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Classrooms</p>
+              <h2 id="classes-title">Learn the shift. Build through it.</h2>
+            </div>
+            <p>Practical classes for people who want understanding before hype.</p>
+          </div>
+
+          <div class="class-grid">
+            <article class="class-card class-card-featured">
+              <div class="class-card-top">
+                <span class="class-type">AI foundations</span>
+                <span class="class-status"><i></i> Forming now</span>
+              </div>
+              <p class="class-number">CLASS 001</p>
+              <h3>AI for Real Life</h3>
+              <p>
+                Understand today’s AI landscape, what the tools actually do, and
+                how to use them without confusing output for intelligence.
+              </p>
+              <ul>
+                <li>AI literacy</li>
+                <li>Prompt thinking</li>
+                <li>Human judgment</li>
+              </ul>
+              <button class="class-save" type="button" data-save-class="ai-real-life">
+                <span class="save-icon" aria-hidden="true">+</span>
+                Save this class
+              </button>
+            </article>
+
+            <article class="class-card">
+              <div class="class-card-top">
+                <span class="class-type">Build lab</span>
+                <span class="class-duration">60 min</span>
+              </div>
+              <p class="class-number">CLASS 002</p>
+              <h3>Build Your First Agent</h3>
+              <p>
+                Move beyond chatbot use and design a focused AI assistant around
+                one real problem, repeatable process, and clear boundary.
+              </p>
+              <button class="class-save" type="button" data-save-class="first-agent">
+                <span class="save-icon" aria-hidden="true">+</span>
+                Save this class
+              </button>
+            </article>
+
+            <article class="class-card">
+              <div class="class-card-top">
+                <span class="class-type">Inner intelligence</span>
+                <span class="class-duration">60 min</span>
+              </div>
+              <p class="class-number">CLASS 003</p>
+              <h3>The Frequency Method</h3>
+              <p>
+                Move from experience to pattern, from pattern to principle, and
+                from principle to a stronger decision or owned piece of work.
+              </p>
+              <button class="class-save" type="button" data-save-class="frequency-method">
+                <span class="save-icon" aria-hidden="true">+</span>
+                Save this class
+              </button>
+            </article>
+          </div>
+        </section>
+
+        <section class="notes-section section-anchor" id="notes" aria-labelledby="notes-title">
+          <div class="section-heading notes-heading">
+            <div>
+              <p class="eyebrow">Field notes</p>
+              <h2 id="notes-title">Ideas worth returning to.</h2>
+            </div>
+            <label class="note-search">
+              <span class="sr-only">Search field notes</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="11" cy="11" r="6"></circle>
+                <path d="m16 16 4 4"></path>
+              </svg>
+              <input id="note-search" type="search" placeholder="Search the notes">
+            </label>
+          </div>
+
+          <div class="note-filters" aria-label="Filter field notes">
+            <button class="filter-button is-active" type="button" data-note-filter="all">All notes</button>
+            <button class="filter-button" type="button" data-note-filter="ai">AI</button>
+            <button class="filter-button" type="button" data-note-filter="technology">Technology</button>
+            <button class="filter-button" type="button" data-note-filter="intelligence">Inner intelligence</button>
+            <button class="filter-button" type="button" data-note-filter="reads">InnerGReads</button>
+          </div>
+
+          <div class="notes-grid" id="notes-grid">
+            <article class="note-card note-card-lead" data-note-topic="ai">
+              <div class="note-meta"><span>AI foundations</span><span>6 min</span></div>
+              <h3>What an AI agent actually is</h3>
+              <p>
+                An agent is not magic. It is a model given a goal, context, tools,
+                and a loop for deciding what to do next.
+              </p>
+              <a href="#community">Enter the AI discussion <span aria-hidden="true">→</span></a>
+            </article>
+
+            <article class="note-card" data-note-topic="ai">
+              <div class="note-meta"><span>Human judgment</span><span>4 min</span></div>
+              <h3>AI should increase judgment, not replace it</h3>
+              <p>The fastest answer is not automatically the wisest decision.</p>
+              <span class="note-state">Field note</span>
+            </article>
+
+            <article class="note-card" data-note-topic="technology">
+              <div class="note-meta"><span>Technology</span><span>5 min</span></div>
+              <h3>Technology literacy is a form of power</h3>
+              <p>You cannot shape a system you only know how to consume.</p>
+              <span class="note-state">Field note</span>
+            </article>
+
+            <article class="note-card" data-note-topic="technology">
+              <div class="note-meta"><span>Systems</span><span>5 min</span></div>
+              <h3>Build the process before the platform</h3>
+              <p>A new tool cannot repair a workflow nobody understands.</p>
+              <span class="note-state">Field note</span>
+            </article>
+
+            <article class="note-card" data-note-topic="intelligence">
+              <div class="note-meta"><span>Verse 014</span><span>7 min</span></div>
+              <h3>Your standard is a decision made early</h3>
+              <p>Personal intelligence determines how technology, relationships, and opportunity are used.</p>
+              <a href="#reading-room">Enter the reading room <span aria-hidden="true">→</span></a>
+            </article>
+
+            <article class="note-card" data-note-topic="reads">
+              <div class="note-meta"><span>InnerGReads</span><span>4 min</span></div>
+              <h3>A book is a container for lived intelligence</h3>
+              <p>The page gives experience a structure other people can enter.</p>
+              <a href="./index.html#library">Visit the library <span aria-hidden="true">→</span></a>
+            </article>
+          </div>
+
+          <p class="empty-notes" id="empty-notes" hidden>No field notes match that search yet.</p>
+        </section>
+
+        <section class="reading-section section-anchor" id="reading-room" aria-labelledby="reading-title">
+          <div class="reading-cover">
+            <img
+              src="./assets/final-frequency-cover.jpg"
+              alt="Legacy In Ink: The Final Frequency by Nasirr Mayo"
+              width="1024"
+              height="1536"
+              loading="lazy"
+            >
+            <span>Release 001</span>
+          </div>
+
+          <div class="reading-copy">
+            <p class="eyebrow">InnerGReads / Current reading room</p>
+            <h2 id="reading-title">Standards protect your life.</h2>
+            <p class="reading-lede">
+              Books are one room inside InnerG Intel. The current reading room
+              uses Verse 014 to explore discernment, standards, and the human
+              judgment required beneath every tool and relationship.
+            </p>
+            <div class="reader-prompts">
+              <article>
+                <span>01</span>
+                <p>What did you agree to before you understood what it would require?</p>
+              </article>
+              <article>
+                <span>02</span>
+                <p>Where has keeping someone happy replaced telling the truth?</p>
+              </article>
+              <article>
+                <span>03</span>
+                <p>What would partnership look like without performance?</p>
+              </article>
+            </div>
+            <div class="reading-actions">
+              <a
+                class="button button-primary"
+                href="https://innergclaw.github.io/legacy-in-ink-final-frequency/"
+                target="_blank"
+                rel="noreferrer"
+              >Read the digital preview</a>
+              <a
+                class="text-link"
+                href="https://www.amazon.com/dp/B0HC2WTW1G"
+                target="_blank"
+                rel="noreferrer"
+              >Get the book <span aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+        </section>
+
+        <section class="community-section section-anchor" id="community" aria-labelledby="community-title">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">The community</p>
+              <h2 id="community-title">The conversation continues in Discord.</h2>
+            </div>
+            <p>A room for learners, builders, readers, creators, and people doing the work in real life.</p>
+          </div>
+
+          <div class="discord-preview">
+            <div class="discord-rail" aria-label="Community channel preview">
+              <button class="discord-channel is-active" type="button" data-channel="welcome">
+                <span>#</span> welcome-desk
+              </button>
+              <button class="discord-channel" type="button" data-channel="ai">
+                <span>#</span> ai-agents-lab
+              </button>
+              <button class="discord-channel" type="button" data-channel="tech">
+                <span>#</span> technology-desk
+              </button>
+              <button class="discord-channel" type="button" data-channel="reads">
+                <span>#</span> reading-room
+              </button>
+              <button class="discord-channel" type="button" data-channel="builds">
+                <span>#</span> build-in-public
+              </button>
+            </div>
+
+            <div class="discord-room" aria-live="polite">
+              <div class="room-heading">
+                <div>
+                  <span>#</span>
+                  <strong id="room-name">welcome-desk</strong>
+                </div>
+                <small id="room-topic">Begin here. Learn how the Study Hall works.</small>
+              </div>
+              <div class="room-message" id="room-message">
+                <span class="message-avatar" aria-hidden="true">IG</span>
+                <div>
+                  <p><strong>InnerG Intel</strong><time>Today</time></p>
+                  <p>
+                    Welcome to the InnerG network. Introduce yourself with one
+                    thing you want to understand, build, or preserve.
+                  </p>
+                </div>
+              </div>
+              <div class="room-prompt">
+                <span>Community prompt</span>
+                <p id="room-prompt">What do you want the InnerG ecosystem to help you build?</p>
+              </div>
+            </div>
+
+            <aside class="discord-members">
+              <p>Inside the room</p>
+              <ul>
+                <li><i class="member-dot is-live"></i><span>Learners</span><small>Understand</small></li>
+                <li><i class="member-dot is-live"></i><span>Builders</span><small>Create</small></li>
+                <li><i class="member-dot"></i><span>Readers</span><small>Reflect</small></li>
+                <li><i class="member-dot"></i><span>Mentors</span><small>Guide</small></li>
+              </ul>
+            </aside>
+          </div>
+
+          <div class="community-cta">
+            <div>
+              <p class="eyebrow">The door is being prepared</p>
+              <h3>Be there when the Study Hall opens.</h3>
+              <p>Follow InnerG Intelligence for the first class and community announcement.</p>
+            </div>
+            <a
+              class="button button-primary"
+              href="https://open.substack.com/pub/innergintelligence"
+              target="_blank"
+              rel="noreferrer"
+            >Follow on Substack</a>
+          </div>
+        </section>
+      </main>
+
+      <aside class="study-pulse" aria-label="Study Hall pulse">
+        <div class="pulse-card">
+          <p class="pulse-label">Now tracking</p>
+          <strong>AI agents</strong>
+          <span>Tools, workflows, and human judgment</span>
+          <div class="pulse-meter"><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+
+        <div class="pulse-card">
+          <p class="pulse-label">Next room</p>
+          <strong>AI for Real Life</strong>
+          <span>First community class</span>
+          <button class="pulse-save" type="button" data-save-class="ai-real-life">Save class</button>
+        </div>
+
+        <div class="pulse-card pulse-card-links">
+          <p class="pulse-label">Keep learning</p>
+          <a href="https://www.youtube.com/@innergintel" target="_blank" rel="noreferrer">
+            YouTube <span aria-hidden="true">↗</span>
+          </a>
+          <a href="https://open.substack.com/pub/innergintelligence" target="_blank" rel="noreferrer">
+            Substack <span aria-hidden="true">↗</span>
+          </a>
+          <a href="./index.html">
+            InnerGReads <span aria-hidden="true">→</span>
+          </a>
+        </div>
+
+        <p class="pulse-quote">“Intelligence matters when people can use it to move forward.”</p>
+      </aside>
+    </div>
+
+    <footer class="study-footer">
+      <p>InnerG Study Hall</p>
+      <p>InnerG Intel × InnerGReads</p>
+      <p>Founded by Nasirr Mayo</p>
+    </footer>
+
+    <iframe
+      class="newsletter-submit-frame"
+      name="newsletter-submit-frame"
+      title="Newsletter subscription response"
+      tabindex="-1"
+      aria-hidden="true"
+    ></iframe>
+  </body>
+</html>
