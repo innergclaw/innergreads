@@ -30,11 +30,98 @@
       }
     </script>
     <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./newsletter.css">
     <script src="./app.js" defer></script>
+    <script src="./newsletter.js" defer></script>
     <script type="module" src="./book-scene.js?v=2"></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to the library</a>
+
+    <div
+      class="newsletter-gate"
+      id="newsletter-gate"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="newsletter-title"
+      aria-describedby="newsletter-description"
+      hidden
+    >
+      <button
+        class="newsletter-backdrop"
+        type="button"
+        data-newsletter-close
+        aria-label="Close newsletter signup"
+      ></button>
+      <section class="newsletter-card">
+        <span class="newsletter-signal" aria-hidden="true"></span>
+        <button
+          class="newsletter-close"
+          type="button"
+          data-newsletter-close
+          aria-label="Close newsletter signup"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </button>
+
+        <div class="newsletter-kicker">
+          <i aria-hidden="true"></i>
+          <span>InnerG Intelligence / Signal 001</span>
+        </div>
+
+        <div class="newsletter-copy">
+          <p class="newsletter-label">Enter the network</p>
+          <h2 id="newsletter-title">Receive the intelligence <em>before the noise.</em></h2>
+          <p id="newsletter-description">
+            Field notes on AI, technology, personal intelligence, creative ownership,
+            and the ideas shaping the InnerG ecosystem.
+          </p>
+        </div>
+
+        <form
+          class="newsletter-form"
+          id="newsletter-form"
+          action="https://innergintelligence.substack.com/api/v1/free?nojs=true"
+          method="post"
+          target="newsletter-submit-frame"
+          novalidate
+        >
+          <input type="hidden" name="source" value="custom_embed">
+          <input type="hidden" name="first_url" value="">
+          <input type="hidden" name="current_url" value="">
+          <label for="newsletter-email">Email address</label>
+          <div class="newsletter-field">
+            <input
+              id="newsletter-email"
+              name="email"
+              type="email"
+              inputmode="email"
+              autocomplete="email"
+              placeholder="you@email.com"
+              required
+            >
+            <button type="submit">
+              <span class="newsletter-button-label">Join the network</span>
+              <span class="newsletter-button-icon" aria-hidden="true">→</span>
+            </button>
+          </div>
+          <p class="newsletter-error" id="newsletter-error" aria-live="polite"></p>
+        </form>
+
+        <p class="newsletter-terms">
+          Free to join. Unsubscribe anytime. By subscribing, you agree to
+          <a href="https://innergintelligence.substack.com/privacy" target="_blank" rel="noreferrer">the privacy policy</a>.
+        </p>
+
+        <div class="newsletter-confirmation" aria-live="polite" aria-hidden="true">
+          <span class="confirmation-mark" aria-hidden="true">IG</span>
+          <p>Signal received</p>
+          <strong>Frequency confirmed.</strong>
+          <small>Check your inbox to complete the connection.</small>
+        </div>
+      </section>
+    </div>
 
     <div class="intro" aria-hidden="true">
       <div class="intro-mark">
@@ -461,5 +548,12 @@
     >
       Choose where to purchase <span aria-hidden="true">↑</span>
     </a>
+    <iframe
+      class="newsletter-submit-frame"
+      name="newsletter-submit-frame"
+      title="Newsletter signup response"
+      tabindex="-1"
+      aria-hidden="true"
+    ></iframe>
   </body>
 </html>
