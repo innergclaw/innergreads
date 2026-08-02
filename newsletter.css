@@ -15,8 +15,7 @@ body.newsletter-open {
   overflow: hidden;
 }
 
-.newsletter-gate[hidden],
-.newsletter-submit-frame {
+.newsletter-gate[hidden] {
   display: none;
 }
 

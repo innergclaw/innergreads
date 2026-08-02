@@ -3,10 +3,8 @@ const newsletterGate = document.querySelector("#newsletter-gate");
 const newsletterForm = document.querySelector("#newsletter-form");
 const newsletterEmail = document.querySelector("#newsletter-email");
 const newsletterError = document.querySelector("#newsletter-error");
-const newsletterFrame = document.querySelector('[name="newsletter-submit-frame"]');
 const newsletterCloseButtons = [...document.querySelectorAll("[data-newsletter-close]")];
 
-let newsletterSubmitted = false;
 let newsletterPreviousFocus = null;
 
 function getStoredNewsletterValue(key, fallback) {
@@ -70,12 +68,16 @@ function hideNewsletterGate({ rememberDismissal = false } = {}) {
   }, 420);
 }
 
-function confirmNewsletterSignal() {
+function showNewsletterHandoff() {
   if (!newsletterGate || newsletterGate.classList.contains("is-confirmed")) return;
 
   newsletterGate.classList.add("is-confirmed");
   newsletterGate.querySelector(".newsletter-confirmation")?.setAttribute("aria-hidden", "false");
-  storeNewsletterValue("innerg-newsletter-confirmed", true);
+  try {
+    sessionStorage.setItem("innerg-newsletter-dismissed", "true");
+  } catch {
+    // The signup handoff remains usable when browser storage is unavailable.
+  }
 
   window.setTimeout(() => newsletterGate.classList.add("is-exiting"), 1050);
   window.setTimeout(() => {
@@ -99,13 +101,9 @@ newsletterForm?.addEventListener("submit", (event) => {
   }
 
   if (newsletterError) newsletterError.textContent = "";
-  newsletterSubmitted = true;
   newsletterForm.classList.add("is-sending");
   newsletterForm.querySelector("button[type='submit']")?.setAttribute("aria-busy", "true");
-});
-
-newsletterFrame?.addEventListener("load", () => {
-  if (newsletterSubmitted) confirmNewsletterSignal();
+  window.setTimeout(showNewsletterHandoff, 180);
 });
 
 newsletterEmail?.addEventListener("input", () => {

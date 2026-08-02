@@ -84,7 +84,7 @@
           id="newsletter-form"
           action="https://innergintelligence.substack.com/api/v1/free?nojs=true"
           method="post"
-          target="newsletter-submit-frame"
+          target="_blank"
           novalidate
         >
           <input type="hidden" name="source" value="custom_embed">
@@ -116,9 +116,9 @@
 
         <div class="newsletter-confirmation" aria-live="polite" aria-hidden="true">
           <span class="confirmation-mark" aria-hidden="true">IG</span>
-          <p>Signal received</p>
-          <strong>Frequency confirmed.</strong>
-          <small>Check your inbox to complete the connection.</small>
+          <p>Secure signup opened</p>
+          <strong>Complete the connection.</strong>
+          <small>Finish subscribing in the Substack tab, then check your inbox.</small>
         </div>
       </section>
     </div>
@@ -548,12 +548,5 @@
     >
       Choose where to purchase <span aria-hidden="true">↑</span>
     </a>
-    <iframe
-      class="newsletter-submit-frame"
-      name="newsletter-submit-frame"
-      title="Newsletter signup response"
-      tabindex="-1"
-      aria-hidden="true"
-    ></iframe>
   </body>
 </html>
