@@ -129,11 +129,13 @@ function confirmationEmailHtml() {
                 <h1 style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:42px;line-height:1.02;font-weight:500;letter-spacing:-1.5px;">You are now inside the frequency.</h1>
                 <p style="margin:24px 0 0;font-family:Georgia,'Times New Roman',serif;font-size:18px;line-height:1.65;color:#4e403a;">Your email has been added to the InnerGReads network. You will receive new frequencies, field notes, releases, and selected transmissions from InnerG Intelligence and Substack.</p>
                 <p style="margin:18px 0 0;font-size:14px;line-height:1.65;color:#6a5951;"><strong style="color:#9f2f24;">No spam. No daily noise.</strong> Only ideas worth preserving.</p>
+                <p style="margin:18px 0 0;font-size:14px;line-height:1.65;color:#6a5951;">When you return to InnerGReads, enter this same email to restore access. You will not be subscribed twice.</p>
               </td>
             </tr>
             <tr>
               <td style="padding:12px 42px 38px;">
-                <a href="https://open.substack.com/pub/innergintelligence" style="display:inline-block;padding:15px 22px;background:#9f2f24;color:#fff8ec;text-decoration:none;border-radius:8px;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;">Read InnerG Intelligence</a>
+                <a href="https://www.innergreads.study/" style="display:inline-block;margin:0 8px 8px 0;padding:15px 22px;background:#9f2f24;color:#fff8ec;text-decoration:none;border-radius:8px;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;">Open InnerGReads</a>
+                <a href="https://open.substack.com/pub/innergintelligence" style="display:inline-block;margin:0 0 8px;padding:15px 22px;background:#2a211e;color:#fff8ec;text-decoration:none;border-radius:8px;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;">Read Substack</a>
                 <p style="margin:28px 0 0;font-size:13px;line-height:1.6;color:#7d6b62;">Explore the library at <a href="https://www.innergreads.study/" style="color:#9f2f24;">innergreads.study</a>.</p>
               </td>
             </tr>
@@ -177,6 +179,8 @@ async function sendConfirmation(email: string) {
         "",
         "No spam. No daily noise. Only ideas worth preserving.",
         "",
+        "When you return to InnerGReads, enter this same email to restore access. You will not be subscribed twice.",
+        "",
         "Read InnerG Intelligence: https://open.substack.com/pub/innergintelligence",
         "Explore InnerGReads: https://www.innergreads.study/",
         "",
@@ -219,14 +223,18 @@ Deno.serve(async (req) => {
   }
 
   try {
-    let subscriber = await getSubscriber(email);
-    if (!subscriber) subscriber = await saveSubscriber(email);
+    const subscriber = await getSubscriber(email);
+    if (subscriber) {
+      return jsonResponse(origin, { ok: true, stored: true, confirmation: "accepted" });
+    }
 
-    const lastSent = subscriber.confirmation_sent_at
-      ? new Date(subscriber.confirmation_sent_at).getTime()
+    const newSubscriber = await saveSubscriber(email);
+
+    const lastSent = newSubscriber.confirmation_sent_at
+      ? new Date(newSubscriber.confirmation_sent_at).getTime()
       : 0;
     if (lastSent && Date.now() - lastSent < 15 * 60 * 1000) {
-      return jsonResponse(origin, { ok: true, stored: true, confirmation: "already_sent" });
+      return jsonResponse(origin, { ok: true, stored: true, confirmation: "accepted" });
     }
 
     const delivery = await sendConfirmation(email);
@@ -249,7 +257,7 @@ Deno.serve(async (req) => {
         502,
       );
     }
-    return jsonResponse(origin, { ok: true, stored: true, confirmation: "sent" });
+    return jsonResponse(origin, { ok: true, stored: true, confirmation: "accepted" });
   } catch (error) {
     const message = error instanceof Error ? error.message : "signup_failed";
     return jsonResponse(origin, { ok: false, error: message }, 500);

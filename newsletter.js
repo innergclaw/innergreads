@@ -68,7 +68,7 @@ newsletterForm?.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   if (!newsletterEmail?.checkValidity()) {
-    if (newsletterError) newsletterError.textContent = "Enter a valid email to join the network.";
+    if (newsletterError) newsletterError.textContent = "Enter a valid email to continue.";
     newsletterEmail?.focus();
     return;
   }
@@ -102,7 +102,7 @@ newsletterForm?.addEventListener("submit", async (event) => {
     confirmNewsletterSignal();
   } catch {
     if (newsletterError) {
-      newsletterError.textContent = "We could not save your email. Check your connection and try again.";
+      newsletterError.textContent = "We could not confirm access. Check your email and try again.";
     }
     newsletterForm.classList.remove("is-sending");
     newsletterSubmitButton?.removeAttribute("aria-busy");

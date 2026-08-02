@@ -285,6 +285,21 @@ body.newsletter-open {
   font-size: 0.72rem;
 }
 
+.newsletter-returning {
+  margin: 2px 4px 12px;
+  color: var(--newsletter-copy);
+  font-family: var(--newsletter-serif);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.newsletter-returning strong {
+  color: var(--newsletter-red);
+  font-family: var(--newsletter-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+}
+
 .newsletter-terms {
   margin: 0 4px;
   color: var(--newsletter-muted);
