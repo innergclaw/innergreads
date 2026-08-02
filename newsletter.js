@@ -6,8 +6,8 @@ const newsletterError = document.querySelector("#newsletter-error");
 const newsletterCompany = document.querySelector("#newsletter-company");
 const newsletterSubmitButton = newsletterForm?.querySelector("button[type='submit']");
 
-const NEWSLETTER_ENDPOINT = "https://zkyhhoxcrjkhywblzehr.supabase.co/rest/v1/innergreads_signups";
-const NEWSLETTER_KEY = "sb_publishable_bdi3BexAKWDBaUIh40hJ_A_8CNVdnM_";
+const NEWSLETTER_ENDPOINT =
+  "https://zkyhhoxcrjkhywblzehr.supabase.co/functions/v1/innergreads-signup";
 
 let newsletterPreviousFocus = null;
 
@@ -86,21 +86,18 @@ newsletterForm?.addEventListener("submit", async (event) => {
     const response = await fetch(NEWSLETTER_ENDPOINT, {
       method: "POST",
       headers: {
-        apikey: NEWSLETTER_KEY,
         "Content-Type": "application/json",
-        Prefer: "return=minimal",
       },
       body: JSON.stringify({
         email,
         source: "innergreads_home_gate",
         consent_copy_version: "2026-08-02",
+        company: newsletterCompany?.value || "",
       }),
     });
 
-    if (!response.ok) {
-      const error = await response.json().catch(() => ({}));
-      if (response.status !== 409 || error.code !== "23505") throw new Error("signup_failed");
-    }
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok || !result.ok) throw new Error("signup_failed");
 
     confirmNewsletterSignal();
   } catch {
