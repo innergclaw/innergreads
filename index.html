@@ -47,23 +47,9 @@
       aria-describedby="newsletter-description"
       hidden
     >
-      <button
-        class="newsletter-backdrop"
-        type="button"
-        data-newsletter-close
-        aria-label="Close newsletter signup"
-      ></button>
+      <div class="newsletter-backdrop" aria-hidden="true"></div>
       <section class="newsletter-card">
         <span class="newsletter-signal" aria-hidden="true"></span>
-        <button
-          class="newsletter-close"
-          type="button"
-          data-newsletter-close
-          aria-label="Close newsletter signup"
-        >
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </button>
 
         <div class="newsletter-kicker">
           <i aria-hidden="true"></i>
@@ -74,22 +60,17 @@
           <p class="newsletter-label">Enter the network</p>
           <h2 id="newsletter-title">Receive the intelligence <em>before the noise.</em></h2>
           <p id="newsletter-description">
-            Field notes on AI, technology, personal intelligence, creative ownership,
-            and the ideas shaping the InnerG ecosystem.
+            Enter your email to access InnerGReads. This is not a spam list. Your
+            address is used only to receive new frequencies from InnerG Intelligence
+            and our Substack.
           </p>
         </div>
 
-        <form
-          class="newsletter-form"
-          id="newsletter-form"
-          action="https://innergintelligence.substack.com/api/v1/free?nojs=true"
-          method="post"
-          target="_blank"
-          novalidate
-        >
-          <input type="hidden" name="source" value="custom_embed">
-          <input type="hidden" name="first_url" value="">
-          <input type="hidden" name="current_url" value="">
+        <form class="newsletter-form" id="newsletter-form" novalidate>
+          <div class="newsletter-honeypot" aria-hidden="true">
+            <label for="newsletter-company">Leave this field empty</label>
+            <input id="newsletter-company" name="company" type="text" tabindex="-1" autocomplete="off">
+          </div>
           <label for="newsletter-email">Email address</label>
           <div class="newsletter-field">
             <input
@@ -110,15 +91,15 @@
         </form>
 
         <p class="newsletter-terms">
-          Free to join. Unsubscribe anytime. By subscribing, you agree to
-          <a href="https://innergintelligence.substack.com/privacy" target="_blank" rel="noreferrer">the privacy policy</a>.
+          No spam. No daily noise. Only new InnerG frequencies, releases, and
+          field notes. You can unsubscribe at any time.
         </p>
 
         <div class="newsletter-confirmation" aria-live="polite" aria-hidden="true">
           <span class="confirmation-mark" aria-hidden="true">IG</span>
-          <p>Secure signup opened</p>
-          <strong>Complete the connection.</strong>
-          <small>Finish subscribing in the Substack tab, then check your inbox.</small>
+          <p>Frequency confirmed</p>
+          <strong>Signal received.</strong>
+          <small>Entering the InnerGReads library.</small>
         </div>
       </section>
     </div>
