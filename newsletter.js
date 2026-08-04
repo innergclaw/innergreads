@@ -5,6 +5,7 @@ const newsletterEmail = document.querySelector("#newsletter-email");
 const newsletterError = document.querySelector("#newsletter-error");
 const newsletterCompany = document.querySelector("#newsletter-company");
 const newsletterSubmitButton = newsletterForm?.querySelector("button[type='submit']");
+const newsletterOpenButtons = [...document.querySelectorAll("[data-newsletter-open]")];
 
 const NEWSLETTER_ENDPOINT =
   "https://zkyhhoxcrjkhywblzehr.supabase.co/functions/v1/innergreads-signup";
@@ -46,6 +47,12 @@ function showNewsletterGate() {
     newsletterGate.classList.add("is-visible");
     window.setTimeout(() => newsletterEmail?.focus(), 360);
   });
+}
+
+function openNewsletterGate(event) {
+  event.preventDefault();
+  storeNewsletterValue("innerg-newsletter-confirmed", false);
+  showNewsletterGate();
 }
 
 function confirmNewsletterSignal() {
@@ -112,6 +119,10 @@ newsletterForm?.addEventListener("submit", async (event) => {
 
 newsletterEmail?.addEventListener("input", () => {
   if (newsletterError) newsletterError.textContent = "";
+});
+
+newsletterOpenButtons.forEach((button) => {
+  button.addEventListener("click", openNewsletterGate);
 });
 
 window.addEventListener("keydown", (event) => {
