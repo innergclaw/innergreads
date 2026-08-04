@@ -327,6 +327,12 @@ a {
   pointer-events: none;
 }
 
+.social-icon-link .discord-icon {
+  width: 19px;
+  height: 19px;
+  transform: translateY(0.5px);
+}
+
 .social-icon-link svg path {
   fill: currentColor;
 }
