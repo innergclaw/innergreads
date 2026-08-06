@@ -221,6 +221,9 @@ body.newsletter-open {
   height: 54px;
   padding: 0 16px;
   color: var(--newsletter-paper);
+  font-family: var(--newsletter-sans);
+  font-size: 16px;
+  line-height: 1;
   background: transparent;
   border: 0;
   outline: 0;

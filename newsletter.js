@@ -58,6 +58,11 @@ function openNewsletterGate(event) {
 function confirmNewsletterSignal() {
   if (!newsletterGate || newsletterGate.classList.contains("is-confirmed")) return;
 
+  // Release the mobile keyboard before the exit animation. Combined with the
+  // 16px input size, this prevents iOS Safari from carrying a focused-field
+  // zoom level into the main library.
+  newsletterEmail?.blur();
+
   storeNewsletterValue("innerg-newsletter-confirmed", true);
   newsletterGate.classList.add("is-confirmed");
   newsletterGate.querySelector(".newsletter-confirmation")?.setAttribute("aria-hidden", "false");
@@ -67,7 +72,9 @@ function confirmNewsletterSignal() {
     newsletterGate.hidden = true;
     newsletterGate.classList.remove("is-visible", "is-confirmed", "is-exiting");
     setNewsletterPageLock(false);
-    newsletterPreviousFocus?.focus?.();
+    if (newsletterPreviousFocus && newsletterPreviousFocus !== newsletterEmail) {
+      newsletterPreviousFocus.focus?.({ preventScroll: true });
+    }
   }, 1780);
 }
 
