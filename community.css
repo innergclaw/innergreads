@@ -789,6 +789,18 @@ body.newsletter-open {
   transform: scale(0.96);
 }
 
+.channel-link-discord {
+  margin-top: 10px;
+  color: var(--paper-50);
+  background: var(--red-600);
+}
+
+.channel-link-discord:hover,
+.channel-link-discord:focus-visible {
+  color: var(--paper-50);
+  background: var(--red-500);
+}
+
 .channel-link > span {
   color: var(--red-400);
   font-family: var(--mono);
@@ -1174,6 +1186,119 @@ body.newsletter-open {
   font-size: 0.98rem;
   line-height: 1.5;
   text-wrap: pretty;
+}
+
+.discussion-section {
+  background: oklch(0.17 0.016 26);
+}
+
+.discussion-heading {
+  margin-bottom: 34px;
+}
+
+.discussion-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.discussion-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 470px;
+  padding: clamp(25px, 3vw, 42px);
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: inset 0 0 0 1px var(--line), 0 26px 54px oklch(0 0 0 / 0.18);
+}
+
+.discussion-card-morning {
+  background: linear-gradient(145deg, oklch(0.3 0.06 62), oklch(0.18 0.02 30) 68%);
+}
+
+.discussion-card-night {
+  background: linear-gradient(145deg, oklch(0.24 0.03 285), oklch(0.13 0.012 26) 70%);
+}
+
+.discussion-card-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.discussion-card-top span {
+  color: var(--red-300);
+  font-size: 1.4rem;
+}
+
+.discussion-card-top p,
+.discussion-number {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.discussion-card-top p {
+  color: var(--paper-300);
+}
+
+.discussion-number {
+  margin-top: 54px;
+  color: var(--red-300);
+}
+
+.discussion-card h3 {
+  max-width: 13ch;
+  margin: 14px 0 0;
+  font-family: var(--serif);
+  font-size: clamp(2rem, 3.4vw, 3.4rem);
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+}
+
+.discussion-card > p:not(.discussion-number) {
+  max-width: 46ch;
+  margin: 18px 0 0;
+  color: var(--paper-200);
+  font-family: var(--serif);
+  line-height: 1.55;
+}
+
+.discussion-card ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  padding: 0;
+  margin: 24px 0 0;
+  list-style: none;
+}
+
+.discussion-card li {
+  padding: 6px 9px;
+  color: var(--paper-100);
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.05em;
+  border: 1px solid oklch(1 0 0 / 0.16);
+  border-radius: 999px;
+}
+
+.discussion-card a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: auto;
+  padding-top: 34px;
+  color: var(--paper-50);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  text-transform: uppercase;
 }
 
 .path-section .section-heading > p,
@@ -2143,7 +2268,8 @@ body.newsletter-open {
 
   .ecosystem-grid,
   .class-grid,
-  .notes-grid {
+  .notes-grid,
+  .discussion-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -2262,7 +2388,8 @@ body.newsletter-open {
 
   .ecosystem-grid,
   .class-grid,
-  .notes-grid {
+  .notes-grid,
+  .discussion-grid {
     grid-template-columns: 1fr;
   }
 
