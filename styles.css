@@ -254,10 +254,6 @@ a {
   gap: clamp(13px, 1.45vw, 25px);
 }
 
-.site-nav > .nav-socials {
-  display: none;
-}
-
 .site-nav a {
   position: relative;
   display: inline-flex;
@@ -287,25 +283,6 @@ a {
 .site-nav a:focus-visible::after {
   transform: scaleX(1);
   transform-origin: left;
-}
-
-.site-nav .nav-cta {
-  min-height: 38px;
-  padding: 0 13px;
-  color: var(--paper-100);
-  background: var(--red-500);
-  border-radius: 999px;
-  transition: background-color 180ms ease, transform 180ms ease;
-}
-
-.site-nav .nav-cta::after {
-  display: none;
-}
-
-.site-nav .nav-cta:hover,
-.site-nav .nav-cta:focus-visible {
-  background: var(--red-600);
-  transform: translateY(-1px);
 }
 
 .nav-socials,
