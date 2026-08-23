@@ -20,12 +20,17 @@ if (intro && !reducedMotion.matches) {
   intro?.classList.add("is-finished");
 }
 
+// Scroll-reveal follows the animation-on-scroll skill: elements stay paused
+// until they enter the viewport, then run once and stay readable.
+revealItems.forEach((item) => item.classList.add("animate-on-scroll"));
+
 if ("IntersectionObserver" in window && !reducedMotion.matches) {
   const revealObserver = new IntersectionObserver(
     (entries, observer) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
         entry.target.classList.add("is-visible");
+        entry.target.classList.add("animate");
         observer.unobserve(entry.target);
       });
     },
@@ -34,7 +39,10 @@ if ("IntersectionObserver" in window && !reducedMotion.matches) {
 
   revealItems.forEach((item) => revealObserver.observe(item));
 } else {
-  revealItems.forEach((item) => item.classList.add("is-visible"));
+  revealItems.forEach((item) => {
+    item.classList.add("is-visible");
+    item.classList.add("animate");
+  });
 }
 
 function closeMenu() {
