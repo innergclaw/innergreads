@@ -2241,6 +2241,7 @@ a {
 }
 
 .verse-frequency .monthly-frequency-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   max-width: 1200px;
   margin-inline: auto;
 }
