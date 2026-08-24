@@ -2221,6 +2221,18 @@ a {
 
 .verse-frequency {
   padding-block: clamp(90px, 12vw, 170px);
+  color: var(--ink-950);
+}
+
+.verse-frequency .next-frequency-heading h2,
+.verse-frequency .monthly-frequency-card h3,
+.verse-frequency .monthly-frequency-card p {
+  color: var(--ink-950);
+}
+
+.verse-frequency .monthly-frequency-prompt h3,
+.verse-frequency .monthly-frequency-prompt p {
+  color: var(--paper-100);
 }
 
 .verse-frequency .next-frequency-heading {
