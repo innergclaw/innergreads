@@ -3,128 +3,27 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta
-      name="description"
-      content="Buy Legacy In Ink: The Final Frequency, then enter InnerGReads for study, reflection, and practical education."
-    >
-    <meta name="theme-color" content="#191313">
+    <meta name="description" content="Read the sixteen verses of Legacy In Ink: The Final Frequency, then buy the first edition from Nasirr Mayo.">
+    <meta name="theme-color" content="#9f2f24">
     <meta property="og:title" content="Legacy In Ink: The Final Frequency | InnerGReads">
-    <meta
-      property="og:description"
-      content="Start with Legacy In Ink: The Final Frequency. Continue into InnerGReads study and InnerG Intel education."
-    >
+    <meta property="og:description" content="Sixteen verses on value, discipline, ownership, love, time, and the patterns we inherit.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://innergreads.study/">
-    <meta
-      property="og:image"
-      content="https://innergreads.study/assets/final-frequency-cover.jpg"
-    >
+    <meta property="og:image" content="https://innergreads.study/assets/final-frequency-cover.jpg">
     <link rel="canonical" href="https://innergreads.study/">
     <title>Legacy In Ink: The Final Frequency | InnerGReads</title>
-    <script type="importmap">
-      {
-        "imports": {
-          "three": "./vendor/three.module.min.js",
-          "three/addons/": "./vendor/addons/"
-        }
-      }
-    </script>
     <link rel="stylesheet" href="./styles.css">
-    <link rel="stylesheet" href="./newsletter.css">
     <script src="./app.js" defer></script>
-    <script src="./newsletter.js" defer></script>
-    <script type="module" src="./book-scene.js?v=2"></script>
   </head>
-  <body>
-    <a class="skip-link" href="#main">Skip to the library</a>
+  <body class="verse-page">
+    <a class="skip-link" href="#verses">Skip to the verses</a>
 
-    <div
-      class="newsletter-gate"
-      id="newsletter-gate"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="newsletter-title"
-      aria-describedby="newsletter-description"
-      hidden
-    >
-      <div class="newsletter-backdrop" aria-hidden="true"></div>
-      <section class="newsletter-card">
-        <span class="newsletter-signal" aria-hidden="true"></span>
-
-        <div class="newsletter-kicker">
-          <i aria-hidden="true"></i>
-          <span>InnerG Intelligence / Signal 001</span>
-        </div>
-
-        <div class="newsletter-copy">
-          <p class="newsletter-label">Join or return</p>
-          <h2 id="newsletter-title">Enter the frequency. <em>Return anytime.</em></h2>
-          <p id="newsletter-description">
-            Enter your email to access InnerGReads. New readers join the network;
-            returning readers use the same email to get straight back inside.
-          </p>
-        </div>
-
-        <form class="newsletter-form" id="newsletter-form" novalidate>
-          <div class="newsletter-honeypot" aria-hidden="true">
-            <label for="newsletter-company">Leave this field empty</label>
-            <input id="newsletter-company" name="company" type="text" tabindex="-1" autocomplete="off">
-          </div>
-          <label for="newsletter-email">Email address</label>
-          <div class="newsletter-field">
-            <input
-              id="newsletter-email"
-              name="email"
-              type="email"
-              inputmode="email"
-              autocomplete="email"
-              placeholder="you@email.com"
-              required
-            >
-            <button type="submit">
-              <span class="newsletter-button-label">Enter InnerGReads</span>
-              <span class="newsletter-button-icon" aria-hidden="true">→</span>
-            </button>
-          </div>
-          <p class="newsletter-error" id="newsletter-error" aria-live="polite"></p>
-        </form>
-
-        <p class="newsletter-returning">
-          <strong>Already joined?</strong> Enter the email you originally used. We will
-          recognize it and restore access without subscribing you twice.
-        </p>
-
-        <p class="newsletter-terms">
-          No spam. No daily noise. Only new InnerG frequencies, releases, and
-          field notes. You can unsubscribe at any time.
-        </p>
-
-        <div class="newsletter-confirmation" aria-live="polite" aria-hidden="true">
-          <span class="confirmation-mark" aria-hidden="true">IG</span>
-          <p>Access confirmed</p>
-          <strong>Welcome inside.</strong>
-          <small>Entering the InnerGReads library.</small>
-        </div>
-      </section>
-    </div>
-
-    <div class="intro" aria-hidden="true">
-      <div class="intro-mark">
-        <span class="intro-label">An InnerGReads publication</span>
-        <span class="intro-title">The Final Frequency</span>
-        <span class="intro-rule"></span>
-        <span class="intro-author">By Nasirr Mayo</span>
-      </div>
-    </div>
-
-    <header class="site-header">
+    <header class="site-header verse-header">
       <a class="brand" href="#top" aria-label="InnerGReads home">
-        <span class="brand-mark" aria-hidden="true">
-          <span>I</span><span>G</span><span>R</span>
-        </span>
+        <span class="brand-mark" aria-hidden="true"><span>I</span><span>G</span><span>R</span></span>
         <span class="brand-copy">
           <strong>InnerGReads</strong>
-          <em>Books that preserve the frequency</em>
+          <em>Legacy In Ink / Release 001</em>
         </span>
       </a>
 
@@ -134,502 +33,120 @@
       </button>
 
       <nav class="site-nav" id="site-nav" aria-label="Main navigation">
-        <a href="#book">Buy the book</a>
+        <a href="#verses">The 16 verses</a>
+        <a href="#buy">Buy the book</a>
         <a href="./community.html#overview">Study Hall</a>
-        <a href="#next-frequency">August Frequency</a>
-        <a href="#inside">Inside the book</a>
-        <a href="#imprint">The imprint</a>
-        <a href="./community.html#morning-transmissions">Morning Transmissions</a>
-        <a href="./community.html#rabbit-holes">Rabbit Holes</a>
-        <div class="nav-socials" aria-label="InnerG links">
-          <a
-            class="social-icon-link"
-            href="https://www.youtube.com/@innergintel"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Subscribe to InnerG Intel on YouTube"
-          >
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.2 3.6-6.2 3.6Z"/>
-            </svg>
-          </a>
-          <a
-            class="social-icon-link"
-            href="https://www.instagram.com/innergintel"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Follow InnerG Intel on Instagram"
-          >
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <rect x="3" y="3" width="18" height="18" rx="5"/>
-              <circle cx="12" cy="12" r="4"/>
-              <circle cx="17.5" cy="6.5" r="1"/>
-            </svg>
-          </a>
-          <a
-            class="social-icon-link"
-            href="https://discord.gg/s4HK9fdJQc"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Join the InnerG Intel community on Discord"
-          >
-            <svg class="discord-icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M20.317 4.3698a19.7913 19.7913 0 0 0-4.8851-1.5152.0741.0741 0 0 0-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 0 0-.0785-.037 19.7363 19.7363 0 0 0-4.8852 1.515.0699.0699 0 0 0-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 0 0 .0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 0 0 .0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 0 0-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 0 1-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 0 1 .0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 0 1 .0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 0 1-.0066.1276 12.2986 12.2986 0 0 1-1.873.8914.0766.0766 0 0 0-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 0 0 .0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 0 0 .0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 0 0-.0312-.0286ZM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189Zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/>
-            </svg>
-          </a>
-          <a
-            class="social-icon-link"
-            href="https://open.substack.com/pub/innergintelligence"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Read InnerG Intelligence on Substack"
-          >
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M4 4h16v2H4V4Zm0 4h16v2H4V8Zm0 4h16v8l-8-4.5L4 20v-8Z"/>
-            </svg>
-          </a>
-          <a
-            class="social-icon-link"
-            href="https://www.amazon.com/dp/B0HC2WTW1G"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Buy Legacy In Ink on Amazon"
-          >
-            <svg class="amazon-icon" viewBox="0 0 24 24" aria-hidden="true">
-              <text x="7" y="15.5">a</text>
-              <path class="amazon-smile" d="M5.5 17.6c3.9 2.3 8.4 2.5 12.7.5"/>
-              <path class="amazon-arrow" d="m16.5 17.3 2 .8-1.2 1.8"/>
-            </svg>
-          </a>
-        </div>
       </nav>
     </header>
 
-    <main id="main">
-      <section class="hero" id="top" aria-labelledby="hero-title">
-        <div class="frequency-field" aria-hidden="true">
-          <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-        </div>
-
-        <div class="hero-copy">
-          <p class="eyebrow reveal">Start here / InnerGReads release 001</p>
-          <h1 id="hero-title" class="reveal">
-            Legacy in Ink:
-            <span>The Final Frequency</span>
-          </h1>
-          <p class="hero-description reveal">
-            Sixteen verses on value, discipline, ownership, love, time, and the
-            patterns we inherit. Buy the first edition, then keep the questions moving.
-          </p>
-          <div class="hero-actions reveal" id="book" aria-label="Purchase options">
-            <a
-              class="button button-primary"
-              href="https://buy.stripe.com/14A4gBesDcSB3T0gOvao81o"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Buy the book direct <span aria-hidden="true">↗</span>
-            </a>
-            <a
-              class="button button-outline"
-              href="https://www.amazon.com/dp/B0HC2WTW1G"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Buy on Amazon <span aria-hidden="true">↗</span>
-            </a>
-            <a
-              class="text-link"
-              href="https://innergclaw.github.io/legacy-in-ink-final-frequency/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Read a preview <span aria-hidden="true">→</span>
-            </a>
-          </div>
-        </div>
-
-        <div class="book-stage reveal is-loading" data-book-viewer>
-          <div class="book-aura" aria-hidden="true"></div>
-          <canvas
-            id="book-canvas"
-            tabindex="0"
-            aria-label="Interactive three-dimensional model of Legacy In Ink: The Final Frequency"
-          ></canvas>
-          <div class="book-loading" role="status" aria-live="polite">
-            <span></span>
-            Building the first edition
-          </div>
-          <div class="book-fallback">
-            <img
-              src="./assets/final-frequency-front-3d.jpg"
-              alt="Cover of Legacy In Ink: The Final Frequency by Nasirr Mayo"
-              width="1220"
-              height="1850"
-            >
-          </div>
-          <p class="drag-note">Drag to rotate · click to turn the book</p>
-        </div>
-
-        <aside class="release-meta reveal" aria-label="Book information">
-          <span class="release-number">001</span>
-          <dl>
-            <div>
-              <dt>Author</dt>
-              <dd>Nasirr Mayo</dd>
-            </div>
-            <div>
-              <dt>Published by</dt>
-              <dd>InnerGReads</dd>
-            </div>
-            <div>
-              <dt>Form</dt>
-              <dd>Poetry / Reader notes</dd>
-            </div>
-            <div>
-              <dt>Edition</dt>
-              <dd>First edition</dd>
-            </div>
-          </dl>
-        </aside>
-
-        <a class="scroll-cue" href="#library" aria-label="Continue to the library">
-          <span>See the book</span>
-          <i aria-hidden="true"></i>
-        </a>
+    <main id="main" class="verse-landing">
+      <section class="verse-hero" id="top" aria-labelledby="hero-title">
+        <div class="verse-hero-grid" aria-hidden="true"></div>
+        <p class="eyebrow reveal">InnerGReads / Release 001</p>
+        <h1 id="hero-title" class="reveal">Legacy in Ink:<br><em>The Final Frequency</em></h1>
+        <p class="verse-hero-lede reveal">
+          Sixteen verses on value, discipline, ownership, love, time, and the patterns we inherit.
+          Scroll through the book before you decide where to begin.
+        </p>
+        <a class="verse-hero-cue reveal" href="#verses">Read the verses <span aria-hidden="true">↓</span></a>
       </section>
 
-      <section class="library-section" id="library" aria-labelledby="library-title">
-        <div class="section-heading reveal">
-          <p class="eyebrow">The library</p>
-          <h2 id="library-title">Start with the book.</h2>
-          <p>
-            Legacy In Ink is the first release. Read it slowly, return to the verses,
-            and use the questions as a starting point for the work that comes next.
-          </p>
+      <section class="verse-stack-section" id="verses" aria-labelledby="verses-title">
+        <div class="verse-stack-intro reveal">
+          <p class="eyebrow">The book, in sequence</p>
+          <h2 id="verses-title">Sixteen ways to hear the signal.</h2>
+          <p>Each card names a verse and gives you the question it carries. The full work is in the book.</p>
         </div>
 
-        <article class="featured-release reveal">
-          <div class="featured-image">
-            <img
-              src="./assets/final-frequency-book.jpg"
-              alt="Three-dimensional paperback view of Legacy In Ink: The Final Frequency"
-              width="1254"
-              height="1254"
-              loading="lazy"
-            >
-          </div>
-          <div class="featured-copy">
-            <p class="release-kicker">Release 001 / Available now</p>
-            <h3>Legacy In Ink:<br>The Final Frequency</h3>
-            <p class="featured-lede">
-              This is not just poetry. It is pattern recognition, survival
-              language, and a field guide for breaking inherited loops.
-            </p>
-            <p>
-              Each verse begins with the words, then opens into the principle,
-              the pattern being exposed, and questions that ask the reader to
-              recognize where the lesson already lives in their own life.
-            </p>
-            <ul class="format-list" aria-label="Book features">
-              <li><span>16</span> original verses</li>
-              <li><span>176</span> interior pages</li>
-              <li><span>01</span> first edition note</li>
-            </ul>
-            <div class="purchase-block">
-              <p class="purchase-label">Choose where to purchase</p>
-              <div class="featured-actions" aria-label="Purchase options">
-                <a
-                  class="button button-dark"
-                  href="https://buy.stripe.com/14A4gBesDcSB3T0gOvao81o"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Buy direct <span aria-hidden="true">↗</span>
-                </a>
-                <a
-                  class="button button-outline-dark"
-                  href="https://www.amazon.com/dp/B0HC2WTW1G"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Buy on Amazon <span aria-hidden="true">↗</span>
-                </a>
-                <a
-                  class="text-link text-link-dark"
-                  href="https://innergclaw.github.io/legacy-in-ink-final-frequency/"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Open the preview <span aria-hidden="true">→</span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </article>
-      </section>
-
-      <section class="study-bridge" id="study" aria-labelledby="study-title">
-        <div class="study-bridge-copy reveal">
-          <p class="eyebrow">Then enter the study</p>
-          <h2 id="study-title">Read the book. Keep the work moving.</h2>
-          <p>
-            InnerGReads opens into the InnerG Study Hall, where the book's questions
-            connect with InnerG Intel lessons on technology, ownership, personal
-            intelligence, and creative practice.
-          </p>
-          <a class="button button-primary" href="./community.html#overview">
-            Enter the Study Hall <span aria-hidden="true">→</span>
-          </a>
-        </div>
-        <div class="study-bridge-signal reveal" aria-label="InnerGReads learning path">
-          <span>INNERGREADS × INNERG INTEL</span>
-          <strong>Book<br>Reflection<br>Education</strong>
-          <i aria-hidden="true"></i>
-          <small>Move from the page into practice.</small>
-        </div>
-      </section>
-
-      <section class="next-frequency-section monthly-frequency-section" id="next-frequency" aria-labelledby="next-frequency-title">
-        <div class="next-frequency-heading reveal">
-          <div>
-            <p class="eyebrow">InnerGReads / Monthly Frequency</p>
-            <p class="frequency-status"><span aria-hidden="true"></span> August 2026 transmission</p>
-          </div>
-          <h2 id="next-frequency-title">August Frequency: financial and asset alignment.</h2>
-          <div class="next-frequency-copy">
-            <p>
-              This month is about getting money, focus, and assets into order:
-              clean up the loose ends, protect the budget, build the first layer
-              of ownership, and move with a clear 30-day gameplan.
-            </p>
-            <p>
-              At the beginning of each month, InnerGReads will send a new frequency
-              with the month’s focus, a practical action prompt, book notes, and
-              the Monday AI news roundup from InnerG Intel.
-            </p>
-            <a
-              class="button button-dark"
-              href="#newsletter-gate"
-              data-newsletter-open
-            >
-              Join the monthly frequency <span aria-hidden="true">→</span>
-            </a>
-          </div>
-        </div>
-
-        <div class="monthly-frequency-grid reveal" aria-label="August Frequency action plan">
-          <article class="monthly-frequency-card">
-            <span>01</span>
-            <h3>Money management</h3>
-            <p>Know what is coming in, what is leaking out, and what needs to be protected before the month moves too fast.</p>
+        <div class="verse-stack" aria-label="Sixteen verse summaries">
+          <article class="verse-card reveal" style="--verse-index: 0">
+            <span class="verse-card-number">001</span>
+            <div><p class="verse-card-kicker">Know your value</p><h3>Know Your Value as an Individual</h3><p>Learn what you carry before the world names a price for it. Self-knowledge keeps you from trading peace, identity, and purpose for approval.</p></div>
           </article>
-          <article class="monthly-frequency-card">
-            <span>02</span>
-            <h3>Asset alignment</h3>
-            <p>Move small amounts into assets, savings, tools, books, storage, or infrastructure that make the next month stronger.</p>
+          <article class="verse-card reveal" style="--verse-index: 1">
+            <span class="verse-card-number">002</span>
+            <div><p class="verse-card-kicker">Read the cost</p><h3>The Book of Risk</h3><p>Feelings can show you what you want. Discernment asks what the choice will cost, and whether the room is safe enough to enter.</p></div>
           </article>
-          <article class="monthly-frequency-card">
-            <span>03</span>
-            <h3>Focus discipline</h3>
-            <p>Choose one task before every check-in. Finish what is practical. Remove what keeps stealing attention.</p>
+          <article class="verse-card reveal" style="--verse-index: 2">
+            <span class="verse-card-number">003</span>
+            <div><p class="verse-card-kicker">Move with awareness</p><h3>The Book of the Table</h3><p>When you have a seat, remember who is still outside. Abundance is not only what you consume; it is how you carry your access.</p></div>
           </article>
-          <article class="monthly-frequency-card monthly-frequency-prompt">
-            <span>Prompt</span>
-            <h3>Build your August gameplan</h3>
-            <p>I want to create my August Gameplan. Help me turn my current life goals into a clear 30-day action plan I can actually follow.</p>
+          <article class="verse-card reveal" style="--verse-index: 3">
+            <span class="verse-card-number">004</span>
+            <div><p class="verse-card-kicker">Protect your freedom</p><h3>Take Care of Business</h3><p>Handle the practical work while you still have options. Delayed responsibility can turn a small obligation into a locked door.</p></div>
+          </article>
+          <article class="verse-card reveal" style="--verse-index: 4">
+            <span class="verse-card-number">005</span>
+            <div><p class="verse-card-kicker">Let truth do its work</p><h3>Feelings Heal. Principles Stand.</h3><p>Hurt is real, but numbness is not strength. Let the feelings move through you without surrendering the principles that keep you whole.</p></div>
+          </article>
+          <article class="verse-card reveal" style="--verse-index: 5">
+            <span class="verse-card-number">006</span>
+            <div><p class="verse-card-kicker">Reclaim the clock</p><h3>Redeem Your Time</h3><p>Not everyone deserves unlimited access to your days. Notice where your time goes before resentment becomes the only proof that it mattered.</p></div>
+          </article>
+          <article class="verse-card reveal" style="--verse-index: 6">
+            <span class="verse-card-number">007</span>
+            <div><p class="verse-card-kicker">Build shelter</p><h3>Let Money Become Shelter</h3><p>Money is more than something to display. Save it, organize it, and let it create protection, room to move, and a stronger next season.</p></div>
+          </article>
+          <article class="verse-card reveal" style="--verse-index: 7">
+            <span class="verse-card-number">008</span>
+            <div><p class="verse-card-kicker">Guard the gate</p><h3>Speak Life into the Gate</h3><p>Your words shape the doorway your life keeps walking through. Treat the tongue as an instrument of direction, not a toy.</p></div>
+          </article>
+          <article class="verse-card reveal" style="--verse-index: 8">
+            <span class="verse-card-number">009</span>
+            <div><p class="verse-card-kicker">Stop repeating the script</p><h3>Old Lies from New Mouths</h3><p>Self-worth makes old patterns easier to recognize. Do not confuse hunger, attention, or a familiar voice with love that can actually hold you.</p></div>
+          </article>
+          <article class="verse-card reveal" style="--verse-index: 9">
+            <span class="verse-card-number">010</span>
+            <div><p class="verse-card-kicker">Pressure reveals</p><h3>The Measure in the Challenge</h3><p>Comfort cannot tell you everything about yourself. Difficulty, controversy, and real responsibility reveal the measure of your character.</p></div>
+          </article>
+          <article class="verse-card reveal" style="--verse-index: 10">
+            <span class="verse-card-number">011</span>
+            <div><p class="verse-card-kicker">Choose from wholeness</p><h3>Stop Borrowing Love</h3><p>Do not enter the same painful room with a different face. Build enough self-love and discernment to stop outsourcing your sense of enough.</p></div>
+          </article>
+          <article class="verse-card reveal" style="--verse-index: 11">
+            <span class="verse-card-number">012</span>
+            <div><p class="verse-card-kicker">Own the foundation</p><h3>Own What Cannot Be Taken</h3><p>Audit the rooms, language, and futures around you. Put your energy toward knowledge, discipline, and assets that remain yours.</p></div>
+          </article>
+          <article class="verse-card reveal" style="--verse-index: 12">
+            <span class="verse-card-number">013</span>
+            <div><p class="verse-card-kicker">Stay in the moment</p><h3>Play the Next Play</h3><p>Release the script you wrote before life answered. Adapt without abandoning yourself, and give the next move your full attention.</p></div>
+          </article>
+          <article class="verse-card reveal" style="--verse-index: 13">
+            <span class="verse-card-number">014</span>
+            <div><p class="verse-card-kicker">Set the boundary</p><h3>Standards Protect Your Life</h3><p>Before blaming the world, examine the standards you keep. What you permit, repeat, and call normal becomes the architecture of your life.</p></div>
+          </article>
+          <article class="verse-card reveal" style="--verse-index: 14">
+            <span class="verse-card-number">015</span>
+            <div><p class="verse-card-kicker">Audit the circle</p><h3>Official and Beneficial</h3><p>Difference does not disqualify wisdom. Keep people close because their presence bears fruit, not because they simply carry a familiar label.</p></div>
+          </article>
+          <article class="verse-card reveal" style="--verse-index: 15">
+            <span class="verse-card-number">016</span>
+            <div><p class="verse-card-kicker">Build from command</p><h3>Do Not Build on Approval</h3><p>Your walk, voice, clothes, and style cannot be governed by another person’s likes. Build a life that can stand when the audience changes.</p></div>
           </article>
         </div>
       </section>
 
-      <section class="inside-section" id="inside" aria-labelledby="inside-title">
-        <div class="inside-intro reveal">
-          <p class="eyebrow">Inside release 001</p>
-          <h2 id="inside-title">Sixteen verses.<br>One frequency.</h2>
-          <p>
-            A progression from knowing your value to building a life that no
-            longer depends on approval.
-          </p>
-        </div>
-
-        <div class="contents-frame reveal">
-          <img
-            src="./assets/final-frequency-contents.jpg"
-            alt="Table of contents showing the sixteen verses in The Final Frequency"
-            loading="lazy"
-          >
-        </div>
-
-        <ol class="verse-index reveal">
-          <li><span>001</span> Know Your Value as an Individual</li>
-          <li><span>002</span> The Book of Risk</li>
-          <li><span>003</span> The Book of the Table</li>
-          <li><span>004</span> Take Care of Business</li>
-          <li><span>005</span> Feelings Heal. Principles Stand.</li>
-          <li><span>006</span> Redeem Your Time</li>
-          <li><span>007</span> Let Money Become Shelter</li>
-          <li><span>008</span> Speak Life into the Gate</li>
-          <li><span>009</span> Old Lies from New Mouths</li>
-          <li><span>010</span> The Measure in the Challenge</li>
-          <li><span>011</span> Stop Borrowing Love</li>
-          <li><span>012</span> Own What Cannot Be Taken</li>
-          <li><span>013</span> Play the Next Play</li>
-          <li><span>014</span> Standards Protect Your Life</li>
-          <li><span>015</span> Official and Beneficial</li>
-          <li><span>016</span> Do Not Build on Approval</li>
-        </ol>
-      </section>
-
-      <section class="manifesto" aria-label="InnerGReads statement">
-        <blockquote class="reveal">
-          <span>“</span>
-          Some things were written to destroy us.
-          <em>Now, we write to restore us.</em>
-        </blockquote>
-      </section>
-
-      <section class="imprint-section" id="imprint" aria-labelledby="imprint-title">
-        <div class="imprint-mark reveal" aria-hidden="true">
-          <span>I</span><span>G</span><span>R</span>
-        </div>
-        <div class="imprint-copy reveal">
-          <p class="eyebrow">The imprint</p>
-          <h2 id="imprint-title">InnerGReads</h2>
-          <p class="imprint-lede">
-            The independent publishing home of Nasirr Mayo and InnerG Intel.
-          </p>
-          <p>
-            InnerGReads exists to preserve lived wisdom in physical and digital
-            form. Every release is built to be read, discussed, revisited, and
-            carried forward.
-          </p>
-          <div class="imprint-links">
-            <a href="https://www.youtube.com/@innergintel" target="_blank" rel="noreferrer">
-              Watch InnerG Intel <span aria-hidden="true">↗</span>
-            </a>
-            <a href="https://www.instagram.com/innergintel" target="_blank" rel="noreferrer">
-              Follow on Instagram <span aria-hidden="true">↗</span>
-            </a>
+      <section class="verse-buy" id="buy" aria-labelledby="buy-title">
+        <div class="verse-buy-inner reveal">
+          <p class="eyebrow">The complete frequency</p>
+          <h2 id="buy-title">The full work is waiting in the book.</h2>
+          <p>Take the verses with you. Read the principles, sit with the questions, and return when the next season asks for a new answer.</p>
+          <div class="verse-buy-actions" aria-label="Purchase options">
+            <a class="button verse-button-light" href="https://buy.stripe.com/14A4gBesDcSB3T0gOvao81o" target="_blank" rel="noreferrer">Buy the book direct <span aria-hidden="true">↗</span></a>
+            <a class="button verse-button-outline" href="https://www.amazon.com/dp/B0HC2WTW1G" target="_blank" rel="noreferrer">Buy on Amazon <span aria-hidden="true">↗</span></a>
+            <a class="verse-preview-link" href="https://innergclaw.github.io/legacy-in-ink-final-frequency/" target="_blank" rel="noreferrer">Read a preview <span aria-hidden="true">→</span></a>
           </div>
-        </div>
-      </section>
-
-      <section class="next-releases" aria-labelledby="next-title">
-        <div class="section-heading section-heading-dark reveal">
-          <p class="eyebrow">The shelf continues</p>
-          <h2 id="next-title">More frequencies are being preserved.</h2>
-        </div>
-        <div class="shelf reveal">
-          <article class="shelf-card shelf-card-live">
-            <span class="shelf-number">001</span>
-            <div>
-              <p>Available now</p>
-              <h3>The Final Frequency</h3>
-              <span>Nasirr Mayo</span>
-            </div>
-          </article>
-          <article class="shelf-card shelf-card-empty">
-            <span class="shelf-number">002</span>
-            <div>
-              <p>Forthcoming</p>
-              <h3>Next transmission</h3>
-              <span>InnerGReads</span>
-            </div>
-          </article>
-          <article class="shelf-card shelf-card-empty">
-            <span class="shelf-number">003</span>
-            <div>
-              <p>In development</p>
-              <h3>From the archive</h3>
-              <span>InnerG Intel</span>
-            </div>
-          </article>
         </div>
       </section>
     </main>
 
-    <footer class="site-footer">
+    <footer class="site-footer verse-footer">
       <a class="brand brand-footer" href="#top">
-        <span class="brand-mark" aria-hidden="true">
-          <span>I</span><span>G</span><span>R</span>
-        </span>
-        <span class="brand-copy">
-          <strong>InnerGReads</strong>
-          <em>An independent publishing house</em>
-        </span>
+        <span class="brand-mark" aria-hidden="true"><span>I</span><span>G</span><span>R</span></span>
+        <span class="brand-copy"><strong>InnerGReads</strong><em>Books that preserve the frequency</em></span>
       </a>
-      <div class="footer-center">
-        <p>© <span id="year">2026</span> InnerGReads / Nasirr Mayo</p>
-        <div class="footer-socials" aria-label="InnerG links">
-          <a
-            class="social-icon-link"
-            href="https://www.youtube.com/@innergintel"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Subscribe to InnerG Intel on YouTube"
-          >
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.2 3.6-6.2 3.6Z"/>
-            </svg>
-          </a>
-          <a
-            class="social-icon-link"
-            href="https://www.instagram.com/innergintel"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Follow InnerG Intel on Instagram"
-          >
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <rect x="3" y="3" width="18" height="18" rx="5"/>
-              <circle cx="12" cy="12" r="4"/>
-              <circle cx="17.5" cy="6.5" r="1"/>
-            </svg>
-          </a>
-          <a
-            class="social-icon-link"
-            href="https://discord.gg/s4HK9fdJQc"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Join the InnerG Intel community on Discord"
-          >
-            <svg class="discord-icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M20.317 4.3698a19.7913 19.7913 0 0 0-4.8851-1.5152.0741.0741 0 0 0-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 0 0-.0785-.037 19.7363 19.7363 0 0 0-4.8852 1.515.0699.0699 0 0 0-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 0 0 .0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 0 0 .0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 0 0-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 0 1-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 0 1 .0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 0 1 .0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 0 1-.0066.1276 12.2986 12.2986 0 0 1-1.873.8914.0766.0766 0 0 0-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 0 0 .0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 0 0 .0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 0 0-.0312-.0286ZM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189Zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/>
-            </svg>
-          </a>
-          <a
-            class="social-icon-link"
-            href="https://open.substack.com/pub/innergintelligence"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Read InnerG Intelligence on Substack"
-          >
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M4 4h16v2H4V4Zm0 4h16v2H4V8Zm0 4h16v8l-8-4.5L4 20v-8Z"/>
-            </svg>
-          </a>
-          <a
-            class="social-icon-link"
-            href="https://www.amazon.com/dp/B0HC2WTW1G"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Buy Legacy In Ink on Amazon"
-          >
-            <svg class="amazon-icon" viewBox="0 0 24 24" aria-hidden="true">
-              <text x="7" y="15.5">a</text>
-              <path class="amazon-smile" d="M5.5 17.6c3.9 2.3 8.4 2.5 12.7.5"/>
-              <path class="amazon-arrow" d="m16.5 17.3 2 .8-1.2 1.8"/>
-            </svg>
-          </a>
-        </div>
-      </div>
-      <a href="#top">Return to the beginning ↑</a>
+      <p>© <span id="year">2026</span> InnerGReads / Nasirr Mayo</p>
+      <a href="./community.html#overview">Enter the Study Hall <span aria-hidden="true">→</span></a>
     </footer>
-
-    <a
-      class="mobile-buy"
-      href="#book"
-    >
-      Buy the book <span aria-hidden="true">↑</span>
-    </a>
   </body>
 </html>

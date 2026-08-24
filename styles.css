@@ -1946,6 +1946,375 @@ a {
   }
 }
 
+/* Verse landing page: a quiet red field with sticky cards that gather as the reader scrolls. */
+.verse-page {
+  background: var(--red-500);
+}
+
+.verse-header {
+  position: absolute;
+  color: var(--paper-100);
+}
+
+.verse-header .brand-mark {
+  color: var(--paper-100);
+  border-color: oklch(0.985 0.004 80 / 0.42);
+}
+
+.verse-header .brand-copy em,
+.verse-header .site-nav a {
+  color: var(--paper-200);
+}
+
+.verse-header .site-nav a::after {
+  background: var(--paper-100);
+}
+
+.verse-landing {
+  overflow: clip;
+  background: var(--red-500);
+}
+
+.verse-hero {
+  position: relative;
+  display: grid;
+  align-content: end;
+  min-height: 100svh;
+  padding: 170px max(5vw, calc((100vw - 1280px) / 2)) 86px;
+  color: var(--ink-950);
+  background: var(--red-500);
+}
+
+.verse-hero-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.22;
+  background-image: linear-gradient(oklch(0.18 0.014 24 / 0.14) 1px, transparent 1px), linear-gradient(90deg, oklch(0.18 0.014 24 / 0.14) 1px, transparent 1px);
+  background-size: 58px 58px;
+  mask-image: radial-gradient(ellipse 65% 65% at 80% 10%, black 0%, transparent 72%);
+}
+
+.verse-hero > *:not(.verse-hero-grid) {
+  position: relative;
+  z-index: 1;
+}
+
+.verse-hero .eyebrow,
+.verse-buy .eyebrow {
+  color: currentColor;
+}
+
+.verse-hero h1 {
+  max-width: 10ch;
+  margin: 20px 0 0;
+  font-family: var(--serif);
+  font-size: clamp(4.5rem, 12vw, 12rem);
+  font-weight: 500;
+  line-height: 0.82;
+  letter-spacing: -0.075em;
+  text-wrap: balance;
+}
+
+.verse-hero h1 em {
+  display: block;
+  margin-inline-start: 0.48em;
+  font-style: italic;
+}
+
+.verse-hero-lede {
+  max-width: 42ch;
+  margin: 38px 0 0;
+  font-family: var(--serif);
+  font-size: clamp(1.05rem, 1.5vw, 1.35rem);
+  line-height: 1.5;
+}
+
+.verse-hero-cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  width: fit-content;
+  margin-top: 68px;
+  color: var(--ink-950);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.verse-hero-cue span {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+}
+
+.verse-stack-section {
+  padding: clamp(90px, 12vw, 180px) max(5vw, calc((100vw - 1280px) / 2)) 0;
+  color: var(--paper-100);
+  background: var(--red-500);
+}
+
+.verse-stack-intro {
+  display: grid;
+  grid-template-columns: minmax(230px, 0.45fr) minmax(280px, 0.85fr) minmax(220px, 0.55fr);
+  gap: 34px;
+  align-items: end;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-bottom: clamp(44px, 8vw, 96px);
+}
+
+.verse-stack-intro h2 {
+  max-width: 9ch;
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(3.4rem, 7vw, 8rem);
+  font-weight: 500;
+  line-height: 0.86;
+  letter-spacing: -0.065em;
+  text-wrap: balance;
+}
+
+.verse-stack-intro > p:last-child {
+  max-width: 30ch;
+  margin: 0;
+  color: var(--paper-200);
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  line-height: 1.55;
+}
+
+.verse-stack {
+  width: min(100%, 1100px);
+  margin-inline: auto;
+  padding-bottom: 12vh;
+}
+
+.verse-card {
+  position: sticky;
+  top: calc(76px + (var(--verse-index) * 8px));
+  display: grid;
+  grid-template-columns: minmax(60px, 0.22fr) minmax(0, 1fr);
+  gap: clamp(24px, 5vw, 88px);
+  align-items: start;
+  min-height: min(64svh, 650px);
+  margin-bottom: 9vh;
+  padding: clamp(30px, 5vw, 72px);
+  color: var(--ink-950);
+  background: var(--paper-100);
+  border: 1px solid oklch(0.18 0.014 24 / 0.2);
+  box-shadow: 0 -16px 36px oklch(0.18 0.014 24 / 0.16), 0 24px 60px oklch(0.18 0.014 24 / 0.18);
+  transform: rotate(-0.15deg);
+}
+
+.verse-card:nth-child(even) {
+  transform: rotate(0.18deg);
+}
+
+.verse-card:nth-child(3n) {
+  background: var(--paper-200);
+}
+
+.verse-card:nth-child(4n) {
+  background: var(--ink-950);
+  color: var(--paper-100);
+}
+
+.verse-card-number {
+  color: var(--red-600);
+  font-size: clamp(0.85rem, 1.2vw, 1.1rem);
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+.verse-card:nth-child(4n) .verse-card-number {
+  color: var(--red-500);
+}
+
+.verse-card-kicker {
+  margin: 0 0 20px;
+  color: var(--red-600);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.verse-card:nth-child(4n) .verse-card-kicker {
+  color: var(--paper-300);
+}
+
+.verse-card h3 {
+  max-width: 13ch;
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(2.6rem, 6vw, 6.8rem);
+  font-weight: 500;
+  line-height: 0.88;
+  letter-spacing: -0.065em;
+  text-wrap: balance;
+}
+
+.verse-card div > p:last-child {
+  max-width: 48ch;
+  margin: 34px 0 0;
+  color: var(--muted-dark);
+  font-family: var(--serif);
+  font-size: clamp(1rem, 1.35vw, 1.2rem);
+  line-height: 1.6;
+}
+
+.verse-card:nth-child(4n) div > p:last-child {
+  color: var(--muted-light);
+}
+
+.verse-buy {
+  padding: clamp(110px, 16vw, 240px) 5vw;
+  color: var(--paper-100);
+  background: var(--ink-950);
+}
+
+.verse-buy-inner {
+  width: min(100%, 900px);
+  margin-inline: auto;
+  text-align: center;
+}
+
+.verse-buy h2 {
+  max-width: 10ch;
+  margin: 18px auto 0;
+  font-family: var(--serif);
+  font-size: clamp(3.8rem, 8vw, 9rem);
+  font-weight: 500;
+  line-height: 0.84;
+  letter-spacing: -0.07em;
+  text-wrap: balance;
+}
+
+.verse-buy-inner > p:not(.eyebrow) {
+  max-width: 50ch;
+  margin: 32px auto 0;
+  color: var(--muted-light);
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.verse-buy-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px 18px;
+  margin-top: 42px;
+}
+
+.verse-button-light,
+.verse-button-outline,
+.verse-preview-link {
+  min-height: 52px;
+  padding: 0 22px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.verse-button-light {
+  color: var(--ink-950);
+  background: var(--paper-100);
+}
+
+.verse-button-outline {
+  color: var(--paper-100);
+  border: 1px solid oklch(0.985 0.004 80 / 0.48);
+}
+
+.verse-preview-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--paper-100);
+}
+
+.verse-footer {
+  color: var(--paper-100);
+  background: var(--ink-950);
+}
+
+.verse-footer p {
+  margin: 0;
+  color: var(--paper-300);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 780px) {
+  .verse-hero {
+    min-height: 92svh;
+    padding: 150px 22px 64px;
+  }
+
+  .verse-hero h1 {
+    font-size: clamp(4rem, 17vw, 7rem);
+  }
+
+  .verse-hero h1 em {
+    margin-inline-start: 0.18em;
+  }
+
+  .verse-stack-section {
+    padding-inline: 18px;
+  }
+
+  .verse-stack-intro {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding-bottom: 52px;
+  }
+
+  .verse-stack-intro h2 {
+    max-width: 10ch;
+  }
+
+  .verse-card {
+    top: calc(62px + (var(--verse-index) * 5px));
+    grid-template-columns: 1fr;
+    gap: 24px;
+    min-height: 70svh;
+    margin-bottom: 7vh;
+    padding: 28px 24px 34px;
+  }
+
+  .verse-card h3 {
+    font-size: clamp(2.65rem, 13vw, 5.6rem);
+  }
+
+  .verse-card div > p:last-child {
+    margin-top: 28px;
+  }
+
+  .verse-buy {
+    padding-inline: 22px;
+  }
+
+  .verse-buy-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .verse-button-light,
+  .verse-button-outline,
+  .verse-preview-link {
+    justify-content: center;
+    width: 100%;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
