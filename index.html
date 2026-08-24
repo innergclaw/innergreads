@@ -12,8 +12,17 @@
     <meta property="og:image" content="https://innergreads.study/assets/final-frequency-cover.jpg">
     <link rel="canonical" href="https://innergreads.study/">
     <title>Legacy In Ink: The Final Frequency | InnerGReads</title>
-    <link rel="stylesheet" href="./styles.css?v=c6af4d2">
+    <link rel="stylesheet" href="./styles.css?v=book-frequency-01">
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "./vendor/three.module.min.js",
+          "three/addons/": "./vendor/addons/"
+        }
+      }
+    </script>
     <script src="./app.js" defer></script>
+    <script type="module" src="./book-scene.js?v=book-frequency-01"></script>
   </head>
   <body class="verse-page">
     <a class="skip-link" href="#verses">Skip to the verses</a>
@@ -35,19 +44,30 @@
       <nav class="site-nav" id="site-nav" aria-label="Main navigation">
         <a href="#verses">The 16 verses</a>
         <a href="#buy">Buy the book</a>
-        <a href="./community.html#overview">Study Hall</a>
+        <a href="#frequency">August Frequency</a>
       </nav>
     </header>
 
     <main id="main" class="verse-landing">
       <section class="verse-hero" id="top" aria-labelledby="hero-title">
         <div class="verse-hero-grid" aria-hidden="true"></div>
-        <p class="eyebrow reveal">InnerGReads / Release 001</p>
-        <h1 id="hero-title" class="reveal">Legacy in Ink:<br><em>The Final Frequency</em></h1>
-        <p class="verse-hero-lede reveal">
-          Sixteen verses on value, discipline, ownership, love, time, and the patterns we inherit.
-          Scroll through the book before you decide where to begin.
-        </p>
+        <div class="verse-hero-copy">
+          <p class="eyebrow reveal">InnerGReads / Release 001</p>
+          <h1 id="hero-title" class="reveal">Legacy in Ink:<br><em>The Final Frequency</em></h1>
+          <p class="verse-hero-lede reveal">
+            Sixteen verses on value, discipline, ownership, love, time, and the patterns we inherit.
+            Scroll through the book before you decide where to begin.
+          </p>
+        </div>
+        <div class="verse-book-stage book-stage reveal is-loading" data-book-viewer>
+          <div class="book-aura" aria-hidden="true"></div>
+          <canvas id="book-canvas" tabindex="0" aria-label="Interactive three-dimensional model of Legacy In Ink: The Final Frequency"></canvas>
+          <div class="book-loading" role="status" aria-live="polite"><span></span>Building the first edition</div>
+          <div class="book-fallback">
+            <img src="./assets/final-frequency-front-3d.jpg" alt="Cover of Legacy In Ink: The Final Frequency by Nasirr Mayo" width="1220" height="1850">
+          </div>
+          <p class="drag-note">Drag to rotate · click to turn the book</p>
+        </div>
         <a class="verse-hero-cue reveal" href="#verses">Read the verses <span aria-hidden="true">↓</span></a>
       </section>
 
@@ -126,14 +146,35 @@
         </div>
       </section>
 
+      <section class="monthly-frequency-section verse-frequency" id="frequency" aria-labelledby="frequency-title">
+        <div class="next-frequency-heading reveal">
+          <div>
+            <p class="eyebrow">InnerGReads / Monthly Frequency</p>
+            <p class="frequency-status"><span aria-hidden="true"></span> August 2026 transmission</p>
+          </div>
+          <h2 id="frequency-title">August Frequency: financial and asset alignment.</h2>
+          <div class="next-frequency-copy">
+            <p>This month is about getting money, focus, and assets into order: clean up the loose ends, protect the budget, build the first layer of ownership, and move with a clear 30-day gameplan.</p>
+            <p>Use the verses as a starting point, then turn the lesson into a practical action you can finish this month.</p>
+            <a class="frequency-link" href="https://open.substack.com/pub/innergintelligence" target="_blank" rel="noreferrer">Follow the monthly frequency <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+        <div class="monthly-frequency-grid reveal" aria-label="August Frequency action plan">
+          <article class="monthly-frequency-card"><span>01</span><h3>Money management</h3><p>Know what is coming in, what is leaking out, and what needs to be protected.</p></article>
+          <article class="monthly-frequency-card"><span>02</span><h3>Asset alignment</h3><p>Move small amounts toward savings, tools, books, storage, or infrastructure that strengthens the next month.</p></article>
+          <article class="monthly-frequency-card"><span>03</span><h3>Focus discipline</h3><p>Choose one practical task before every check-in. Finish what matters and remove what steals attention.</p></article>
+          <article class="monthly-frequency-card monthly-frequency-prompt"><span>Prompt</span><h3>Build your August gameplan</h3><p>Turn your current goals into a clear 30-day action plan you can actually follow.</p></article>
+        </div>
+      </section>
+
       <section class="verse-buy" id="buy" aria-labelledby="buy-title">
         <div class="verse-buy-inner reveal">
           <p class="eyebrow">The complete frequency</p>
           <h2 id="buy-title">The full work is waiting in the book.</h2>
           <p>Take the verses with you. Read the principles, sit with the questions, and return when the next season asks for a new answer.</p>
           <div class="verse-buy-actions" aria-label="Purchase options">
-            <a class="button verse-button-light" href="https://buy.stripe.com/14A4gBesDcSB3T0gOvao81o" target="_blank" rel="noreferrer">Buy the book direct <span aria-hidden="true">↗</span></a>
-            <a class="button verse-button-outline" href="https://www.amazon.com/dp/B0HC2WTW1G" target="_blank" rel="noreferrer">Buy on Amazon <span aria-hidden="true">↗</span></a>
+            <a class="button verse-button-light" href="https://buy.stripe.com/14A4gBesDcSB3T0gOvao81o" target="_blank" rel="noreferrer">BUY PAPERBACK <span aria-hidden="true">↗</span></a>
+            <a class="button verse-button-outline" href="https://www.amazon.com/dp/B0HC2WTW1G" target="_blank" rel="noreferrer">BUY DIGITAL ON AMAZON <span aria-hidden="true">↗</span></a>
             <a class="verse-preview-link" href="https://innergclaw.github.io/legacy-in-ink-final-frequency/" target="_blank" rel="noreferrer">Read a preview <span aria-hidden="true">→</span></a>
           </div>
         </div>
@@ -146,7 +187,12 @@
         <span class="brand-copy"><strong>InnerGReads</strong><em>Books that preserve the frequency</em></span>
       </a>
       <p>© <span id="year">2026</span> InnerGReads / Nasirr Mayo</p>
-      <a href="./community.html#overview">Enter the Study Hall <span aria-hidden="true">→</span></a>
+      <nav class="verse-social-links" aria-label="InnerG social links">
+        <a href="https://open.substack.com/pub/innergintelligence" target="_blank" rel="noreferrer">Substack <span aria-hidden="true">↗</span></a>
+        <a href="https://www.youtube.com/@innergintel" target="_blank" rel="noreferrer">YouTube <span aria-hidden="true">↗</span></a>
+        <a href="https://www.instagram.com/innergintel" target="_blank" rel="noreferrer">Instagram <span aria-hidden="true">↗</span></a>
+        <a href="https://www.tiktok.com/@innergintel" target="_blank" rel="noreferrer">TikTok <span aria-hidden="true">↗</span></a>
+      </nav>
     </footer>
   </body>
 </html>
