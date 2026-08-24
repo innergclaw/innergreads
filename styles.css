@@ -1673,7 +1673,7 @@ a {
   }
 }
 
-@media (max-width: 780px) {
+@media (max-width: 980px) {
   :root {
     --container: calc(100vw - 36px);
   }
