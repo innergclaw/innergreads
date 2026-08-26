@@ -2036,12 +2036,17 @@ a {
 }
 
 .verse-book-stage .drag-note {
+  inset: 50% -10px auto auto;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 11px;
+  width: max-content;
+  padding: 8px 10px;
   font-size: 0.62rem;
   letter-spacing: 0.13em;
+  background: oklch(0.49 0.162 28 / 0.88);
+  transform: translateY(-50%);
 }
 
 .verse-book-stage .drag-note span {
@@ -2410,6 +2415,14 @@ a {
 
   .verse-book-stage #book-canvas {
     height: min(58svh, 500px);
+  }
+
+  .verse-book-stage .drag-note {
+    inset: auto 0 10px;
+    width: auto;
+    padding: 0;
+    background: transparent;
+    transform: none;
   }
 
   .verse-hero .verse-hero-cue {
