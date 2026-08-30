@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="InnerGReads member dashboard." />
+  <title>Member dashboard | InnerGReads</title>
+  <link rel="stylesheet" href="../member-access.css" />
+</head>
+<body data-member-page="dashboard" style="--member-bg:#17120f;--member-ink:#fffaf1;--member-muted:#c8bdb2;--member-line:rgba(255,250,241,.18);--member-surface:#211a16;--member-accent:#9f352d">
+  <main class="member-page">
+    <div class="member-shell">
+      <div class="member-topline"><a href="../">Back to InnerGReads</a><span>Member dashboard</span></div>
+      <p class="member-eyebrow">InnerG ecosystem member</p>
+      <h1 class="member-title">Your InnerGReads room.</h1>
+      <p class="member-lede">Continue into the books, community, and learning spaces connected to InnerGReads.</p>
+      <p class="member-status" id="member-status" role="status" aria-live="polite">Checking your secure session...</p>
+      <section class="member-dashboard" id="member-dashboard" aria-labelledby="member-continue-title">
+        <div class="member-focus">
+          <p class="member-eyebrow">Your next move</p>
+          <h2 id="member-continue-title">Choose where to continue.</h2>
+          <p id="member-email">Your member access is active.</p>
+        </div>
+        <nav class="member-grid" aria-label="InnerGReads member destinations">
+        <a class="member-link" href="../#verses"><strong>Read the current release</strong><span aria-hidden="true">↗</span></a>
+        <a class="member-link" href="../community.html"><strong>Join the community</strong><span aria-hidden="true">↗</span></a>
+        <a class="member-link" href="../#buy"><strong>Buy the book</strong><span aria-hidden="true">↗</span></a>
+        <a class="member-link" href="https://nasirr.innergintel.org/"><strong>Open Home Base</strong><span aria-hidden="true">↗</span></a>
+        </nav>
+        <button class="member-button member-signout" id="member-signout" type="button">Sign out</button>
+      </section>
+    </div>
+  </main>
+  <script type="module" src="../member-auth.mjs"></script>
+</body>
+</html>
