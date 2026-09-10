@@ -8,6 +8,11 @@ const page = document.body.dataset.memberPage;
 const status = document.querySelector("#member-status");
 let redirecting = false;
 let recoveryMode = isRecoveryCallback(window.location.hash);
+let returnToReads = new URLSearchParams(window.location.search).get("from") === "reads";
+try {
+  if (returnToReads) sessionStorage.setItem("innerg-reads-return", "1");
+  else returnToReads = sessionStorage.getItem("innerg-reads-return") === "1";
+} catch { /* Direct email sign-in can still use the fixed query destination. */ }
 
 const setStatus = (message, state = "") => {
   if (!status) return;
@@ -15,12 +20,13 @@ const setStatus = (message, state = "") => {
   status.dataset.state = state;
 };
 
-const fixedAccountURL = () => `${window.location.origin}/account/${new URLSearchParams(window.location.search).get("from") === "reads" ? "?from=reads" : ""}`;
+const fixedAccountURL = () => `${window.location.origin}/account/`;
 
 const openDashboard = () => {
   if (redirecting) return;
   redirecting = true;
-  window.location.replace(accountDestination(window.location.search));
+  try { sessionStorage.removeItem("innerg-reads-return"); } catch { /* Storage is optional. */ }
+  window.location.replace(accountDestination(returnToReads ? "?from=reads" : ""));
 };
 
 const initializeAccount = async () => {
