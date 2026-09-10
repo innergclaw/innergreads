@@ -1,5 +1,7 @@
 export const ACCOUNT_PATH = "/account/";
 export const DASHBOARD_PATH = "/dashboard/";
+// Only this fixed destination is accepted. Never redirect to a URL supplied in a query.
+export const accountDestination = (search = "") => new URLSearchParams(search).get("from") === "reads" ? "/reads/#reading-room" : DASHBOARD_PATH;
 
 export const isRecoveryCallback = (hash = "") => {
   const params = new URLSearchParams(String(hash).replace(/^#/, ""));
@@ -11,4 +13,3 @@ export const shouldOpenDashboard = ({ session, recovery = false, path = ACCOUNT_
 
 export const shouldReturnToAccount = ({ session, path = DASHBOARD_PATH } = {}) =>
   Boolean(!session?.user && path === DASHBOARD_PATH);
-

@@ -1,5 +1,5 @@
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.4/+esm";
-import { ACCOUNT_PATH, DASHBOARD_PATH, isRecoveryCallback, shouldOpenDashboard, shouldReturnToAccount } from "./member-auth-flow.mjs";
+import { ACCOUNT_PATH, DASHBOARD_PATH, accountDestination, isRecoveryCallback, shouldOpenDashboard, shouldReturnToAccount } from "./member-auth-flow.mjs";
 
 const SUPABASE_URL = "https://zkyhhoxcrjkhywblzehr.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_bdi3BexAKWDBaUIh40hJ_A_8CNVdnM_";
@@ -15,12 +15,12 @@ const setStatus = (message, state = "") => {
   status.dataset.state = state;
 };
 
-const fixedAccountURL = () => `${window.location.origin}/account/`;
+const fixedAccountURL = () => `${window.location.origin}/account/${new URLSearchParams(window.location.search).get("from") === "reads" ? "?from=reads" : ""}`;
 
 const openDashboard = () => {
   if (redirecting) return;
   redirecting = true;
-  window.location.replace(DASHBOARD_PATH);
+  window.location.replace(accountDestination(window.location.search));
 };
 
 const initializeAccount = async () => {
