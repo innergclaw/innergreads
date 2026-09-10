@@ -48,4 +48,4 @@ the UI suite uses synthetic responses, not real member records. live checks sepa
 
 if a guest loses their key, verify the purchase in Stripe and ownership of the checkout email before support restores access. a screenshot or a claimed email alone is not proof. do not issue keys in public chat.
 
-existing project advisories remain: leaked-password protection is disabled and `pg_net` is installed in public. no new warning-level advisory was introduced. tables intended for service-only access deliberately have no browser policies.
+existing project advisories remain: [leaked-password protection is disabled](https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection) and [pg_net is installed in public](https://supabase.com/docs/guides/database/database-linter?lint=0014_extension_in_public). no new warning-level advisory was introduced. tables intended for service-only access deliberately have no browser policies.
