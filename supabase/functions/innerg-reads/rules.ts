@@ -7,6 +7,13 @@ export function activePaidMember(member: any, now = Date.now()): boolean {
     member.access_expires_at && Date.parse(member.access_expires_at) > now);
 }
 
+export function memberCanRead(member: any, now = Date.now()): boolean {
+  // The ID and original-member flag must come from the trusted membership row.
+  const hasId = typeof member?.membership_number === "string" && member.membership_number.trim().length > 0;
+  if (!hasId || member.status !== "active") return false;
+  return member.access_source === "grandfathered" || activePaidMember(member, now);
+}
+
 export function paidRead(session: any, secretHash: string): boolean {
   const item = session.line_items?.data;
   return Boolean(session.status === "complete" && session.payment_status === "paid" &&

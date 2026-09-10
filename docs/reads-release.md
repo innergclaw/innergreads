@@ -5,14 +5,14 @@
 - `https://www.innergreads.study/reads/`
 - first essay: welcome to the a.r.t. era.
 - guests pay USD 1 once for this essay. this is not a subscription.
-- active paid innerg id members have access while their paid membership remains active.
+- original active members with an issued innerg id have access included. active paid members with an issued id are also included while their paid access remains active.
 - the existing legacy in ink home page and book checkout remain in place.
 
 ## access and privacy
 
 the full manuscript is stored in `innerg_reads`, not in this repository. browser roles have no access to that table. the `innerg-reads` function verifies a Supabase user with `auth.getUser` and checks `innerg_memberships`. authorization does not use user metadata.
 
-included access requires `status=active`, `payment_verified=true`, and a future `access_expires_at`. existing unpaid grandfathered accounts are not changed and do not receive this new paid-read benefit automatically.
+included access requires an issued `membership_number` and `status=active`. original members identified by the server-owned `access_source=grandfathered` flag are included without a payment or expiry requirement. other members need `payment_verified=true` and a future `access_expires_at`. a number supplied in a request or user metadata never grants access. no membership rows or payment records were modified by this rule change.
 
 guest checkout starts with a random 256-bit reading key. the database stores only its SHA-256 hash. Stripe Checkout returns the key in the URL fragment. the page saves it to local storage and removes it from the address bar. the private link can be copied or downloaded for another device. it is a bearer link, so anyone who has it can use it. no automatic email of this key is implemented in v1.
 

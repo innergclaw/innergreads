@@ -1,7 +1,7 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import Stripe from "npm:stripe@22.6.1";
 import { createClient } from "npm:@supabase/supabase-js@2.112.4";
-import { activePaidMember, paidRead, settledCharge, hash, validSecret, READ_SLUG, READ_PRICE, READ_HOME } from "./rules.ts";
+import { memberCanRead, paidRead, settledCharge, hash, validSecret, READ_SLUG, READ_PRICE, READ_HOME } from "./rules.ts";
 
 const origins = new Set(["https://www.innergreads.study", "https://innergreads.study"]);
 const env = (key: string) => Deno.env.get(key) || "";
@@ -40,8 +40,8 @@ Deno.serve(async (req: Request) => {
     let memberAccess = false;
     if (user) {
       const member = check(await service.from("innerg_memberships")
-        .select("status,payment_verified,access_expires_at").eq("user_id", user.id).maybeSingle());
-      memberAccess = activePaidMember(member);
+        .select("status,payment_verified,access_expires_at,access_source,membership_number").eq("user_id", user.id).maybeSingle());
+      memberAccess = memberCanRead(member);
     }
     const accessHash = validSecret(body.secret) ? await hash(body.secret) : null;
     const purchase = accessHash ? check(await service.from("innerg_read_purchases").select("*")

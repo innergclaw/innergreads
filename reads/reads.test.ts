@@ -1,4 +1,4 @@
-import { activePaidMember, paidRead, settledCharge, validSecret, hash } from "../supabase/functions/innerg-reads/rules.ts";
+import { activePaidMember, memberCanRead, paidRead, settledCharge, validSecret, hash } from "../supabase/functions/innerg-reads/rules.ts";
 import { fulfillRead } from "../supabase/functions/watchlist-stripe-webhook/reads-fulfillment.ts";
 const assert = (value: unknown, message = "assertion failed") => { if (!value) throw new Error(message); };
 const now = Date.parse("2026-09-10T12:00:00Z");
@@ -6,6 +6,20 @@ const member = {status:"active",payment_verified:true,access_expires_at:"2026-10
 Deno.test("only active paid unexpired membership unlocks", () => {
   assert(activePaidMember(member,now));
   for (const value of [null,{}, {...member,payment_verified:false}, {...member,status:"past_due"}, {...member,access_expires_at:null}, {...member,access_expires_at:"2026-09-09"}]) assert(!activePaidMember(value,now));
+});
+Deno.test("original active numbered members read without a payment", () => {
+  const original = {status:"active",access_source:"grandfathered",payment_verified:false,membership_number:"test-original-id",access_expires_at:null};
+  assert(memberCanRead(original,now));
+  for (const change of [{membership_number:null},{membership_number:""},{membership_number:" "},{status:"canceled"},{status:"pending"},{access_source:"stripe"}]) assert(!memberCanRead({...original,...change},now));
+});
+Deno.test("paid ID members remain included and inactive or unnumbered accounts remain locked", () => {
+  const paid={...member,membership_number:"test-paid-id",access_source:"stripe"};
+  assert(memberCanRead(paid,now));
+  assert(!memberCanRead({...paid,access_expires_at:"2026-09-09"},now));
+  assert(!memberCanRead({...paid,payment_verified:false},now));
+  assert(!memberCanRead({...paid,membership_number:null},now));
+  assert(!memberCanRead(null,now));
+  assert(!memberCanRead({user_metadata:{membership_number:"copied-id",access_source:"grandfathered"}},now));
 });
 const session = {id:"cs_unit_test",status:"complete",payment_status:"paid",mode:"payment",currency:"usd",amount_total:100,
   metadata:{product_key:"innerg_read",read_slug:"art-era",access_hash:"hash"},

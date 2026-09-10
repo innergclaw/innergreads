@@ -54,7 +54,7 @@ async function refresh() {
     $("feedback-section").hidden = !unlocked;
     $("guest-tools").hidden = result.access !== "guest";
     renderBody(unlocked ? result.body : []);
-    status(result.access === "member" ? "included with your active paid innerg id. welcome to the reading room." : result.access === "guest" ? "your read is unlocked. thank you for supporting innerg reads." : signedIn ? "you are signed in. this read needs an active paid innerg id or a $1 guest purchase." : "you are reading the preview.");
+    status(result.access === "member" ? "included with your innerg id. welcome to the reading room." : result.access === "guest" ? "your read is unlocked. thank you for supporting innerg reads." : signedIn ? "you are signed in. full reads are included for original innerg id members and active paid members. otherwise, unlock this essay for $1." : "you are reading the preview.");
     $("comments").replaceChildren();
     for (const comment of result.comments || []) {
       const note = document.createElement("blockquote"), by = document.createElement("small");
