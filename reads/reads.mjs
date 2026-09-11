@@ -37,6 +37,8 @@ function renderBody(blocks) {
 
 async function refresh() {
   const id = ++requestId;
+  clearProtected();
+  status("checking your reading access...");
   $("retry").hidden = true;
   try {
     const result = await api("access");
@@ -47,7 +49,7 @@ async function refresh() {
     $("sign-out").hidden = !signedIn;
     $("bookmark").textContent = saved ? "saved to my reads" : "save this read";
     $("bookmark").setAttribute("aria-pressed", String(saved));
-    const unlocked = result.access !== "locked";
+    const unlocked = (result.access === "member" && result.signedIn === true) || result.access === "guest";
     $("paywall").hidden = unlocked;
     $("public-excerpt").hidden = unlocked;
     $("full-read").hidden = !unlocked;
@@ -76,6 +78,16 @@ async function refresh() {
   }
 }
 
+function clearProtected() {
+  renderBody([]);
+  $("full-read").hidden = true;
+  $("feedback-section").hidden = true;
+  $("guest-tools").hidden = true;
+  $("comments").replaceChildren();
+  $("public-excerpt").hidden = false;
+  $("paywall").hidden = true;
+}
+
 $("retry").addEventListener("click", refresh);
 $("buy").addEventListener("click", async () => {
   $("buy").disabled = true;
@@ -102,6 +114,8 @@ $("bookmark").addEventListener("click", async () => {
   finally { $("bookmark").disabled = false; }
 });
 $("sign-out").addEventListener("click", async () => {
+  requestId++;
+  clearProtected();
   $("sign-out").disabled = true;
   const { error } = await client.auth.signOut();
   $("sign-out").disabled = false;
@@ -134,5 +148,12 @@ client.auth.onAuthStateChange(event => {
     $("guest-tools").hidden = true;
   }
   setTimeout(refresh, 0);
+});
+// Do not leave a restored or backgrounded member essay visible without a fresh check.
+window.addEventListener("pagehide", () => { requestId++; clearProtected(); });
+window.addEventListener("pageshow", event => { if (event.persisted) refresh(); });
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "hidden") { requestId++; clearProtected(); }
+  else refresh();
 });
 refresh();
