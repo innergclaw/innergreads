@@ -1,7 +1,7 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import Stripe from "npm:stripe@22.6.1";
 import { createClient } from "npm:@supabase/supabase-js@2.112.4";
-import { memberCanRead, paidRead, settledCharge, hash, validSecret, READ_SLUG, READ_PRICE, READ_HOME } from "./rules.ts";
+import { hash, paidSupport, settledSupport, validSecret, validSupportAmount, READ_SLUG, READ_HOME } from "./rules.ts";
 
 const origins = new Set(["https://www.innergreads.study", "https://innergreads.study"]);
 const env = (key: string) => Deno.env.get(key) || "";
@@ -25,43 +25,23 @@ Deno.serve(async (req: Request) => {
     const body = JSON.parse(raw);
     if (body.slug !== READ_SLUG) return reply({ error: "read not found" }, 404);
     const action = body.action;
-    if (!["access", "checkout", "bookmark", "feedback"].includes(action)) fail("unknown request");
+    if (!["access", "support_checkout", "support_status", "bookmark", "feedback"].includes(action)) fail("unknown request");
     const article = check(await service.from("innerg_reads").select("slug,title,body,published").eq("slug", READ_SLUG).maybeSingle());
     if (!article?.published) return reply({ error: "this read is not available yet" }, 404);
 
-    // Identity comes only from the Auth server. Membership is read from the database.
     let user: any = null;
     const token = req.headers.get("authorization")?.replace(/^Bearer /, "");
     if (token) {
       const result = await service.auth.getUser(token);
-      if (result.error || !result.data.user) fail("please sign in again to check your member access.", 401);
+      if (result.error || !result.data.user) fail("please sign in again to use your innerg account.", 401);
       user = result.data.user;
     }
-    let memberAccess = false;
-    if (user) {
-      const member = check(await service.from("innerg_memberships")
-        .select("status,payment_verified,access_expires_at,access_source,membership_number").eq("user_id", user.id).maybeSingle());
-      memberAccess = memberCanRead(member);
-    }
-    const accessHash = validSecret(body.secret) ? await hash(body.secret) : null;
-    const purchase = accessHash ? check(await service.from("innerg_read_purchases").select("*")
-      .eq("access_hash", accessHash).eq("slug", READ_SLUG).maybeSingle()) : null;
-    let guestAccess = false;
-    // Check current Stripe state, including refunds/disputes, instead of trusting a return URL or stale flag.
-    if (!memberAccess && purchase?.session_id && purchase.status !== "revoked") {
-      const session = await stripe.checkout.sessions.retrieve(purchase.session_id, { expand: ["line_items", "payment_intent.latest_charge"] });
-      guestAccess = paidRead(session, accessHash!) && settledCharge(session.payment_intent);
-      if (guestAccess && purchase.status !== "paid") {
-        check(await service.from("innerg_read_purchases").update({ status: "paid", paid_at: new Date().toISOString() }).eq("id", purchase.id));
-      }
-    }
-    const access = memberAccess ? "member" : guestAccess ? "guest" : "locked";
     if (action === "access") {
       const saved = user ? check(await service.from("innerg_read_bookmarks").select("slug").eq("user_id", user.id).eq("slug", READ_SLUG).maybeSingle()) : null;
       const comments = check(await service.from("innerg_read_feedback").select("message,created_at")
         .eq("slug", READ_SLUG).eq("approved", true).order("created_at", { ascending: false }).limit(20));
-      return reply({ access, signedIn: Boolean(user), bookmarked: Boolean(saved), title: article.title,
-        body: access !== "locked" ? article.body : null, comments: access !== "locked" ? comments : [] });
+      return reply({ access: "public", signedIn: Boolean(user), bookmarked: Boolean(saved), title: article.title,
+        body: article.body, comments });
     }
     if (action === "bookmark") {
       if (!user) fail("sign in to save this read to your account.", 401);
@@ -71,45 +51,56 @@ Deno.serve(async (req: Request) => {
       return reply({ saved: body.saved });
     }
     if (action === "feedback") {
-      if (access === "locked") fail("unlock the read before leaving a note.", 403);
+      if (!validSecret(body.readerId)) fail("reload the page before leaving a note.");
       const message = typeof body.message === "string" ? body.message.trim() : "";
       if (message.length < 3 || message.length > 1500) fail("write a note between 3 and 1,500 characters.");
-      // One anonymous note per reader per day. A one-way hash prevents names/emails appearing in feedback.
-      const readerHash = await hash(env("SUPABASE_SERVICE_ROLE_KEY") + ":reads:" + (guestAccess ? accessHash : user.id));
+      const readerHash = await hash(env("SUPABASE_SERVICE_ROLE_KEY") + ":reads:" + body.readerId);
       const { error } = await service.from("innerg_read_feedback").insert({ slug: READ_SLUG, reader_hash: readerHash, message });
       if (error?.code === "23505") fail("your note for today is already saved. thank you.", 409);
       if (error) fail("your note could not be saved. please try again.", 503);
       return reply({ received: true });
     }
-    if (access !== "locked") return reply({ alreadyUnlocked: true });
-    if (!accessHash) fail("your private reading key could not be created. reload and try again.");
-    if (purchase?.session_id) {
-      const existing = await stripe.checkout.sessions.retrieve(purchase.session_id);
-      if (existing.status === "open" && existing.url) return reply({ checkoutUrl: existing.url });
-      if (existing.status === "complete") fail("payment could not be verified. contact support before paying again.", 409);
-      fail("this checkout expired. start a new checkout.", 410);
+    if (action === "support_status") {
+      if (typeof body.sessionId !== "string" || !/^cs_(test_|live_)?[A-Za-z0-9]+$/.test(body.sessionId)) fail("support session not found.");
+      const session = await stripe.checkout.sessions.retrieve(body.sessionId, { expand: ["line_items", "payment_intent.latest_charge"] });
+      const amount = Number(session.metadata?.support_amount);
+      const confirmed = paidSupport(session) && settledSupport(session.payment_intent, amount);
+      if (confirmed) check(await service.from("innerg_read_supports").update({ status: "paid", confirmed_at: new Date().toISOString() }).eq("session_id", body.sessionId));
+      return reply({ confirmed, amount: validSupportAmount(amount) ? amount / 100 : null });
     }
-    // A persisted attempt and Stripe idempotency key prevent duplicate Checkout sessions on retries.
-    if (purchase && Date.now() - Date.parse(purchase.created_at) > 23 * 60 * 60 * 1000) fail("this checkout expired. start a new checkout.", 410);
-    if (!purchase) {
-      const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
-      if (!ip) fail("checkout is temporarily unavailable. please try again.", 503);
-      const ipHash = await hash(env("SUPABASE_SERVICE_ROLE_KEY") + ":reads-ip:" + ip);
-      const limit = await service.from("innerg_read_purchases").select("id", { count: "exact", head: true })
-        .eq("ip_hash", ipHash).gte("created_at", new Date(Date.now() - 3600000).toISOString());
-      check(limit);
-      if ((limit.count || 0) >= 8) fail("too many checkout attempts. please try again later.", 429);
-      check(await service.from("innerg_read_purchases").upsert({ slug: READ_SLUG, access_hash: accessHash, ip_hash: ipHash }, { onConflict: "access_hash", ignoreDuplicates: true }));
+    const amount = Number(body.amount) * 100;
+    if (!validSupportAmount(amount)) fail("choose a support amount from $1 to $5.");
+    if (!validSecret(body.intent)) fail("support checkout could not start. reload and try again.");
+    const intentHash = await hash(body.intent);
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
+    if (!ip) fail("support checkout is temporarily unavailable. please try again.", 503);
+    const ipHash = await hash(env("SUPABASE_SERVICE_ROLE_KEY") + ":read-support:" + ip);
+    const limit = await service.from("innerg_read_supports").select("id", { count: "exact", head: true })
+      .eq("ip_hash", ipHash).gte("created_at", new Date(Date.now() - 3600000).toISOString());
+    check(limit);
+    if ((limit.count || 0) >= 8) fail("too many checkout attempts. please try again later.", 429);
+    const existing = check(await service.from("innerg_read_supports").select("amount_cents,session_id,status")
+      .eq("intent_hash", intentHash).maybeSingle());
+    if (existing) {
+      if (existing.amount_cents !== amount) fail("choose the amount again and restart checkout.", 409);
+      if (existing.status === "paid") return reply({ alreadySupported: true });
+      if (existing.session_id) {
+        const prior = await stripe.checkout.sessions.retrieve(existing.session_id);
+        if (prior.status === "open" && prior.url) return reply({ checkoutUrl: prior.url });
+        if (prior.status === "complete") return reply({ alreadySupported: true });
+      }
+    } else {
+      check(await service.from("innerg_read_supports").insert({ slug: READ_SLUG, intent_hash: intentHash, ip_hash: ipHash, amount_cents: amount }));
     }
     const session = await stripe.checkout.sessions.create({ mode: "payment", payment_method_types: ["card"],
-      line_items: [{ quantity: 1, price_data: { currency: "usd", unit_amount: READ_PRICE,
-        product_data: { name: "a.r.t. era | innerg reads", description: "one personal essay by nasirr g. mayo. one-time purchase, no subscription." } } }],
-      metadata: { product_key: "innerg_read", read_slug: READ_SLUG, access_hash: accessHash },
-      success_url: READ_HOME + "#key=" + body.secret,
-      cancel_url: READ_HOME + "#checkout-cancelled",
-      custom_text: { submit: { message: "save your private reading link after payment. this purchase unlocks one essay and does not create an INNERG membership." } },
-    }, { idempotencyKey: "innerg-read:" + accessHash });
-    check(await service.from("innerg_read_purchases").update({ session_id: session.id }).eq("access_hash", accessHash));
+      line_items: [{ quantity: 1, price_data: { currency: "usd", unit_amount: amount,
+        product_data: { name: "support innerg reads", description: "optional support for future personal reads by nasirr g. mayo." } } }],
+      metadata: { product_key: "innerg_read_support", read_slug: READ_SLUG, support_amount: String(amount), support_intent: intentHash },
+      success_url: READ_HOME + "?support_session_id={CHECKOUT_SESSION_ID}#support",
+      cancel_url: READ_HOME + "#support",
+      custom_text: { submit: { message: "this is an optional one-time contribution. the full essay is free to read." } },
+    }, { idempotencyKey: "innerg-read-support:" + intentHash + ":" + amount });
+    check(await service.from("innerg_read_supports").update({ session_id: session.id }).eq("intent_hash", intentHash));
     return reply({ checkoutUrl: session.url });
   } catch (error) {
     const status = (error as any)?.status || 503;

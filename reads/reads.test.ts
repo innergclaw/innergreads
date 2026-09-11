@@ -1,4 +1,4 @@
-import { activePaidMember, memberCanRead, paidRead, settledCharge, validSecret, hash } from "../supabase/functions/innerg-reads/rules.ts";
+import { activePaidMember, memberCanRead, paidRead, settledCharge, paidSupport, settledSupport, validSupportAmount, validSecret, hash } from "../supabase/functions/innerg-reads/rules.ts";
 import { fulfillRead } from "../supabase/functions/watchlist-stripe-webhook/reads-fulfillment.ts";
 const assert = (value: unknown, message = "assertion failed") => { if (!value) throw new Error(message); };
 const now = Date.parse("2026-09-10T12:00:00Z");
@@ -35,6 +35,17 @@ Deno.test("refunds and disputes never unlock", () => {
   assert(settledCharge(intent));
   for(const change of [{refunded:true},{amount_refunded:1},{disputed:true},{paid:false}]) assert(!settledCharge({...intent,latest_charge:{...intent.latest_charge,...change}}));
   assert(!settledCharge({...intent,status:"processing"}));
+});
+Deno.test("support accepts whole dollar choices from one through five", () => {
+  for (const amount of [100,200,300,400,500]) assert(validSupportAmount(amount));
+  for (const amount of [0,99,101,550,600,NaN]) assert(!validSupportAmount(amount));
+});
+Deno.test("support confirmation needs the exact product, amount and settled charge", () => {
+  const support={...session,amount_total:300,metadata:{product_key:"innerg_read_support",read_slug:"art-era",support_amount:"300",support_intent:"hash"},
+    line_items:{data:[{quantity:1,price:{unit_amount:300,currency:"usd"}}]},payment_intent:{...session.payment_intent,amount_received:300}};
+  assert(paidSupport(support)); assert(settledSupport(support.payment_intent,300));
+  for (const change of [{amount_total:100},{payment_status:"unpaid"},{metadata:{...support.metadata,product_key:"innerg_read"}},{line_items:{data:[]}}]) assert(!paidSupport({...support,...change}));
+  assert(!settledSupport({...support.payment_intent,latest_charge:{...support.payment_intent.latest_charge,refunded:true}},300));
 });
 Deno.test("capability is validated and stored as a hash", async () => {
   assert(validSecret("a".repeat(64))); assert(!validSecret("short")); assert(!validSecret("x".repeat(64)));

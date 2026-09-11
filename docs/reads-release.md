@@ -4,48 +4,45 @@
 
 - `https://www.innergreads.study/reads/`
 - first essay: welcome to the a.r.t. era.
-- guests pay USD 1 once for this essay. this is not a subscription.
-- original active members with an issued innerg id have access included. active paid members with an issued id are also included while their paid access remains active.
-- the existing legacy in ink home page and book checkout remain in place.
+- the full essay is public. no account or payment is required to finish it.
+- after the essay, readers can optionally support future innerg reads with a one-time USD 1, 2, 3, 4 or 5 contribution through Stripe Checkout.
+- sign-in remains available only for saving a bookmark to an innerg account.
 
-## access and privacy
+## public reading and privacy
 
-the full manuscript is stored in `innerg_reads`, not in this repository. browser roles have no access to that table. the `innerg-reads` function verifies a Supabase user with `auth.getUser` and checks `innerg_memberships`. authorization does not use user metadata.
+the manuscript remains in `innerg_reads`. browser roles cannot query that table directly. the `innerg-reads` edge function returns the published essay and approved anonymous notes to the allowed innerg reads origins. it uses `Cache-Control: no-store` and never exposes the service-role key.
 
-included access requires an issued `membership_number` and `status=active`. original members identified by the server-owned `access_source=grandfathered` flag are included without a payment or expiry requirement. other members need `payment_verified=true` and a future `access_expires_at`. a number supplied in a request or user metadata never grants access. no membership rows or payment records were modified by this rule change.
+authenticated bookmark actions use the Supabase Auth server to verify the access token. authorization does not use user metadata. bookmark policies continue to restrict each account to its own rows.
 
-guest checkout starts with a random 256-bit reading key. the database stores only its SHA-256 hash. Stripe Checkout returns the key in the URL fragment. the page saves it to local storage and removes it from the address bar. the private link can be copied or downloaded for another device. it is a bearer link, so anyone who has it can use it. no automatic email of this key is implemented in v1.
+anonymous notes use a random browser reader id. the service stores only a salted one-way hash and allows one note per reader per UTC day. notes remain private until reviewed. review `innerg_read_feedback` before approving a note, and never publish personal details or abuse.
 
-the server checks the exact product, USD 1 amount, completed payment, settled charge, refunds and disputes before returning a guest read. the signed Stripe webhook records fulfillment independently of the return page. retries use a persisted attempt and Stripe idempotency key. revoked purchases stay revoked.
+## optional support
 
-the shared `watchlist-stripe-webhook` baseline was fetched from deployed version 15. version 16 added a separate `innerg_read` branch before the member logic. subsequent patch preserves manual revocation. no membership, video or watchlist payment conditions were changed. keep this shared function coordinated with the other ecosystem repositories.
+the support control is after the final essay paragraph. the native range input accepts whole-dollar choices from USD 1 through USD 5 and defaults to USD 3. the chosen amount is visible in the button before checkout.
 
-## notes and saved reads
+the server validates the amount and creates a one-time Stripe Checkout Session with inline price data. support does not unlock content, create membership or change an existing subscription. a random support intent and Stripe idempotency key prevent duplicate sessions on retry. `innerg_read_supports` stores hashed intent and IP values, amount, session id and confirmation state. browser roles have no access to this table. an hourly attempt limit reduces checkout-session abuse.
 
-bookmarks belong to the authenticated user. database policies enforce ownership. anonymous notes require an unlocked read, are capped at one per reader per UTC day, and remain private until reviewed. notes do not store the reader's name or email. the service uses a salted reader hash for repeat limits.
+the success URL contains Stripe's literal `{CHECKOUT_SESSION_ID}` placeholder. after Stripe redirects back, the server retrieves the session and confirms the exact product, read slug, amount, paid status, settled payment intent, and non-refunded, non-disputed charge before showing a confirmed message. Stripe remains the payment source of truth.
 
-review notes in Supabase `innerg_read_feedback`. approve individual notes after checking for personal details or abuse. never expose the review table directly to browser roles.
+the previous USD 1 read-unlock records and signed webhook handler remain intact for historical payment records, but new visitors do not use that flow.
 
 ## editorial source
 
 source conversation: `A R T Framework Rewrite`, id `6a9a42b4-4848-83e9-b657-22a7fd4e31aa`.
 
-the edition keeps the actions, reactions and relationship-expectations argument. copy is lowercase, with short fragments grouped for reading. the old subscriber-count promotion and an unverified NFL allegation were removed. the full protected edition is about 1,820 words.
+the edition keeps the actions, reactions and relationship-expectations argument. copy is lowercase, with short fragments grouped for reading. the old subscriber-count promotion and an unverified NFL allegation remain excluded. the public edition is about 1,820 words.
 
-## verification and remaining acceptance
+## verification
 
-automated tests cover paid membership, expired/unpaid access, wrong amount/currency/product/key, refunds/disputes, repeated webhook events, account return destinations, recovery, mobile overflow, keyboard focus, locked/member/guest views, bookmarks, notes and error handling.
+focused tests cover the public full-read response, signed-in bookmarks, anonymous notes, support amounts, exact Stripe product and amount checks, refunds and disputes, mobile overflow, keyboard focus, loading and error states, and reduced motion.
 
 commands:
 
 ```sh
 deno test reads/reads.test.ts
-node --test member-auth-flow.test.mjs
+deno check supabase/functions/innerg-reads/index.ts
+node --check reads/reads.mjs
 PLAYWRIGHT_MODULE=/path/to/playwright node reads/ui.test.cjs
 ```
 
-the UI suite uses synthetic responses, not real member records. live checks separately confirm anonymous denial, direct database denial, unsigned webhook denial and an unpaid Stripe Checkout session. no real payment was charged. complete one authorized purchase and verify return, private-link reuse and anonymous feedback before promoting the offer as fully purchase-tested.
-
-if a guest loses their key, verify the purchase in Stripe and ownership of the checkout email before support restores access. a screenshot or a claimed email alone is not proof. do not issue keys in public chat.
-
-existing project advisories remain: [leaked-password protection is disabled](https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection) and [pg_net is installed in public](https://supabase.com/docs/guides/database/database-linter?lint=0014_extension_in_public). no new warning-level advisory was introduced. tables intended for service-only access deliberately have no browser policies.
+do not claim a real support payment was tested unless an authorized live charge completes and the return confirmation is verified.
