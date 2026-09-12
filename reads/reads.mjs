@@ -1,4 +1,5 @@
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.4/+esm";
+import { formatCommentDate } from "./comment-date.mjs";
 const URL = "https://zkyhhoxcrjkhywblzehr.supabase.co";
 const KEY = "sb_publishable_bdi3BexAKWDBaUIh40hJ_A_8CNVdnM_";
 const client = createClient(URL, KEY);
@@ -56,7 +57,15 @@ async function refresh() {
       const note = document.createElement("blockquote"), by = document.createElement("small");
       note.textContent = comment.message;
       by.textContent = "anonymous reader";
-      note.append(by); $("comments").append(note);
+      note.append(by);
+      const submitted = formatCommentDate(comment.created_at);
+      if (submitted) {
+        const time = document.createElement("time");
+        time.dateTime = submitted.datetime;
+        time.textContent = "posted " + submitted.label;
+        note.append(time);
+      }
+      $("comments").append(note);
     }
   } catch (error) {
     if (id !== requestId) return;

@@ -14,7 +14,11 @@ the manuscript remains in `innerg_reads`. browser roles cannot query that table 
 
 authenticated bookmark actions use the Supabase Auth server to verify the access token. authorization does not use user metadata. bookmark policies continue to restrict each account to its own rows.
 
-anonymous notes use a random browser reader id. the service stores only a salted one-way hash and allows one note per reader per UTC day. notes remain private until reviewed. review `innerg_read_feedback` before approving a note, and never publish personal details or abuse.
+anonymous notes use a random browser reader id. the service stores only a salted one-way hash and allows one note per reader per UTC day. notes remain private until reviewed. use the private Founder Dashboard comment inbox to approve or deny a note, and never publish personal details or abuse.
+
+approved notes display their original submission date and time in Eastern time. the visible edt or est label follows the offset at submission. the semantic time element preserves the UTC instant. missing or invalid dates are omitted instead of replaced with an invented timestamp.
+
+three native dropdowns appear before the essay: actions, reactions, and transactions. each gives a short introduction based on the published essay. they support keyboard controls and work without JavaScript. the essay and the optional support offer are unchanged.
 
 ## optional support
 
@@ -42,6 +46,7 @@ commands:
 deno test reads/reads.test.ts
 deno check supabase/functions/innerg-reads/index.ts
 node --check reads/reads.mjs
+node --test reads/comment-date.test.mjs
 PLAYWRIGHT_MODULE=/path/to/playwright node reads/ui.test.cjs
 ```
 
