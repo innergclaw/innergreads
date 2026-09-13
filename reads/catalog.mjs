@@ -1,5 +1,18 @@
 export const reads = [
   {
+    slug: "philly-money-moving",
+    number: "003",
+    title: "is philly actually making money ~ or does it just look like money is moving?",
+    date: "2026-09-12",
+    dateLabel: "sep 12, 2026",
+    topics: "philadelphia / local economy / ownership",
+    summary: "there’s a difference between money being spent and wealth being built.",
+    archiveSummary: "visible spending, local circulation, business survival, and wealth that lasts.",
+    coverTitle: "money\nmoving?",
+    coverLines: "spending\ncirculation\nownership",
+    roomTitle: "is philly actually making money ~ or does it just look like money is moving?",
+  },
+  {
     slug: "pull-the-plug-on-intelligence",
     number: "002",
     title: "you can’t just “pull the plug” on intelligence",

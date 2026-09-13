@@ -3,6 +3,7 @@
 ## route and offer
 
 - `https://www.innergreads.study/reads/`
+- article 003: is philly actually making money ~ or does it just look like money is moving?, published sep 12, 2026.
 - article 002: you can’t just “pull the plug” on intelligence, published sep 12, 2026.
 - article 001: welcome to the a.r.t. era, published sep 11, 2026.
 - the full essay is public. no account or payment is required to finish it.
@@ -41,6 +42,8 @@ source conversation: `A R T Framework Rewrite`, id `6a9a42b4-4848-83e9-b657-22a7
 the edition keeps the actions, reactions and relationship-expectations argument. copy is lowercase, with short fragments grouped for reading. the old subscriber-count promotion and an unverified NFL allegation remain excluded. the public edition is about 1,820 words.
 
 article 002 preserves the title and 37 text blocks supplied by nasirr in the innerg reads publishing thread. the repository source is `content/reads/2026-09-12-pull-the-plug-on-intelligence.json`.
+
+article 003 preserves the title and 51 text blocks supplied by nasirr in the innerg reads publishing thread. the repository source is `content/reads/2026-09-12-philly-money-moving.json`.
 
 ## verification
 

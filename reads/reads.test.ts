@@ -6,6 +6,7 @@ const member = {status:"active",payment_verified:true,access_expires_at:"2026-10
 Deno.test("only published reader slugs are accepted", () => {
   assert(validReadSlug("art-era"));
   assert(validReadSlug("pull-the-plug-on-intelligence"));
+  assert(validReadSlug("philly-money-moving"));
   for (const value of ["", "unknown", "../art-era", null, 2]) assert(!validReadSlug(value));
 });
 Deno.test("only active paid unexpired membership unlocks", () => {
