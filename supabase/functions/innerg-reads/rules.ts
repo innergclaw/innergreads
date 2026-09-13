@@ -1,4 +1,5 @@
 export const READ_SLUG = "art-era";
+export const READ_SLUGS = new Set([READ_SLUG, "pull-the-plug-on-intelligence"]);
 export const READ_PRICE = 100;
 export const READ_HOME = "https://www.innergreads.study/reads/";
 export const SUPPORT_MIN = 100;
@@ -36,12 +37,14 @@ export function settledCharge(intent: any): boolean {
 export const validSupportAmount = (amount: unknown): amount is number =>
   Number.isInteger(amount) && Number(amount) >= SUPPORT_MIN && Number(amount) <= SUPPORT_MAX && Number(amount) % 100 === 0;
 
-export function paidSupport(session: any): boolean {
+export const validReadSlug = (value: unknown): value is string => typeof value === "string" && READ_SLUGS.has(value);
+
+export function paidSupport(session: any, readSlug = READ_SLUG): boolean {
   const amount = Number(session.metadata?.support_amount);
   const item = session.line_items?.data;
   return Boolean(validSupportAmount(amount) && session.status === "complete" && session.payment_status === "paid" &&
     session.mode === "payment" && session.currency === "usd" && session.amount_total === amount &&
-    session.metadata?.product_key === "innerg_read_support" && session.metadata?.read_slug === READ_SLUG &&
+    session.metadata?.product_key === "innerg_read_support" && session.metadata?.read_slug === readSlug &&
     item?.length === 1 && item[0].quantity === 1 && item[0].price?.unit_amount === amount && item[0].price?.currency === "usd");
 }
 

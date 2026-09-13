@@ -1,13 +1,15 @@
-# personal reads, first release
+# personal reads
 
 ## route and offer
 
 - `https://www.innergreads.study/reads/`
-- first essay: welcome to the a.r.t. era.
+- article 002: you can’t just “pull the plug” on intelligence, published sep 12, 2026.
+- article 001: welcome to the a.r.t. era, published sep 11, 2026.
 - the full essay is public. no account or payment is required to finish it.
 - after the essay, readers can optionally support future innerg reads with a one-time USD 1, 2, 3, 4 or 5 contribution through Stripe Checkout.
 - sign-in remains available only for saving a bookmark to an innerg account.
 - the article archive uses native accordion controls. each entry shows its article number, title, and upload date before it opens.
+- the newest article loads at `/reads/`. older articles use the allowlisted `?read=` query value. bookmarks, notes, and optional support remain tied to the selected article slug.
 
 ## public reading and privacy
 
@@ -37,6 +39,8 @@ source conversation: `A R T Framework Rewrite`, id `6a9a42b4-4848-83e9-b657-22a7
 
 the edition keeps the actions, reactions and relationship-expectations argument. copy is lowercase, with short fragments grouped for reading. the old subscriber-count promotion and an unverified NFL allegation remain excluded. the public edition is about 1,820 words.
 
+article 002 preserves the title and 37 text blocks supplied by nasirr in the innerg reads publishing thread. the repository source is `content/reads/2026-09-12-pull-the-plug-on-intelligence.json`.
+
 ## verification
 
 focused tests cover the public full-read response, signed-in bookmarks, anonymous notes, support amounts, exact Stripe product and amount checks, refunds and disputes, mobile overflow, keyboard focus, loading and error states, and reduced motion.
@@ -47,6 +51,7 @@ commands:
 deno test reads/reads.test.ts
 deno check supabase/functions/innerg-reads/index.ts
 node --check reads/reads.mjs
+node --test reads/catalog.test.mjs
 node --test reads/comment-date.test.mjs
 PLAYWRIGHT_MODULE=/path/to/playwright node reads/ui.test.cjs
 ```

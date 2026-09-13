@@ -1,10 +1,13 @@
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.4/+esm";
 import { formatCommentDate } from "./comment-date.mjs";
+import { defaultRead, findRead } from "./catalog.mjs";
 const URL = "https://zkyhhoxcrjkhywblzehr.supabase.co";
 const KEY = "sb_publishable_bdi3BexAKWDBaUIh40hJ_A_8CNVdnM_";
 const client = createClient(URL, KEY);
 const $ = id => document.getElementById(id);
 let signedIn = false, saved = false, requestId = 0;
+const requestedSlug = new URLSearchParams(location.search).get("read");
+const selectedRead = findRead(requestedSlug);
 const randomId = () => Array.from(crypto.getRandomValues(new Uint8Array(32)), n => n.toString(16).padStart(2, "0")).join("");
 let readerId = "";
 try {
@@ -19,10 +22,40 @@ async function api(action, extra = {}) {
   if (error) throw new Error("we could not check your sign-in. please try again.");
   const response = await fetch(URL + "/functions/v1/innerg-reads", { method: "POST", cache: "no-store",
     headers: { "Content-Type": "application/json", apikey: KEY, ...(data.session ? { Authorization: "Bearer " + data.session.access_token } : {}) },
-    body: JSON.stringify({ action, slug: "art-era", ...extra }), signal: AbortSignal.timeout(25000) });
+    body: JSON.stringify({ action, slug: selectedRead.slug, ...extra }), signal: AbortSignal.timeout(25000) });
   const result = await response.json();
   if (!response.ok) throw Object.assign(new Error(result.error || "please try again."), { status: response.status });
   return result;
+}
+
+function applyRead() {
+  document.title = `innerg reads | ${selectedRead.title}`;
+  document.querySelector('meta[name="description"]').content = `read ${selectedRead.title} by nasirr g. mayo. the full personal essay is public. readers can support innerg reads with $1 to $5 after reading.`;
+  document.querySelector('link[rel="canonical"]').href = selectedRead === defaultRead ? location.origin + location.pathname : location.origin + location.pathname + `?read=${selectedRead.slug}`;
+  $("collection-number").textContent = `the personal reads collection / no. ${selectedRead.number}`;
+  $("cover-number").textContent = selectedRead.number;
+  $("cover-title").replaceChildren();
+  if (selectedRead.slug === "art-era") {
+    $("cover-title").append("a", Object.assign(document.createElement("span"), { textContent: "." }), "r", Object.assign(document.createElement("span"), { textContent: "." }), "t", Object.assign(document.createElement("span"), { textContent: "." }));
+  } else $("cover-title").textContent = selectedRead.coverTitle;
+  $("cover-title").dataset.short = String(!selectedRead.coverTitle.includes("\n"));
+  $("cover-lines").textContent = selectedRead.coverLines;
+  $("feature-topics").textContent = selectedRead.topics;
+  $("read-title").textContent = selectedRead.title;
+  $("read-summary").textContent = selectedRead.summary;
+  $("room-kicker").textContent = `${selectedRead.number} / ${selectedRead.title.replace(/[.“”]/g, "").replace(/^welcome to /, "")}`;
+  $("room-title").textContent = selectedRead.roomTitle;
+  for (const link of document.querySelectorAll("[data-read-slug]")) {
+    if (link.dataset.readSlug === selectedRead.slug) link.setAttribute("aria-current", "page");
+    else link.removeAttribute("aria-current");
+  }
+  const concepts = $("concepts");
+  concepts.querySelectorAll("details").forEach(detail => detail.remove());
+  for (const [name, copy] of selectedRead.concepts || []) {
+    const detail = document.createElement("details"), summary = document.createElement("summary"), paragraph = document.createElement("p");
+    summary.textContent = name; paragraph.textContent = copy; detail.append(summary, paragraph); concepts.append(detail);
+  }
+  concepts.hidden = !selectedRead.concepts?.length;
 }
 
 function renderBody(blocks) {
@@ -110,8 +143,8 @@ $("support-button").addEventListener("click", async () => {
     let intent = "";
     try {
       const stored = JSON.parse(sessionStorage.getItem("innerg-read-support") || "null");
-      intent = stored?.amount === amount && /^[a-f0-9]{64}$/.test(stored.intent) ? stored.intent : randomId();
-      sessionStorage.setItem("innerg-read-support", JSON.stringify({ amount, intent }));
+      intent = stored?.slug === selectedRead.slug && stored?.amount === amount && /^[a-f0-9]{64}$/.test(stored.intent) ? stored.intent : randomId();
+      sessionStorage.setItem("innerg-read-support", JSON.stringify({ slug: selectedRead.slug, amount, intent }));
     } catch { intent = randomId(); }
     const result = await api("support_checkout", { amount, intent });
     if (result.alreadySupported) {
@@ -134,11 +167,14 @@ $("feedback-form").addEventListener("submit", async event => {
 });
 client.auth.onAuthStateChange(() => setTimeout(refresh, 0));
 updateSupport();
+applyRead();
 await refresh();
 
 const supportSession = new URLSearchParams(location.search).get("support_session_id");
 if (supportSession) {
-  history.replaceState(null, "", location.pathname + "#support");
+  const cleanUrl = new URL(location.href);
+  cleanUrl.searchParams.delete("support_session_id");
+  history.replaceState(null, "", cleanUrl.pathname + cleanUrl.search + "#support");
   supportStatus("confirming your support...");
   try {
     const result = await api("support_status", { sessionId: supportSession });

@@ -1,8 +1,13 @@
-import { activePaidMember, memberCanRead, paidRead, settledCharge, paidSupport, settledSupport, validSupportAmount, validSecret, hash } from "../supabase/functions/innerg-reads/rules.ts";
+import { activePaidMember, memberCanRead, paidRead, settledCharge, paidSupport, settledSupport, validReadSlug, validSupportAmount, validSecret, hash } from "../supabase/functions/innerg-reads/rules.ts";
 import { fulfillRead } from "../supabase/functions/watchlist-stripe-webhook/reads-fulfillment.ts";
 const assert = (value: unknown, message = "assertion failed") => { if (!value) throw new Error(message); };
 const now = Date.parse("2026-09-10T12:00:00Z");
 const member = {status:"active",payment_verified:true,access_expires_at:"2026-10-10T12:00:00Z"};
+Deno.test("only published reader slugs are accepted", () => {
+  assert(validReadSlug("art-era"));
+  assert(validReadSlug("pull-the-plug-on-intelligence"));
+  for (const value of ["", "unknown", "../art-era", null, 2]) assert(!validReadSlug(value));
+});
 Deno.test("only active paid unexpired membership unlocks", () => {
   assert(activePaidMember(member,now));
   for (const value of [null,{}, {...member,payment_verified:false}, {...member,status:"past_due"}, {...member,access_expires_at:null}, {...member,access_expires_at:"2026-09-09"}]) assert(!activePaidMember(value,now));
@@ -44,6 +49,7 @@ Deno.test("support confirmation needs the exact product, amount and settled char
   const support={...session,amount_total:300,metadata:{product_key:"innerg_read_support",read_slug:"art-era",support_amount:"300",support_intent:"hash"},
     line_items:{data:[{quantity:1,price:{unit_amount:300,currency:"usd"}}]},payment_intent:{...session.payment_intent,amount_received:300}};
   assert(paidSupport(support)); assert(settledSupport(support.payment_intent,300));
+  assert(!paidSupport(support,"pull-the-plug-on-intelligence"));
   for (const change of [{amount_total:100},{payment_status:"unpaid"},{metadata:{...support.metadata,product_key:"innerg_read"}},{line_items:{data:[]}}]) assert(!paidSupport({...support,...change}));
   assert(!settledSupport({...support.payment_intent,latest_charge:{...support.payment_intent.latest_charge,refunded:true}},300));
 });

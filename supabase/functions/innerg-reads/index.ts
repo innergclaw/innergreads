@@ -1,7 +1,7 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import Stripe from "npm:stripe@22.6.1";
 import { createClient } from "npm:@supabase/supabase-js@2.112.4";
-import { hash, paidSupport, settledSupport, validSecret, validSupportAmount, READ_SLUG, READ_HOME } from "./rules.ts";
+import { hash, paidSupport, settledSupport, validReadSlug, validSecret, validSupportAmount, READ_HOME } from "./rules.ts";
 
 const origins = new Set(["https://www.innergreads.study", "https://innergreads.study"]);
 const env = (key: string) => Deno.env.get(key) || "";
@@ -23,10 +23,11 @@ Deno.serve(async (req: Request) => {
     const raw = await req.text();
     if (raw.length > 8000) return reply({ error: "request is too long" }, 413);
     const body = JSON.parse(raw);
-    if (body.slug !== READ_SLUG) return reply({ error: "read not found" }, 404);
+    if (!validReadSlug(body.slug)) return reply({ error: "read not found" }, 404);
+    const readSlug = body.slug;
     const action = body.action;
     if (!["access", "support_checkout", "support_status", "bookmark", "feedback"].includes(action)) fail("unknown request");
-    const article = check(await service.from("innerg_reads").select("slug,title,body,published").eq("slug", READ_SLUG).maybeSingle());
+    const article = check(await service.from("innerg_reads").select("slug,title,body,published").eq("slug", readSlug).maybeSingle());
     if (!article?.published) return reply({ error: "this read is not available yet" }, 404);
 
     let user: any = null;
@@ -37,17 +38,17 @@ Deno.serve(async (req: Request) => {
       user = result.data.user;
     }
     if (action === "access") {
-      const saved = user ? check(await service.from("innerg_read_bookmarks").select("slug").eq("user_id", user.id).eq("slug", READ_SLUG).maybeSingle()) : null;
+      const saved = user ? check(await service.from("innerg_read_bookmarks").select("slug").eq("user_id", user.id).eq("slug", readSlug).maybeSingle()) : null;
       const comments = check(await service.from("innerg_read_feedback").select("message,created_at")
-        .eq("slug", READ_SLUG).eq("approved", true).order("created_at", { ascending: false }).limit(20));
+        .eq("slug", readSlug).eq("approved", true).order("created_at", { ascending: false }).limit(20));
       return reply({ access: "public", signedIn: Boolean(user), bookmarked: Boolean(saved), title: article.title,
         body: article.body, comments });
     }
     if (action === "bookmark") {
       if (!user) fail("sign in to save this read to your account.", 401);
       if (typeof body.saved !== "boolean") fail("choose whether to save this read.");
-      if (body.saved) check(await service.from("innerg_read_bookmarks").upsert({ user_id: user.id, slug: READ_SLUG }, { onConflict: "user_id,slug" }));
-      else check(await service.from("innerg_read_bookmarks").delete().eq("user_id", user.id).eq("slug", READ_SLUG));
+      if (body.saved) check(await service.from("innerg_read_bookmarks").upsert({ user_id: user.id, slug: readSlug }, { onConflict: "user_id,slug" }));
+      else check(await service.from("innerg_read_bookmarks").delete().eq("user_id", user.id).eq("slug", readSlug));
       return reply({ saved: body.saved });
     }
     if (action === "feedback") {
@@ -55,7 +56,7 @@ Deno.serve(async (req: Request) => {
       const message = typeof body.message === "string" ? body.message.trim() : "";
       if (message.length < 3 || message.length > 1500) fail("write a note between 3 and 1,500 characters.");
       const readerHash = await hash(env("SUPABASE_SERVICE_ROLE_KEY") + ":reads:" + body.readerId);
-      const { error } = await service.from("innerg_read_feedback").insert({ slug: READ_SLUG, reader_hash: readerHash, message });
+      const { error } = await service.from("innerg_read_feedback").insert({ slug: readSlug, reader_hash: readerHash, message });
       if (error?.code === "23505") fail("your note for today is already saved. thank you.", 409);
       if (error) fail("your note could not be saved. please try again.", 503);
       return reply({ received: true });
@@ -64,7 +65,7 @@ Deno.serve(async (req: Request) => {
       if (typeof body.sessionId !== "string" || !/^cs_(test_|live_)?[A-Za-z0-9]+$/.test(body.sessionId)) fail("support session not found.");
       const session = await stripe.checkout.sessions.retrieve(body.sessionId, { expand: ["line_items", "payment_intent.latest_charge"] });
       const amount = Number(session.metadata?.support_amount);
-      const confirmed = paidSupport(session) && settledSupport(session.payment_intent, amount);
+      const confirmed = paidSupport(session, readSlug) && settledSupport(session.payment_intent, amount);
       if (confirmed) check(await service.from("innerg_read_supports").update({ status: "paid", confirmed_at: new Date().toISOString() }).eq("session_id", body.sessionId));
       return reply({ confirmed, amount: validSupportAmount(amount) ? amount / 100 : null });
     }
@@ -90,16 +91,16 @@ Deno.serve(async (req: Request) => {
         if (prior.status === "complete") return reply({ alreadySupported: true });
       }
     } else {
-      check(await service.from("innerg_read_supports").insert({ slug: READ_SLUG, intent_hash: intentHash, ip_hash: ipHash, amount_cents: amount }));
+      check(await service.from("innerg_read_supports").insert({ slug: readSlug, intent_hash: intentHash, ip_hash: ipHash, amount_cents: amount }));
     }
     const session = await stripe.checkout.sessions.create({ mode: "payment", payment_method_types: ["card"],
       line_items: [{ quantity: 1, price_data: { currency: "usd", unit_amount: amount,
         product_data: { name: "support innerg reads", description: "optional support for future personal reads by nasirr g. mayo." } } }],
-      metadata: { product_key: "innerg_read_support", read_slug: READ_SLUG, support_amount: String(amount), support_intent: intentHash },
-      success_url: READ_HOME + "?support_session_id={CHECKOUT_SESSION_ID}#support",
-      cancel_url: READ_HOME + "#support",
+      metadata: { product_key: "innerg_read_support", read_slug: readSlug, support_amount: String(amount), support_intent: intentHash },
+      success_url: READ_HOME + "?read=" + encodeURIComponent(readSlug) + "&support_session_id={CHECKOUT_SESSION_ID}#support",
+      cancel_url: READ_HOME + "?read=" + encodeURIComponent(readSlug) + "#support",
       custom_text: { submit: { message: "this is an optional one-time contribution. the full essay is free to read." } },
-    }, { idempotencyKey: "innerg-read-support:" + intentHash + ":" + amount });
+    }, { idempotencyKey: "innerg-read-support:" + readSlug + ":" + intentHash + ":" + amount });
     check(await service.from("innerg_read_supports").update({ session_id: session.id }).eq("intent_hash", intentHash));
     return reply({ checkoutUrl: session.url });
   } catch (error) {
