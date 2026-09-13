@@ -11,10 +11,10 @@ test("the newest dated read is the default", () => {
   assert.deepEqual(reads.map(read => read.number), ["002", "001"]);
 });
 
-test("known read slugs resolve and unknown slugs return the newest read", () => {
+test("known read slugs resolve and unknown slugs do not open an article", () => {
   assert.equal(findRead("art-era").number, "001");
   assert.equal(findRead("pull-the-plug-on-intelligence").number, "002");
-  assert.equal(findRead("not-a-read"), defaultRead);
+  assert.equal(findRead("not-a-read"), undefined);
 });
 
 test("article 002 has a publishable body with the supplied opening and close", async () => {

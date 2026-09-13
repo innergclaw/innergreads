@@ -33,4 +33,4 @@ export const reads = [
 ];
 
 export const defaultRead = reads[0];
-export const findRead = slug => reads.find(read => read.slug === slug) || defaultRead;
+export const findRead = slug => reads.find(read => read.slug === slug);

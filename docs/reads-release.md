@@ -9,7 +9,8 @@
 - after the essay, readers can optionally support future innerg reads with a one-time USD 1, 2, 3, 4 or 5 contribution through Stripe Checkout.
 - sign-in remains available only for saving a bookmark to an innerg account.
 - the article archive uses native accordion controls. each entry shows its article number, title, and upload date before it opens.
-- the newest article loads at `/reads/`. older articles use the allowlisted `?read=` query value. bookmarks, notes, and optional support remain tied to the selected article slug.
+- `/reads/` is the collection index. it shows the introduction, dated article accordion, author note, and footer without a featured article or full manuscript.
+- each article opens through its allowlisted `?read=` query value. only the article view shows the cover, manuscript, bookmark, moderated notes, and optional support. these actions remain tied to the selected article slug.
 
 ## public reading and privacy
 

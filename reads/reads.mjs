@@ -1,13 +1,13 @@
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.4/+esm";
 import { formatCommentDate } from "./comment-date.mjs";
-import { defaultRead, findRead } from "./catalog.mjs";
+import { findRead } from "./catalog.mjs";
 const URL = "https://zkyhhoxcrjkhywblzehr.supabase.co";
 const KEY = "sb_publishable_bdi3BexAKWDBaUIh40hJ_A_8CNVdnM_";
 const client = createClient(URL, KEY);
 const $ = id => document.getElementById(id);
 let signedIn = false, saved = false, requestId = 0;
 const requestedSlug = new URLSearchParams(location.search).get("read");
-const selectedRead = findRead(requestedSlug);
+const selectedRead = requestedSlug ? findRead(requestedSlug) : null;
 const randomId = () => Array.from(crypto.getRandomValues(new Uint8Array(32)), n => n.toString(16).padStart(2, "0")).join("");
 let readerId = "";
 try {
@@ -31,7 +31,7 @@ async function api(action, extra = {}) {
 function applyRead() {
   document.title = `innerg reads | ${selectedRead.title}`;
   document.querySelector('meta[name="description"]').content = `read ${selectedRead.title} by nasirr g. mayo. the full personal essay is public. readers can support innerg reads with $1 to $5 after reading.`;
-  document.querySelector('link[rel="canonical"]').href = selectedRead === defaultRead ? location.origin + location.pathname : location.origin + location.pathname + `?read=${selectedRead.slug}`;
+  document.querySelector('link[rel="canonical"]').href = location.origin + location.pathname + `?read=${selectedRead.slug}`;
   $("collection-number").textContent = `the personal reads collection / no. ${selectedRead.number}`;
   $("cover-number").textContent = selectedRead.number;
   $("cover-title").replaceChildren();
@@ -56,6 +56,22 @@ function applyRead() {
     summary.textContent = name; paragraph.textContent = copy; detail.append(summary, paragraph); concepts.append(detail);
   }
   concepts.hidden = !selectedRead.concepts?.length;
+  $("index-intro").hidden = true;
+  $("read-index").hidden = true;
+  $("article-nav").hidden = false;
+  $("article-feature").hidden = false;
+  $("reading-room").hidden = false;
+}
+
+function applyIndex() {
+  document.title = "innerg reads | personal essays by nasirr g. mayo";
+  document.querySelector('meta[name="description"]').content = "browse personal essays by nasirr g. mayo on people, technology, relationships, responsibility, and the futures we say we want.";
+  document.querySelector('link[rel="canonical"]').href = location.origin + location.pathname;
+  $("index-intro").hidden = false;
+  $("read-index").hidden = false;
+  $("article-nav").hidden = true;
+  $("article-feature").hidden = true;
+  $("reading-room").hidden = true;
 }
 
 function renderBody(blocks) {
@@ -165,13 +181,15 @@ $("feedback-form").addEventListener("submit", async event => {
   } catch (error) { $("feedback-status").textContent = error.message; }
   finally { button.disabled = false; }
 });
-client.auth.onAuthStateChange(() => setTimeout(refresh, 0));
 updateSupport();
-applyRead();
-await refresh();
+if (selectedRead) {
+  client.auth.onAuthStateChange(() => setTimeout(refresh, 0));
+  applyRead();
+  await refresh();
+} else applyIndex();
 
 const supportSession = new URLSearchParams(location.search).get("support_session_id");
-if (supportSession) {
+if (selectedRead && supportSession) {
   const cleanUrl = new URL(location.href);
   cleanUrl.searchParams.delete("support_session_id");
   history.replaceState(null, "", cleanUrl.pathname + cleanUrl.search + "#support");
