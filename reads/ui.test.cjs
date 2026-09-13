@@ -96,6 +96,18 @@ const assert = require('node:assert/strict');
     await page.screenshot({path:'/tmp/innerg-reads-index-'+width+'.png',fullPage:true}); await page.close();
     console.log(width+'px: homepage contains only the intro, dated accordion, closing section and footer');
   }
+  {
+    const page=await browser.newPage({viewport:{width:390,height:900}});
+    await page.route('https://cdn.jsdelivr.net/**', route=>route.fulfill({contentType:'application/javascript',body:'export function createClient(){return {auth:{async getSession(){return {data:{session:null},error:null}},onAuthStateChange(){}}}}'}));
+    await page.route('**/functions/v1/innerg-reads', route=>route.fulfill({json:{access:'public',signedIn:false,bookmarked:false,body:[{type:'paragraph',text:'article return test passage.'}],comments:[]}}));
+    await page.goto(origin+'/reads/?read=philly-money-moving'); await page.locator('#full-read').waitFor({state:'visible'});
+    await page.locator('#bookmark').click(); await page.waitForURL('**/account/?from=reads&read=philly-money-moving');
+    assert.equal(await page.locator('#member-return-link').textContent(),'Back to article');
+    assert.equal(await page.locator('#member-return-link').getAttribute('href'),'/reads/?read=philly-money-moving#reading-room');
+    assert.equal(await page.locator('#member-email-form button').allTextContents().then(values=>values.join('|')),'Create account|Sign in');
+    await page.locator('#member-return-link').click(); await page.waitForURL('**/reads/?read=philly-money-moving#reading-room');
+    await page.close(); console.log('signed-out save opens InnerG ID access and returns to the selected article');
+  }
   const noScript=await browser.newPage({javaScriptEnabled:false,viewport:{width:390,height:900}});
   await noScript.goto(origin+'/reads/');
   await noScript.locator('.read-list summary').first().click();

@@ -45,6 +45,7 @@ function applyRead() {
   $("read-summary").textContent = selectedRead.summary;
   $("room-kicker").textContent = `${selectedRead.number} / ${selectedRead.title.replace(/[.“”]/g, "").replace(/^welcome to /, "")}`;
   $("room-title").textContent = selectedRead.roomTitle;
+  $("sign-in").href = `/account/?from=reads&read=${encodeURIComponent(selectedRead.slug)}`;
   for (const link of document.querySelectorAll("[data-read-slug]")) {
     if (link.dataset.readSlug === selectedRead.slug) link.setAttribute("aria-current", "page");
     else link.removeAttribute("aria-current");
@@ -129,7 +130,7 @@ async function refresh() {
 
 $("retry").addEventListener("click", refresh);
 $("bookmark").addEventListener("click", async () => {
-  if (!signedIn) { location.assign("/account/?from=reads"); return; }
+  if (!signedIn) { location.assign(`/account/?from=reads&read=${encodeURIComponent(selectedRead.slug)}`); return; }
   $("bookmark").disabled = true;
   try { const result = await api("bookmark", { saved: !saved }); saved = result.saved;
     $("bookmark").textContent = saved ? "saved to my reads" : "save this read";

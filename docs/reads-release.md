@@ -12,6 +12,7 @@
 - the article archive uses native accordion controls. each entry shows its article number, title, and upload date before it opens.
 - `/reads/` is the collection index. it shows the introduction, dated article accordion, author note, and footer without a featured article or full manuscript.
 - each article opens through its allowlisted `?read=` query value. only the article view shows the cover, manuscript, bookmark, moderated notes, and optional support. these actions remain tied to the selected article slug.
+- choosing save while signed out opens the InnerG ID account page for sign-in or account creation. the account-page return link and the successful sign-in redirect preserve the selected article slug and return to that article.
 
 ## public reading and privacy
 

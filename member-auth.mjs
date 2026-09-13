@@ -8,10 +8,16 @@ const page = document.body.dataset.memberPage;
 const status = document.querySelector("#member-status");
 let redirecting = false;
 let recoveryMode = isRecoveryCallback(window.location.hash);
-let returnToReads = new URLSearchParams(window.location.search).get("from") === "reads";
+const query = new URLSearchParams(window.location.search);
+let returnSearch = query.get("from") === "reads"
+  ? `?from=reads${query.get("read") ? `&read=${encodeURIComponent(query.get("read"))}` : ""}`
+  : "";
 try {
-  if (returnToReads) sessionStorage.setItem("innerg-reads-return", "1");
-  else returnToReads = sessionStorage.getItem("innerg-reads-return") === "1";
+  if (returnSearch) sessionStorage.setItem("innerg-reads-return", returnSearch);
+  else {
+    const stored = sessionStorage.getItem("innerg-reads-return") || "";
+    returnSearch = stored === "1" ? "?from=reads" : stored;
+  }
 } catch { /* Direct email sign-in can still use the fixed query destination. */ }
 
 const setStatus = (message, state = "") => {
@@ -26,14 +32,20 @@ const openDashboard = () => {
   if (redirecting) return;
   redirecting = true;
   try { sessionStorage.removeItem("innerg-reads-return"); } catch { /* Storage is optional. */ }
-  window.location.replace(accountDestination(returnToReads ? "?from=reads" : ""));
+  window.location.replace(accountDestination(returnSearch));
 };
 
 const initializeAccount = async () => {
+  const returnLink = document.querySelector("#member-return-link");
   const providerButton = document.querySelector("[data-provider='google']");
   const emailForm = document.querySelector("#member-email-form");
   const recoveryForm = document.querySelector("#member-recovery-form");
   const signInButton = document.querySelector("[data-email-action='signin']");
+
+  if (returnLink && returnSearch) {
+    returnLink.href = accountDestination(returnSearch);
+    if (new URLSearchParams(returnSearch).get("read")) returnLink.textContent = "Back to article";
+  }
 
   const showRecovery = () => {
     recoveryMode = true;
