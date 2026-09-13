@@ -7,6 +7,7 @@
 - the full essay is public. no account or payment is required to finish it.
 - after the essay, readers can optionally support future innerg reads with a one-time USD 1, 2, 3, 4 or 5 contribution through Stripe Checkout.
 - sign-in remains available only for saving a bookmark to an innerg account.
+- the article archive uses native accordion controls. each entry shows its article number, title, and upload date before it opens.
 
 ## public reading and privacy
 
