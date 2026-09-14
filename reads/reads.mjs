@@ -79,7 +79,11 @@ function renderBody(blocks) {
   $("full-read").replaceChildren();
   for (const block of blocks || []) {
     const el = document.createElement(block.type === "heading" ? "h3" : "p");
-    el.textContent = block.text;
+    if (block.type === "emphasis") {
+      const strong = document.createElement("strong");
+      strong.textContent = block.text;
+      el.append(strong);
+    } else el.textContent = block.text;
     $("full-read").append(el);
   }
 }

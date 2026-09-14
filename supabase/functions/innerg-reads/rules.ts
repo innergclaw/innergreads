@@ -1,5 +1,5 @@
 export const READ_SLUG = "art-era";
-export const READ_SLUGS = new Set([READ_SLUG, "pull-the-plug-on-intelligence", "philly-money-moving"]);
+export const READ_SLUGS = new Set([READ_SLUG, "pull-the-plug-on-intelligence", "philly-money-moving", "black-men-step-up"]);
 export const READ_PRICE = 100;
 export const READ_HOME = "https://www.innergreads.study/reads/";
 export const SUPPORT_MIN = 100;

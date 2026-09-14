@@ -3,6 +3,7 @@
 ## route and offer
 
 - `https://www.innergreads.study/reads/`
+- article 004: calling black men, especially younger black men, back toward discipline, purpose, education, mentorship + thinking beyond the immediate moment, published sep 14, 2026.
 - article 003: is philly actually making money ~ or does it just look like money is moving?, published sep 12, 2026.
 - article 002: you can’t just “pull the plug” on intelligence, published sep 12, 2026.
 - article 001: welcome to the a.r.t. era, published sep 11, 2026.
@@ -45,6 +46,8 @@ the edition keeps the actions, reactions and relationship-expectations argument.
 article 002 preserves the title and 37 text blocks supplied by nasirr in the innerg reads publishing thread. the repository source is `content/reads/2026-09-12-pull-the-plug-on-intelligence.json`.
 
 article 003 preserves the title and 51 text blocks supplied by nasirr in the innerg reads publishing thread. the repository source is `content/reads/2026-09-12-philly-money-moving.json`.
+
+article 004 preserves the title and 56 supplied text blocks. the two statements marked for emphasis render in bold without visible markdown marks. the repository source is `content/reads/2026-09-14-black-men-step-up.json`.
 
 ## verification
 

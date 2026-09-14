@@ -1,5 +1,18 @@
 export const reads = [
   {
+    slug: "black-men-step-up",
+    number: "004",
+    title: "calling black men, especially younger black men, back toward discipline, purpose, education, mentorship + thinking beyond the immediate moment.",
+    date: "2026-09-14",
+    dateLabel: "sep 14, 2026",
+    topics: "black men / discipline / mentorship",
+    summary: "black men .. we gotta step up.",
+    archiveSummary: "discipline, purpose, education, mentorship + thinking beyond the immediate moment.",
+    coverTitle: "step\nup.",
+    coverLines: "discipline\npurpose\nmentorship",
+    roomTitle: "calling black men, especially younger black men, back toward discipline, purpose, education, mentorship + thinking beyond the immediate moment.",
+  },
+  {
     slug: "philly-money-moving",
     number: "003",
     title: "is philly actually making money ~ or does it just look like money is moving?",

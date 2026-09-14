@@ -7,6 +7,7 @@ Deno.test("only published reader slugs are accepted", () => {
   assert(validReadSlug("art-era"));
   assert(validReadSlug("pull-the-plug-on-intelligence"));
   assert(validReadSlug("philly-money-moving"));
+  assert(validReadSlug("black-men-step-up"));
   for (const value of ["", "unknown", "../art-era", null, 2]) assert(!validReadSlug(value));
 });
 Deno.test("only active paid unexpired membership unlocks", () => {
