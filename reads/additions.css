@@ -1,0 +1,11 @@
+.support-story-copy{display:grid;gap:24px}
+.support-story-copy p{margin:0;color:var(--muted);font-size:17px;line-height:1.75}
+.support-story-copy .button{width:max-content;color:var(--white)}
+.support-story .cover-title{font-size:clamp(50px,7vw,92px);line-height:.86}
+.support-page .reading-room{padding-top:72px}
+.support-page .prose h2{font-family:var(--serif);font-size:clamp(36px,5vw,52px);font-weight:400;line-height:1.1;letter-spacing:-.03em;margin:0 0 40px}
+.support-page .support{margin-bottom:56px}
+.support-page .support input[disabled]{opacity:1;cursor:default}
+.support-explainer-link{display:inline-block;min-height:44px;padding:12px 0;color:inherit;font-size:13px;font-weight:600}
+.site-header nav a[aria-current=page]{text-decoration:underline;text-decoration-thickness:2px}
+@media(max-width:700px){.site-header nav{justify-content:flex-start;flex-wrap:wrap;gap:4px 18px}.site-header nav a,.site-header nav button{min-height:44px}.support-story-copy .button{width:100%}.support-page .reading-room{padding-top:48px}}

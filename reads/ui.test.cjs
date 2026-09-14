@@ -20,6 +20,7 @@ const assert = require('node:assert/strict');
     await page.goto(origin+'/reads/?read=art-era');
     await page.locator('#full-read').waitFor({state:'visible'});
     assert.equal(await page.locator('#support').isVisible(),true);
+    assert.equal(await page.locator('.support-explainer-link').getAttribute('href'),'./pay-as-you-wish/');
     assert.equal(await page.locator('#paywall').count(),0);
     assert((await page.locator('body').textContent()).includes('full public test passage.'));
     assert.equal(await page.locator('#read-index').isVisible(),false);
@@ -80,6 +81,7 @@ const assert = require('node:assert/strict');
     await page.goto(origin+'/reads/');
     assert.equal(await page.locator('#index-intro').isVisible(),true);
     assert.equal(await page.locator('#read-index').isVisible(),true);
+    assert.equal(await page.locator('nav a').filter({hasText:'pay as you wish'}).getAttribute('href'),'./pay-as-you-wish/');
     assert.equal(await page.locator('#article-feature').isVisible(),false);
     assert.equal(await page.locator('#reading-room').isVisible(),false);
     assert.equal(await page.locator('#support').isVisible(),false);
@@ -96,6 +98,21 @@ const assert = require('node:assert/strict');
     assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'article index horizontal overflow');
     await page.screenshot({path:'/tmp/innerg-reads-index-'+width+'.png',fullPage:true}); await page.close();
     console.log(width+'px: homepage contains only the intro, dated accordion, closing section and footer');
+  }
+  for (const width of [1440,390]) {
+    const page=await browser.newPage({viewport:{width,height:900}});
+    await page.goto(origin+'/reads/pay-as-you-wish/');
+    assert.equal(await page.locator('h1').textContent(),'the writing stays free.the support stays yours.');
+    assert.equal(await page.locator('nav a[aria-current="page"]').textContent(),'pay as you wish');
+    assert((await page.locator('.support-story-copy').textContent()).includes('i’m in a transitional stage'));
+    assert((await page.locator('.support-story-copy').textContent()).includes('when somebody gives even $1'));
+    assert.equal(await page.locator('#slider-example').getAttribute('min'),'1');
+    assert.equal(await page.locator('#slider-example').getAttribute('max'),'5');
+    assert.equal(await page.locator('#slider-example').isDisabled(),true);
+    assert((await page.locator('.support').textContent()).includes('there is no locked ending and no pressure to pay'));
+    assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'pay as you wish page horizontal overflow');
+    await page.screenshot({path:'/tmp/innerg-pay-as-you-wish-'+width+'.png',fullPage:true}); await page.close();
+    console.log(width+'px: pay as you wish explanation and personal writing note passed');
   }
   {
     const page=await browser.newPage({viewport:{width:390,height:900}});
