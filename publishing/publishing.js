@@ -13,7 +13,6 @@ inquiryForm?.addEventListener("submit", (event) => {
   const targetDate = String(data.get("target_date") || "Not supplied").trim();
   const note = String(data.get("project_note") || "").trim();
 
-  const subject = `INNERGREADS PUBLISHING inquiry: ${projectType}`;
   const body = [
     "INNERGREADS PUBLISHING inquiry",
     "",
@@ -30,6 +29,6 @@ inquiryForm?.addEventListener("submit", (event) => {
     "I understand that no payment or manuscript file was submitted through this form.",
   ].join("\n");
 
-  inquiryStatus.textContent = "Your email app will open with the project details. Review the message, then send it.";
-  window.location.href = `mailto:nasgfx215@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  inquiryStatus.textContent = "Your Messages app will open with the project details. Review the text, then send it.";
+  window.location.href = `sms:+12674730397?body=${encodeURIComponent(body)}`;
 });

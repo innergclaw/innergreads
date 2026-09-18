@@ -27,7 +27,11 @@ test("publishing page contains the approved services and prices", () => {
 test("publishing page has one clear inquiry flow", () => {
   assert.match(html, /id="publishing-inquiry-form"/);
   assert.match(html, /href="#inquiry"/);
-  assert.match(script, /mailto:nasgfx215@gmail\.com/);
+  assert.match(html, /href="sms:\+12674730397"/);
+  assert.match(html, /Text me now to get started/);
+  assert.match(script, /sms:\+12674730397\?body=/);
+  assert.doesNotMatch(html, /nasgfx215@gmail\.com/);
+  assert.doesNotMatch(script, /nasgfx215@gmail\.com/);
   assert.match(html, /No payment is collected on this page/);
 });
 
