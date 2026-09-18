@@ -3,7 +3,8 @@ import Stripe from "npm:stripe@22.6.1";
 import { createClient } from "npm:@supabase/supabase-js@2.112.4";
 import { hash, paidSupport, settledSupport, validReadSlug, validSecret, validSupportAmount, READ_HOME } from "./rules.ts";
 
-const origins = new Set(["https://www.innergreads.study", "https://innergreads.study"]);
+const HOME_BASE = "https://nasirr.innergintel.org/";
+const origins = new Set(["https://www.innergreads.study", "https://innergreads.study", "https://nasirr.innergintel.org"]);
 const env = (key: string) => Deno.env.get(key) || "";
 const service = createClient(env("SUPABASE_URL"), env("SUPABASE_SERVICE_ROLE_KEY"));
 const stripe = new Stripe(env("STRIPE_SECRET_KEY"));
@@ -23,12 +24,15 @@ Deno.serve(async (req: Request) => {
     const raw = await req.text();
     if (raw.length > 8000) return reply({ error: "request is too long" }, 413);
     const body = JSON.parse(raw);
-    if (!validReadSlug(body.slug)) return reply({ error: "read not found" }, 404);
+    const homeSupport = body.slug === "home-base";
+    if (!homeSupport && !validReadSlug(body.slug)) return reply({ error: "read not found" }, 404);
     const readSlug = body.slug;
     const action = body.action;
+    if (homeSupport && !["support_checkout", "support_status"].includes(action)) fail("unknown support request");
+    const supportTable = homeSupport ? "home_base_supports" : "innerg_read_supports";
     if (!["access", "support_checkout", "support_status", "bookmark", "feedback"].includes(action)) fail("unknown request");
-    const article = check(await service.from("innerg_reads").select("slug,title,body,published").eq("slug", readSlug).maybeSingle());
-    if (!article?.published) return reply({ error: "this read is not available yet" }, 404);
+    const article = homeSupport ? null : check(await service.from("innerg_reads").select("slug,title,body,published").eq("slug", readSlug).maybeSingle());
+    if (!homeSupport && !article?.published) return reply({ error: "this read is not available yet" }, 404);
 
     let user: any = null;
     const token = req.headers.get("authorization")?.replace(/^Bearer /, "");
@@ -66,7 +70,7 @@ Deno.serve(async (req: Request) => {
       const session = await stripe.checkout.sessions.retrieve(body.sessionId, { expand: ["line_items", "payment_intent.latest_charge"] });
       const amount = Number(session.metadata?.support_amount);
       const confirmed = paidSupport(session, readSlug) && settledSupport(session.payment_intent, amount);
-      if (confirmed) check(await service.from("innerg_read_supports").update({ status: "paid", confirmed_at: new Date().toISOString() }).eq("session_id", body.sessionId));
+      if (confirmed) check(await service.from(supportTable).update({ status: "paid", confirmed_at: new Date().toISOString() }).eq("session_id", body.sessionId));
       return reply({ confirmed, amount: validSupportAmount(amount) ? amount / 100 : null });
     }
     const amount = Number(body.amount) * 100;
@@ -76,11 +80,11 @@ Deno.serve(async (req: Request) => {
     const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
     if (!ip) fail("support checkout is temporarily unavailable. please try again.", 503);
     const ipHash = await hash(env("SUPABASE_SERVICE_ROLE_KEY") + ":read-support:" + ip);
-    const limit = await service.from("innerg_read_supports").select("id", { count: "exact", head: true })
+    const limit = await service.from(supportTable).select("id", { count: "exact", head: true })
       .eq("ip_hash", ipHash).gte("created_at", new Date(Date.now() - 3600000).toISOString());
     check(limit);
     if ((limit.count || 0) >= 8) fail("too many checkout attempts. please try again later.", 429);
-    const existing = check(await service.from("innerg_read_supports").select("amount_cents,session_id,status")
+    const existing = check(await service.from(supportTable).select("amount_cents,session_id,status")
       .eq("intent_hash", intentHash).maybeSingle());
     if (existing) {
       if (existing.amount_cents !== amount) fail("choose the amount again and restart checkout.", 409);
@@ -88,20 +92,20 @@ Deno.serve(async (req: Request) => {
       if (existing.session_id) {
         const prior = await stripe.checkout.sessions.retrieve(existing.session_id);
         if (prior.status === "open" && prior.url) return reply({ checkoutUrl: prior.url });
-        if (prior.status === "complete") return reply({ alreadySupported: true });
+        if (prior.status === "complete" && prior.payment_status === "paid") return reply({ alreadySupported: true });
       }
     } else {
-      check(await service.from("innerg_read_supports").insert({ slug: readSlug, intent_hash: intentHash, ip_hash: ipHash, amount_cents: amount }));
+      check(await service.from(supportTable).insert({ slug: readSlug, intent_hash: intentHash, ip_hash: ipHash, amount_cents: amount }));
     }
     const session = await stripe.checkout.sessions.create({ mode: "payment", payment_method_types: ["card"],
       line_items: [{ quantity: 1, price_data: { currency: "usd", unit_amount: amount,
-        product_data: { name: "support innerg reads", description: "optional support for future personal reads by nasirr g. mayo." } } }],
-      metadata: { product_key: "innerg_read_support", read_slug: readSlug, support_amount: String(amount), support_intent: intentHash },
-      success_url: READ_HOME + "?read=" + encodeURIComponent(readSlug) + "&support_session_id={CHECKOUT_SESSION_ID}#support",
-      cancel_url: READ_HOME + "?read=" + encodeURIComponent(readSlug) + "#support",
-      custom_text: { submit: { message: "this is an optional one-time contribution. the full essay is free to read." } },
+        product_data: { name: homeSupport ? "Support the movement" : "support innerg reads", description: homeSupport ? "Optional one-time support for Nasirr Mayo's independent writing, education, and creative work." : "optional support for future personal reads by nasirr g. mayo." } } }],
+      metadata: { product_key: homeSupport ? "home_base_support" : "innerg_read_support", read_slug: readSlug, support_amount: String(amount), support_intent: intentHash },
+      success_url: homeSupport ? HOME_BASE + "?support_session_id={CHECKOUT_SESSION_ID}#support-movement" : READ_HOME + "?read=" + encodeURIComponent(readSlug) + "&support_session_id={CHECKOUT_SESSION_ID}#support",
+      cancel_url: homeSupport ? HOME_BASE + "?support_cancelled=1#support-movement" : READ_HOME + "?read=" + encodeURIComponent(readSlug) + "#support",
+      custom_text: { submit: { message: homeSupport ? "Optional, one-time creator support. No subscription or purchase is required." : "this is an optional one-time contribution. the full essay is free to read." } },
     }, { idempotencyKey: "innerg-read-support:" + readSlug + ":" + intentHash + ":" + amount });
-    check(await service.from("innerg_read_supports").update({ session_id: session.id }).eq("intent_hash", intentHash));
+    check(await service.from(supportTable).update({ session_id: session.id }).eq("intent_hash", intentHash));
     return reply({ checkoutUrl: session.url });
   } catch (error) {
     const status = (error as any)?.status || 503;

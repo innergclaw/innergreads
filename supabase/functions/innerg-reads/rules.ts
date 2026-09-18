@@ -44,7 +44,7 @@ export function paidSupport(session: any, readSlug = READ_SLUG): boolean {
   const item = session.line_items?.data;
   return Boolean(validSupportAmount(amount) && session.status === "complete" && session.payment_status === "paid" &&
     session.mode === "payment" && session.currency === "usd" && session.amount_total === amount &&
-    session.metadata?.product_key === "innerg_read_support" && session.metadata?.read_slug === readSlug &&
+    session.metadata?.product_key === (readSlug === "home-base" ? "home_base_support" : "innerg_read_support") && session.metadata?.read_slug === readSlug &&
     item?.length === 1 && item[0].quantity === 1 && item[0].price?.unit_amount === amount && item[0].price?.currency === "usd");
 }
 
