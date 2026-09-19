@@ -4,11 +4,11 @@ import { readFile } from "node:fs/promises";
 import { defaultRead, findRead, reads } from "./catalog.mjs";
 
 test("the newest dated read is the default", () => {
-  assert.equal(defaultRead.slug, "black-men-step-up");
-  assert.equal(defaultRead.number, "004");
-  assert.equal(defaultRead.date, "2026-09-14");
-  assert.equal(defaultRead.title, "calling black men, especially younger black men, back toward discipline, purpose, education, mentorship + thinking beyond the immediate moment.");
-  assert.deepEqual(reads.map(read => read.number), ["004", "003", "002", "001"]);
+  assert.equal(defaultRead.slug, "ya-hochu-zhenu");
+  assert.equal(defaultRead.number, "005");
+  assert.equal(defaultRead.date, "2026-09-19");
+  assert.equal(defaultRead.title, "Я хочу жену");
+  assert.deepEqual(reads.map(read => read.number), ["005", "004", "003", "002", "001"]);
 });
 
 test("known read slugs resolve and unknown slugs do not open an article", () => {
@@ -16,13 +16,26 @@ test("known read slugs resolve and unknown slugs do not open an article", () => 
   assert.equal(findRead("pull-the-plug-on-intelligence").number, "002");
   assert.equal(findRead("philly-money-moving").number, "003");
   assert.equal(findRead("black-men-step-up").number, "004");
+  assert.equal(findRead("ya-hochu-zhenu").number, "005");
   assert.equal(findRead("not-a-read"), undefined);
+});
+
+test("article 005 has a publishable body with the supplied opening and close", async () => {
+  const source = JSON.parse(await readFile(new URL("../content/reads/2026-09-19-ya-hochu-zhenu.json", import.meta.url)));
+  assert.equal(source.slug, defaultRead.slug);
+  assert.equal(source.title, defaultRead.title);
+  assert.equal(source.published, true);
+  assert.equal(source.body.length, 21);
+  assert.equal(source.body[0].text, "i be trying to flirt, be intentional + really show up as a man.");
+  assert.equal(source.body.at(-2).text, "я хочу жену.");
+  assert.equal(source.body.at(-1).text, "i want a wife.");
+  assert(source.body.every(block => block.type === "paragraph" && block.text.trim()));
 });
 
 test("article 004 has a publishable body with the supplied opening, emphasis, and close", async () => {
   const source = JSON.parse(await readFile(new URL("../content/reads/2026-09-14-black-men-step-up.json", import.meta.url)));
-  assert.equal(source.slug, defaultRead.slug);
-  assert.equal(source.title, defaultRead.title);
+  assert.equal(source.slug, findRead("black-men-step-up").slug);
+  assert.equal(source.title, findRead("black-men-step-up").title);
   assert.equal(source.published, true);
   assert.equal(source.body.length, 56);
   assert.equal(source.body[0].text, "black men .. we gotta step up.");

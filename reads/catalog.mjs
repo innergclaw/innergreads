@@ -1,5 +1,18 @@
 export const reads = [
   {
+    slug: "ya-hochu-zhenu",
+    number: "005",
+    title: "Я хочу жену",
+    date: "2026-09-19",
+    dateLabel: "sep 19, 2026",
+    topics: "dating / reciprocity / marriage",
+    summary: "i want a woman who understands the kind of love, leadership, affection + consistency i’m trying to bring and gives that same intention back.",
+    archiveSummary: "dating, reciprocity, intention + wanting a wife.",
+    coverTitle: "я хочу\nжену",
+    coverLines: "intention\nreciprocity\nmarriage",
+    roomTitle: "Я хочу жену",
+  },
+  {
     slug: "black-men-step-up",
     number: "004",
     title: "calling black men, especially younger black men, back toward discipline, purpose, education, mentorship + thinking beyond the immediate moment.",

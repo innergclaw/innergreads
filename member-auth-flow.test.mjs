@@ -22,6 +22,7 @@ test("reads return is fixed and cannot become an open redirect", () => {
   assert.equal(accountDestination("?from=reads"), "/reads/");
   assert.equal(accountDestination("?from=reads&read=philly-money-moving"), "/reads/?read=philly-money-moving#reading-room");
   assert.equal(readsDestination("?read=pull-the-plug-on-intelligence"), "/reads/?read=pull-the-plug-on-intelligence#reading-room");
+  assert.equal(readsDestination("?read=ya-hochu-zhenu"), "/reads/?read=ya-hochu-zhenu#reading-room");
   assert.equal(readsDestination("?read=https://evil.example"), "/reads/");
   assert.equal(accountDestination("?from=https://evil.example"), "/dashboard/");
   assert.equal(accountDestination("?redirect=https://evil.example"), "/dashboard/");
