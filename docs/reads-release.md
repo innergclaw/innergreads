@@ -3,6 +3,7 @@
 ## route and offer
 
 - `https://www.innergreads.study/reads/`
+- article 006: clarity is the standard now., published sep 20, 2026.
 - article 005: Я хочу жену, published sep 19, 2026.
 - article 004: calling black men, especially younger black men, back toward discipline, purpose, education, mentorship + thinking beyond the immediate moment, published sep 14, 2026.
 - article 003: is philly actually making money ~ or does it just look like money is moving?, published sep 12, 2026.
@@ -52,6 +53,8 @@ article 003 preserves the title and 51 text blocks supplied by nasirr in the inn
 article 004 preserves the title and 56 supplied text blocks. the two statements marked for emphasis render in bold without visible markdown marks. the repository source is `content/reads/2026-09-14-black-men-step-up.json`.
 
 article 005 preserves the Russian title and all 21 supplied text blocks. the repository source is `content/reads/2026-09-19-ya-hochu-zhenu.json`.
+
+article 006 develops nasirr’s january 1, 2026 journal entry into a personal read about clarity, boundaries, alignment, and sharing more of the person behind the ideas. the repository source is `content/reads/2026-09-20-clarity-is-the-standard.json`.
 
 ## verification
 

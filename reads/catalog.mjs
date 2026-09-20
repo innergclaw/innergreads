@@ -1,5 +1,18 @@
 export const reads = [
   {
+    slug: "clarity-is-the-standard",
+    number: "006",
+    title: "clarity is the standard now.",
+    date: "2026-09-20",
+    dateLabel: "sep 20, 2026",
+    topics: "personal growth / boundaries / alignment",
+    summary: "discomfort doesn’t mean i was wrong. sometimes it means i was honest.",
+    archiveSummary: "a personal journal entry about choosing clarity over comfort, honoring a boundary + stepping away from half-aligned connections.",
+    coverTitle: "clarity\nis the\nstandard.",
+    coverLines: "honesty\nboundaries\nalignment",
+    roomTitle: "clarity is the standard now.",
+  },
+  {
     slug: "ya-hochu-zhenu",
     number: "005",
     title: "Я хочу жену",

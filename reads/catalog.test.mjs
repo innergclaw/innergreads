@@ -4,11 +4,11 @@ import { readFile } from "node:fs/promises";
 import { defaultRead, findRead, reads } from "./catalog.mjs";
 
 test("the newest dated read is the default", () => {
-  assert.equal(defaultRead.slug, "ya-hochu-zhenu");
-  assert.equal(defaultRead.number, "005");
-  assert.equal(defaultRead.date, "2026-09-19");
-  assert.equal(defaultRead.title, "Я хочу жену");
-  assert.deepEqual(reads.map(read => read.number), ["005", "004", "003", "002", "001"]);
+  assert.equal(defaultRead.slug, "clarity-is-the-standard");
+  assert.equal(defaultRead.number, "006");
+  assert.equal(defaultRead.date, "2026-09-20");
+  assert.equal(defaultRead.title, "clarity is the standard now.");
+  assert.deepEqual(reads.map(read => read.number), ["006", "005", "004", "003", "002", "001"]);
 });
 
 test("known read slugs resolve and unknown slugs do not open an article", () => {
@@ -17,13 +17,30 @@ test("known read slugs resolve and unknown slugs do not open an article", () => 
   assert.equal(findRead("philly-money-moving").number, "003");
   assert.equal(findRead("black-men-step-up").number, "004");
   assert.equal(findRead("ya-hochu-zhenu").number, "005");
+  assert.equal(findRead("clarity-is-the-standard").number, "006");
   assert.equal(findRead("not-a-read"), undefined);
+});
+
+test("article 006 develops the supplied journal pages into a publishable personal read", async () => {
+  const source = JSON.parse(await readFile(new URL("../content/reads/2026-09-20-clarity-is-the-standard.json", import.meta.url)));
+  assert.equal(source.slug, defaultRead.slug);
+  assert.equal(source.title, defaultRead.title);
+  assert.equal(source.published, true);
+  assert.equal(source.body.length, 44);
+  assert.equal(source.body[0].text, "on january 1, 2026, i opened my notebook and wrote one sentence at the top of the page.");
+  assert.deepEqual(source.body.filter(block => block.type === "emphasis").map(block => block.text), [
+    "discomfort doesn’t mean i was wrong. sometimes it means i was honest.",
+    "alignment should feel natural, not negotiated.",
+    "clarity is the standard now.",
+  ]);
+  assert.equal(source.body.at(-1).text, "clarity is the standard now.");
+  assert(source.body.every(block => ["paragraph", "emphasis"].includes(block.type) && block.text.trim()));
 });
 
 test("article 005 has a publishable body with the supplied opening and close", async () => {
   const source = JSON.parse(await readFile(new URL("../content/reads/2026-09-19-ya-hochu-zhenu.json", import.meta.url)));
-  assert.equal(source.slug, defaultRead.slug);
-  assert.equal(source.title, defaultRead.title);
+  assert.equal(source.slug, findRead("ya-hochu-zhenu").slug);
+  assert.equal(source.title, findRead("ya-hochu-zhenu").title);
   assert.equal(source.published, true);
   assert.equal(source.body.length, 21);
   assert.equal(source.body[0].text, "i be trying to flirt, be intentional + really show up as a man.");
