@@ -1095,3 +1095,5 @@
     animation: none;
   }
 }
+
+.publishing-transform{width:min(100%,560px);height:auto;display:block;border:1px solid rgba(255,255,255,.12)}
