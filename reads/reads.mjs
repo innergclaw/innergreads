@@ -41,10 +41,12 @@ function applyRead() {
   $("cover-title").dataset.short = String(!selectedRead.coverTitle.includes("\n"));
   $("cover-lines").textContent = selectedRead.coverLines;
   const coverArt = $("cover-art");
+  const hasCover = Boolean(selectedRead.cover);
   if (coverArt) {
-    coverArt.hidden = !selectedRead.cover;
-    if (selectedRead.cover) coverArt.src = selectedRead.cover;
+    coverArt.hidden = !hasCover;
+    if (hasCover) coverArt.src = selectedRead.cover;
   }
+  document.querySelector(".cover")?.classList.toggle("has-art", hasCover);
   $("feature-topics").textContent = selectedRead.topics;
   $("read-title").textContent = selectedRead.title;
   $("read-summary").textContent = selectedRead.summary;
