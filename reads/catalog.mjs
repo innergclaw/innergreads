@@ -14,6 +14,7 @@ export const reads = [
     cover: "/assets/reads/007-both-sides-have-to-show-up.jpg",
     source: "/content/reads/2026-10-07-both-sides-have-to-show-up.json",
   },
+  {
     slug: "clarity-is-the-standard",
     number: "006",
     title: "clarity is the standard now.",
