@@ -6,6 +6,11 @@
   "source": "https://youtu.be/GKNvUujs20s",
   "body": [
     {
+      "type": "source",
+      "text": "source video: ",
+      "href": "https://youtu.be/GKNvUujs20s"
+    },
+    {
       "type": "paragraph",
       "text": "from the recording: we need to wake up ~ our future depends on what we do next."
     },
@@ -60,6 +65,11 @@
     {
       "type": "paragraph",
       "text": "your attention matters. thank you for bringing it here."
+    },
+    {
+      "type": "source",
+      "text": "source video: ",
+      "href": "https://youtu.be/GKNvUujs20s"
     }
   ]
 }

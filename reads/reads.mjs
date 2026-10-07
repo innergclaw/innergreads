@@ -90,6 +90,12 @@ function renderBody(blocks) {
       const strong = document.createElement("strong");
       strong.textContent = block.text;
       el.append(strong);
+    } else if (block.type === "source" && block.href) {
+      el.append(block.text || "source video: ");
+      const link = document.createElement("a");
+      link.href = block.href;
+      link.textContent = block.href;
+      el.append(link);
     } else el.textContent = block.text;
     $("full-read").append(el);
   }
