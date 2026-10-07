@@ -4,11 +4,11 @@ import { readFile } from "node:fs/promises";
 import { defaultRead, findRead, reads } from "./catalog.mjs";
 
 test("the newest dated read is the default", () => {
-  assert.equal(defaultRead.slug, "clarity-is-the-standard");
-  assert.equal(defaultRead.number, "006");
-  assert.equal(defaultRead.date, "2026-09-20");
-  assert.equal(defaultRead.title, "clarity is the standard now.");
-  assert.deepEqual(reads.map(read => read.number), ["006", "005", "004", "003", "002", "001"]);
+  assert.equal(defaultRead.slug, "both-sides-have-to-show-up");
+  assert.equal(defaultRead.number, "007");
+  assert.equal(defaultRead.date, "2026-10-07");
+  assert.equal(defaultRead.title, "both sides have to show up.");
+  assert.deepEqual(reads.map(read => read.number), ["007", "006", "005", "004", "003", "002", "001"]);
 });
 
 test("known read slugs resolve and unknown slugs do not open an article", () => {
@@ -18,13 +18,14 @@ test("known read slugs resolve and unknown slugs do not open an article", () => 
   assert.equal(findRead("black-men-step-up").number, "004");
   assert.equal(findRead("ya-hochu-zhenu").number, "005");
   assert.equal(findRead("clarity-is-the-standard").number, "006");
+  assert.equal(findRead("both-sides-have-to-show-up").number, "007");
   assert.equal(findRead("not-a-read"), undefined);
 });
 
 test("article 006 develops the supplied journal pages into a publishable personal read", async () => {
   const source = JSON.parse(await readFile(new URL("../content/reads/2026-09-20-clarity-is-the-standard.json", import.meta.url)));
-  assert.equal(source.slug, defaultRead.slug);
-  assert.equal(source.title, defaultRead.title);
+  assert.equal(source.slug, "clarity-is-the-standard");
+  assert.equal(source.title, "clarity is the standard now.");
   assert.equal(source.published, true);
   assert.equal(source.body.length, 44);
   assert.equal(source.body[0].text, "on january 1, 2026, i opened my notebook and wrote one sentence at the top of the page.");

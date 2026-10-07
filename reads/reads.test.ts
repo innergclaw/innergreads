@@ -10,6 +10,7 @@ Deno.test("only published reader slugs are accepted", () => {
   assert(validReadSlug("black-men-step-up"));
   assert(validReadSlug("ya-hochu-zhenu"));
   assert(validReadSlug("clarity-is-the-standard"));
+  assert(validReadSlug("both-sides-have-to-show-up"));
   for (const value of ["", "unknown", "../art-era", null, 2]) assert(!validReadSlug(value));
 });
 Deno.test("only active paid unexpired membership unlocks", () => {

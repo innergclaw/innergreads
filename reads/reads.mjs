@@ -40,6 +40,11 @@ function applyRead() {
   } else $("cover-title").textContent = selectedRead.coverTitle;
   $("cover-title").dataset.short = String(!selectedRead.coverTitle.includes("\n"));
   $("cover-lines").textContent = selectedRead.coverLines;
+  const coverArt = $("cover-art");
+  if (coverArt) {
+    coverArt.hidden = !selectedRead.cover;
+    if (selectedRead.cover) coverArt.src = selectedRead.cover;
+  }
   $("feature-topics").textContent = selectedRead.topics;
   $("read-title").textContent = selectedRead.title;
   $("read-summary").textContent = selectedRead.summary;
@@ -88,6 +93,14 @@ function renderBody(blocks) {
   }
 }
 
+async function publishedBody() {
+  if (!selectedRead.source) return null;
+  const response = await fetch(selectedRead.source, { cache: "no-store" });
+  if (!response.ok) return null;
+  const article = await response.json();
+  return article.slug === selectedRead.slug && article.published ? article.body : null;
+}
+
 async function refresh() {
   const id = ++requestId;
   $("retry").hidden = true;
@@ -123,6 +136,16 @@ async function refresh() {
     }
   } catch (error) {
     if (id !== requestId) return;
+    const body = await publishedBody().catch(() => null);
+    if (body) {
+      renderBody(body);
+      $("full-read").hidden = false;
+      $("support").hidden = false;
+      $("feedback-section").hidden = false;
+      $("retry").hidden = true;
+      status("full read loaded.");
+      return;
+    }
     renderBody([]);
     $("full-read").hidden = true;
     $("support").hidden = true;
