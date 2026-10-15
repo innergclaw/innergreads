@@ -1,5 +1,19 @@
 export const reads = [
   {
+    slug: "a-second-chance",
+    number: "008",
+    title: "a second chance at the life i always wanted",
+    date: "2026-10-15",
+    dateLabel: "oct 15, 2026",
+    topics: "accountability / maturity / forward",
+    summary: "personal reflections on accountability, maturity + choosing the path forward",
+    archiveSummary: "personal reflections on accountability, maturity + choosing the path forward",
+    coverTitle: "a second\nchance.",
+    coverLines: "accountability\nmaturity\nforward",
+    roomTitle: "a second chance at the life i always wanted",
+    source: "/content/reads/2026-10-15-a-second-chance.json",
+  },
+  {
     slug: "both-sides-have-to-show-up",
     number: "007",
     title: "both sides have to show up.",

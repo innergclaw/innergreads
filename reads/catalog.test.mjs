@@ -4,11 +4,11 @@ import { readFile } from "node:fs/promises";
 import { defaultRead, findRead, reads } from "./catalog.mjs";
 
 test("the newest dated read is the default", () => {
-  assert.equal(defaultRead.slug, "both-sides-have-to-show-up");
-  assert.equal(defaultRead.number, "007");
-  assert.equal(defaultRead.date, "2026-10-07");
-  assert.equal(defaultRead.title, "both sides have to show up.");
-  assert.deepEqual(reads.map(read => read.number), ["007", "006", "005", "004", "003", "002", "001"]);
+  assert.equal(defaultRead.slug, "a-second-chance");
+  assert.equal(defaultRead.number, "008");
+  assert.equal(defaultRead.date, "2026-10-15");
+  assert.equal(defaultRead.title, "a second chance at the life i always wanted");
+  assert.deepEqual(reads.map(read => read.number), ["008", "007", "006", "005", "004", "003", "002", "001"]);
 });
 
 test("known read slugs resolve and unknown slugs do not open an article", () => {
@@ -19,7 +19,24 @@ test("known read slugs resolve and unknown slugs do not open an article", () => 
   assert.equal(findRead("ya-hochu-zhenu").number, "005");
   assert.equal(findRead("clarity-is-the-standard").number, "006");
   assert.equal(findRead("both-sides-have-to-show-up").number, "007");
+  assert.equal(findRead("a-second-chance").number, "008");
   assert.equal(findRead("not-a-read"), undefined);
+});
+
+test("article 008 keeps the supplied reflection, punctuation, and refrain lines", async () => {
+  const source = JSON.parse(await readFile(new URL("../content/reads/2026-10-15-a-second-chance.json", import.meta.url)));
+  assert.equal(source.slug, findRead("a-second-chance").slug);
+  assert.equal(source.title, findRead("a-second-chance").title);
+  assert.equal(source.published, true);
+  assert.equal(findRead("a-second-chance").archiveSummary, "personal reflections on accountability, maturity + choosing the path forward");
+  assert.equal(source.body.length, 24);
+  assert.equal(source.body[0].text, "for a long time, i had my hands on the life i wanted. i had the vision, the ambition + the opportunity to build something meaningful for myself. but somewhere along the way, my immaturity showed. my lack of focus showed. i made decisions that pulled me away from the very things i said i wanted.");
+  assert.deepEqual(source.body.filter(block => block.type === "emphasis").map(block => block.text), [
+    "but at some point, reflection has to become responsibility.",
+    "i'm not starting from zero. i'm starting from experience.",
+  ]);
+  assert.equal(source.body.at(-1).text, "and for that, i'm grateful.");
+  assert(source.body.every(block => ["paragraph", "emphasis"].includes(block.type) && block.text.trim()));
 });
 
 test("article 006 develops the supplied journal pages into a publishable personal read", async () => {
