@@ -3,6 +3,8 @@
 ## route and offer
 
 - `https://www.innergreads.study/reads/`
+- article 008: a second chance at the life i always wanted, published oct 15, 2026.
+- article 007: both sides have to show up., published oct 7, 2026.
 - article 006: clarity is the standard now., published sep 20, 2026.
 - article 005: Я хочу жену, published sep 19, 2026.
 - article 004: calling black men, especially younger black men, back toward discipline, purpose, education, mentorship + thinking beyond the immediate moment, published sep 14, 2026.
@@ -55,6 +57,8 @@ article 004 preserves the title and 56 supplied text blocks. the two statements 
 article 005 preserves the Russian title and all 21 supplied text blocks. the repository source is `content/reads/2026-09-19-ya-hochu-zhenu.json`.
 
 article 006 develops nasirr’s january 1, 2026 journal entry into a personal read about clarity, boundaries, alignment, and sharing more of the person behind the ideas. the repository source is `content/reads/2026-09-20-clarity-is-the-standard.json`.
+
+article 008 preserves the supplied reflection and its punctuation. the two refrain lines render in bold. the repository source is `content/reads/2026-10-15-a-second-chance.json`. the `innerg-reads` function still reads the manuscript from `innerg_reads`; that row has to be inserted separately before the function can return this essay.
 
 ## verification
 
