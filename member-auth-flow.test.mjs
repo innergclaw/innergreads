@@ -28,3 +28,9 @@ test("reads return is fixed and cannot become an open redirect", () => {
   assert.equal(accountDestination("?from=https://evil.example"), "/dashboard/");
   assert.equal(accountDestination("?redirect=https://evil.example"), "/dashboard/");
 });
+
+test("new passwords need 10+ characters with letters and digits", async () => {
+  const { newPasswordProblem } = await import("./member-auth-flow.mjs");
+  for (const bad of ["", "abc12", "abcdefghij", "1234567890", "abcdefgh1"]) assert.ok(newPasswordProblem(bad), bad);
+  for (const good of ["abcdefgh12", "Member2026pass"]) assert.equal(newPasswordProblem(good), "", good);
+});
