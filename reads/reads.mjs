@@ -1,6 +1,6 @@
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.4/+esm";
 import { formatCommentDate } from "./comment-date.mjs";
-import { findRead } from "./catalog.mjs?v=collection-008-20261015";
+import { findRead } from "./catalog.mjs?v=collection-009-20261019";
 const URL = "https://zkyhhoxcrjkhywblzehr.supabase.co";
 const KEY = "sb_publishable_bdi3BexAKWDBaUIh40hJ_A_8CNVdnM_";
 const client = createClient(URL, KEY);
@@ -50,6 +50,8 @@ function applyRead() {
   $("feature-topics").textContent = selectedRead.topics;
   $("read-title").textContent = selectedRead.title;
   $("read-summary").textContent = selectedRead.summary;
+  const byline = document.querySelector(".feature-copy .byline");
+  if (byline) byline.textContent = selectedRead.byline || "a personal essay by nasirr g. mayo";
   $("room-kicker").textContent = `${selectedRead.number} / ${selectedRead.title.replace(/[.“”]/g, "").replace(/^welcome to /, "")}`;
   $("room-title").textContent = selectedRead.roomTitle;
   $("sign-in").href = `/account/?from=reads&read=${encodeURIComponent(selectedRead.slug)}`;
@@ -86,7 +88,12 @@ function renderBody(blocks) {
   $("full-read").replaceChildren();
   for (const block of blocks || []) {
     const el = document.createElement(block.type === "heading" ? "h3" : "p");
-    if (block.type === "emphasis") {
+    if (block.type === "subtitle") {
+      el.className = "subtitle";
+      const em = document.createElement("em");
+      em.textContent = block.text;
+      el.append(em);
+    } else if (block.type === "emphasis") {
       const strong = document.createElement("strong");
       strong.textContent = block.text;
       el.append(strong);

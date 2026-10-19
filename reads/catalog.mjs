@@ -1,5 +1,20 @@
 export const reads = [
   {
+    slug: "whole-first-then-chosen",
+    number: "009",
+    title: "whole first, then chosen",
+    date: "2026-10-19",
+    dateLabel: "oct 19, 2026",
+    topics: "wholeness / intention / choosing",
+    summary: "on outgrowing the need, and learning what it means to pick someone on purpose",
+    archiveSummary: "on outgrowing the need, and learning what it means to pick someone on purpose",
+    coverTitle: "whole\nfirst,\nthen\nchosen.",
+    coverLines: "wholeness\nintention\nchoosing",
+    roomTitle: "whole first, then chosen",
+    byline: "a personal essay by NASIRR \"G\" MAYO",
+    source: "/content/reads/2026-10-19-whole-first-then-chosen.json",
+  },
+  {
     slug: "a-second-chance",
     number: "008",
     title: "a second chance at the life i always wanted",

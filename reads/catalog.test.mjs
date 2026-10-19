@@ -4,11 +4,11 @@ import { readFile } from "node:fs/promises";
 import { defaultRead, findRead, reads } from "./catalog.mjs";
 
 test("the newest dated read is the default", () => {
-  assert.equal(defaultRead.slug, "a-second-chance");
-  assert.equal(defaultRead.number, "008");
-  assert.equal(defaultRead.date, "2026-10-15");
-  assert.equal(defaultRead.title, "a second chance at the life i always wanted");
-  assert.deepEqual(reads.map(read => read.number), ["008", "007", "006", "005", "004", "003", "002", "001"]);
+  assert.equal(defaultRead.slug, "whole-first-then-chosen");
+  assert.equal(defaultRead.number, "009");
+  assert.equal(defaultRead.date, "2026-10-19");
+  assert.equal(defaultRead.title, "whole first, then chosen");
+  assert.deepEqual(reads.map(read => read.number), ["009", "008", "007", "006", "005", "004", "003", "002", "001"]);
 });
 
 test("known read slugs resolve and unknown slugs do not open an article", () => {
@@ -20,7 +20,27 @@ test("known read slugs resolve and unknown slugs do not open an article", () => 
   assert.equal(findRead("clarity-is-the-standard").number, "006");
   assert.equal(findRead("both-sides-have-to-show-up").number, "007");
   assert.equal(findRead("a-second-chance").number, "008");
+  assert.equal(findRead("whole-first-then-chosen").number, "009");
   assert.equal(findRead("not-a-read"), undefined);
+});
+
+test("article 009 keeps the supplied text, subtitle, and section heads", async () => {
+  const source = JSON.parse(await readFile(new URL("../content/reads/2026-10-19-whole-first-then-chosen.json", import.meta.url)));
+  assert.equal(source.slug, findRead("whole-first-then-chosen").slug);
+  assert.equal(source.title, findRead("whole-first-then-chosen").title);
+  assert.equal(source.published, true);
+  assert.equal(source.author, 'NASIRR "G" MAYO');
+  assert.equal(source.body[0].type, "subtitle");
+  assert.equal(source.body[0].text, "on outgrowing the need, and learning what it means to pick someone on purpose");
+  assert.deepEqual(source.body.filter(block => block.type === "heading").map(block => block.text), [
+    "the need was never about her",
+    "what changes when you can stand on your own",
+    "the door i keep walking back to",
+    "widening the room",
+    "where i'm landing, for now",
+  ]);
+  assert.equal(source.body.at(-1).text, "and maybe that uber ride home was the lesson i didn't know i needed.");
+  assert(source.body.every(block => !block.text.includes("\u2014")));
 });
 
 test("article 008 keeps the supplied reflection, punctuation, and refrain lines", async () => {
