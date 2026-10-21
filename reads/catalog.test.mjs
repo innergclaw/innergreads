@@ -4,11 +4,11 @@ import { readFile } from "node:fs/promises";
 import { defaultRead, findRead, reads } from "./catalog.mjs";
 
 test("the newest dated read is the default", () => {
-  assert.equal(defaultRead.slug, "whole-first-then-chosen");
-  assert.equal(defaultRead.number, "009");
-  assert.equal(defaultRead.date, "2026-10-19");
-  assert.equal(defaultRead.title, "whole first, then chosen");
-  assert.deepEqual(reads.map(read => read.number), ["009", "008", "007", "006", "005", "004", "003", "002", "001"]);
+  assert.equal(defaultRead.slug, "get-it-together");
+  assert.equal(defaultRead.number, "010");
+  assert.equal(defaultRead.date, "2026-10-21");
+  assert.equal(defaultRead.title, "get it toGether");
+  assert.deepEqual(reads.map(read => read.number), ["010", "009", "008", "007", "006", "005", "004", "003", "002", "001"]);
 });
 
 test("known read slugs resolve and unknown slugs do not open an article", () => {
@@ -21,7 +21,25 @@ test("known read slugs resolve and unknown slugs do not open an article", () => 
   assert.equal(findRead("both-sides-have-to-show-up").number, "007");
   assert.equal(findRead("a-second-chance").number, "008");
   assert.equal(findRead("whole-first-then-chosen").number, "009");
+  assert.equal(findRead("get-it-together").number, "010");
   assert.equal(findRead("not-a-read"), undefined);
+});
+
+test("article 010 keeps the supplied text, subtitle, and section heads", async () => {
+  const source = JSON.parse(await readFile(new URL("../content/reads/2026-10-21-get-it-together.json", import.meta.url)));
+  assert.equal(source.slug, findRead("get-it-together").slug);
+  assert.equal(source.title, findRead("get-it-together").title);
+  assert.equal(source.published, true);
+  assert.equal(source.author, 'NASIRR "G" MAYO');
+  assert.equal(source.body[0].type, "subtitle");
+  assert.equal(source.body[0].text, "men only ~ the leaf is already turned");
+  assert.deepEqual(source.body.filter(block => block.type === "heading").map(block => block.text), [
+    "what she's actually looking at",
+    "effort is the signal",
+    "the leaf is already turned",
+    "toGether or forGet it",
+  ]);
+  assert(source.body.every(block => !block.text.includes("\u2014")));
 });
 
 test("article 009 keeps the supplied text, subtitle, and section heads", async () => {

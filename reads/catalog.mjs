@@ -1,5 +1,20 @@
 export const reads = [
   {
+    slug: "get-it-together",
+    number: "010",
+    title: "get it toGether",
+    date: "2026-10-21",
+    dateLabel: "oct 21, 2026",
+    topics: "effort / consistency / direction",
+    summary: "men only ~ the leaf is already turned",
+    archiveSummary: "men only ~ the leaf is already turned",
+    coverTitle: "get\nit\ntoGether.",
+    coverLines: "effort\nconsistency\ndirection",
+    roomTitle: "get it toGether",
+    byline: "a personal essay by NASIRR \"G\" MAYO",
+    source: "/content/reads/2026-10-21-get-it-together.json",
+  },
+  {
     slug: "whole-first-then-chosen",
     number: "009",
     title: "whole first, then chosen",
