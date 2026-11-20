@@ -3,6 +3,7 @@
 ## route and offer
 
 - `https://www.innergreads.study/reads/`
+- article 011: taken already, published nov 20, 2026.
 - article 010: get it toGether, published oct 21, 2026.
 - article 009: whole first, then chosen, published oct 19, 2026.
 - article 008: a second chance at the life i always wanted, published oct 15, 2026.
@@ -64,6 +65,7 @@ article 008 preserves the supplied reflection and its punctuation. the two refra
 
 article 009 preserves the supplied essay word for word, including its lowercase style, capitalized words, and `+` usage. the subtitle renders in italic and the five section heads render in bold. the byline reads NASIRR "G" MAYO. the repository source is `content/reads/2026-10-19-whole-first-then-chosen.json`. the `innerg_reads` row has to be inserted separately before the function can return this essay; until then the page loads it from the published file.
 article 010 preserves the supplied essay word for word, including its lowercase style, capitalized words, emoji, and `~` usage. the subtitle renders in italic and the four section heads render in bold. the byline reads NASIRR "G" MAYO. the repository source is `content/reads/2026-10-21-get-it-together.json`. the `innerg_reads` row has to be inserted separately before the function can return this essay; until then the page loads it from the published file.
+article 011 preserves the supplied essay word for word, including its lowercase style, the ellipsis, the 🤎, and the closing byline ~ NASIRR "G" MAYO. the repository source is `content/reads/2026-11-20-taken-already.json`. the `innerg_reads` row has to be inserted separately before the function can return this essay; until then the page loads it from the published file.
 
 ## verification
 

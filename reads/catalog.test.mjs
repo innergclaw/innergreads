@@ -4,11 +4,11 @@ import { readFile } from "node:fs/promises";
 import { defaultRead, findRead, reads } from "./catalog.mjs";
 
 test("the newest dated read is the default", () => {
-  assert.equal(defaultRead.slug, "get-it-together");
-  assert.equal(defaultRead.number, "010");
-  assert.equal(defaultRead.date, "2026-10-21");
-  assert.equal(defaultRead.title, "get it toGether");
-  assert.deepEqual(reads.map(read => read.number), ["010", "009", "008", "007", "006", "005", "004", "003", "002", "001"]);
+  assert.equal(defaultRead.slug, "taken-already");
+  assert.equal(defaultRead.number, "011");
+  assert.equal(defaultRead.date, "2026-11-20");
+  assert.equal(defaultRead.title, "taken already");
+  assert.deepEqual(reads.map(read => read.number), ["011", "010", "009", "008", "007", "006", "005", "004", "003", "002", "001"]);
 });
 
 test("known read slugs resolve and unknown slugs do not open an article", () => {
@@ -22,7 +22,23 @@ test("known read slugs resolve and unknown slugs do not open an article", () => 
   assert.equal(findRead("a-second-chance").number, "008");
   assert.equal(findRead("whole-first-then-chosen").number, "009");
   assert.equal(findRead("get-it-together").number, "010");
+  assert.equal(findRead("taken-already").number, "011");
   assert.equal(findRead("not-a-read"), undefined);
+});
+
+test("article 011 keeps the supplied text, lowercase title, byline, and brown heart", async () => {
+  const source = JSON.parse(await readFile(new URL("../content/reads/2026-11-20-taken-already.json", import.meta.url)));
+  assert.equal(source.slug, findRead("taken-already").slug);
+  assert.equal(source.title, findRead("taken-already").title);
+  assert.equal(source.published, true);
+  assert.equal(source.author, 'NASIRR "G" MAYO');
+  assert.equal(source.body.length, 17);
+  assert.equal(source.body[0].type, "paragraph");
+  assert.equal(source.body[0].text, "up late with trey songz, passion, pain & pleasure playing. man, i gotta go back and really sit with this album.");
+  assert.equal(source.body.at(-2).text, "i'm taken already, gang. 🤎");
+  assert.equal(source.body.at(-1).text, '~ NASIRR "G" MAYO');
+  assert(source.body.every(block => block.type === "paragraph" && block.text.trim()));
+  assert(source.body.every(block => !block.text.includes("\u2014")));
 });
 
 test("article 010 keeps the supplied text, subtitle, and section heads", async () => {

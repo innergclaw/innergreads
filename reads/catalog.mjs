@@ -1,5 +1,20 @@
 export const reads = [
   {
+    slug: "taken-already",
+    number: "011",
+    title: "taken already",
+    date: "2026-11-20",
+    dateLabel: "nov 20, 2026",
+    topics: "love / choice / partnership",
+    summary: "i'm realizing how differently i see love, connection + companionship at 30.",
+    archiveSummary: "i'm realizing how differently i see love, connection + companionship at 30.",
+    coverTitle: "taken\nalready.",
+    coverLines: "love\nchoice\npartnership",
+    roomTitle: "taken already",
+    byline: "a personal essay by NASIRR \"G\" MAYO",
+    source: "/content/reads/2026-11-20-taken-already.json",
+  },
+  {
     slug: "get-it-together",
     number: "010",
     title: "get it toGether",
