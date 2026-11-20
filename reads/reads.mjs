@@ -1,6 +1,6 @@
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.4/+esm";
 import { formatCommentDate } from "./comment-date.mjs";
-import { findRead } from "./catalog.mjs?v=collection-010-20261021";
+import { findRead } from "./catalog.mjs?v=collection-011-20261120";
 const URL = "https://zkyhhoxcrjkhywblzehr.supabase.co";
 const KEY = "sb_publishable_bdi3BexAKWDBaUIh40hJ_A_8CNVdnM_";
 const client = createClient(URL, KEY);
