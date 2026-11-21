@@ -7,7 +7,7 @@ test("the newest dated read is the default", () => {
   assert.equal(defaultRead.slug, "taken-already");
   assert.equal(defaultRead.number, "011");
   assert.equal(defaultRead.date, "2026-11-20");
-  assert.equal(defaultRead.title, "taken already");
+  assert.equal(defaultRead.title, "Already Taken");
   assert.deepEqual(reads.map(read => read.number), ["011", "010", "009", "008", "007", "006", "005", "004", "003", "002", "001"]);
 });
 
@@ -26,7 +26,7 @@ test("known read slugs resolve and unknown slugs do not open an article", () => 
   assert.equal(findRead("not-a-read"), undefined);
 });
 
-test("article 011 keeps the supplied text, lowercase title, byline, and brown heart", async () => {
+test("article 011 keeps the supplied text, byline, and brown heart", async () => {
   const source = JSON.parse(await readFile(new URL("../content/reads/2026-11-20-taken-already.json", import.meta.url)));
   assert.equal(source.slug, findRead("taken-already").slug);
   assert.equal(source.title, findRead("taken-already").title);
