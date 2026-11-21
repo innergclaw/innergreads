@@ -3,7 +3,7 @@
 ## route and offer
 
 - `https://www.innergreads.study/reads/`
-- article 011: taken already, published nov 20, 2026.
+- article 011: Already Taken, published nov 20, 2026.
 - article 010: get it toGether, published oct 21, 2026.
 - article 009: whole first, then chosen, published oct 19, 2026.
 - article 008: a second chance at the life i always wanted, published oct 15, 2026.
